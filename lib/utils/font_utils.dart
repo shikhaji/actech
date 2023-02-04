@@ -28,6 +28,12 @@ class FontTextStyle {
       fontWeight: FontWeightClass.bold
   );
 
+  static TextStyle poppinsS20W7BlackColor = GoogleFonts.poppins(
+      fontSize: 20.sp,
+      color: ColorUtils.blackColor,
+      fontWeight: FontWeightClass.bold
+  );
+
   static TextStyle poppinsS16W7WhiteColor = GoogleFonts.poppins(
       fontSize: 16.sp,
       color: ColorUtils.whiteColor,
@@ -39,12 +45,20 @@ class FontTextStyle {
       color: ColorUtils.labelColor,
       fontWeight: FontWeightClass.regular
   );
+  static TextStyle poppinsS12HintColor = GoogleFonts.poppins(
+      fontSize: 12.sp,
+      color: ColorUtils.labelColor,
+      fontWeight: FontWeightClass.regular
+  );
 
   static TextStyle poppinsS10HintColor = GoogleFonts.poppins(
       fontSize: 10.sp,
       color: ColorUtils.labelColor,
       fontWeight: FontWeightClass.regular
   );
+
+  static TextStyle poppinsS12W4BlackColor =
+  poppinsS12HintColor.copyWith(color:ColorUtils.blackColor);
 
   static TextStyle poppinsS14W4BlackColor =
   poppinsS14HintColor.copyWith(color:ColorUtils.blackColor);

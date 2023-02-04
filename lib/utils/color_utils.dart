@@ -5,7 +5,7 @@ import 'package:flutter/material.dart';
 class ColorUtils{
 
   static Color appBgColor = const Color(0xffaabeda);
-  static Color primaryColor = const Color(0xFFE6EE9C);
+  static Color primaryColor = const Color(0xFF01579B);
   static Color skyColor = const Color(0xffd5e4ff);
   static Color whiteColor = Colors.white;
   static Color blackColor = const Color(0xff404040);

@@ -10,6 +10,7 @@ import 'package:flutter/cupertino.dart';
 import '../../services/shared_preference.dart';
 import '../../utils/color_utils.dart';
 import '../../utils/font_utils.dart';
+import '../../widgets/custom_btn.dart';
 import '../../widgets/custom_text_field.dart';
 
 class LoginScreen extends StatefulWidget {
@@ -27,132 +28,146 @@ class _LoginScreenState extends State<LoginScreen> {
   @override
   Widget build(BuildContext context) {
     return Container(
-      color: ColorUtils.appBgColor,
+      color: Colors.blueGrey,
       child: SafeArea(
         child: Scaffold(
-          body: Container(
-            height: double.maxFinite,
-            color: ColorUtils.whiteColor,
-            child: SingleChildScrollView(
+          appBar:AppBar(
+            backgroundColor: ColorUtils.whiteColor,
+            elevation: 0,
+            centerTitle: true,
+            leading: IconButton(
+              icon: Icon(Icons.close, color: Colors.black),
+              onPressed: () => Navigator.of(context).pop(),
+            ),
+            title: Text("Login",style: TextStyle(color:ColorUtils.blackColor)),
+
+          ),
+          body: SingleChildScrollView(
+            child: Padding(
+              padding: EdgeInsets.all(2.0),
               child: Column(
-                mainAxisAlignment: MainAxisAlignment.center,
+                crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   SizedBox(
-                    height: 10.h,
-                  ),
-                  Image.asset(
-                    "asset/images/logo.png",
-                    scale: 2,
-                  ),
-                  SizedBox(
-                    height: 2.h,
-                  ),
-                  Container(
-                    child: Text(
-                      "Login Here",
-                      style: FontTextStyle.poppinsS14W7BlackColor,
-                    ),
+                    height: 5.h,
                   ),
                   Padding(
-                    padding: const EdgeInsets.all(30.0),
-                    child: Form(
-                      key: _formKey,
+                    padding: const EdgeInsets.all(8.0),
+                    child: Container(
+                      child: Text("Login to your Account",
+                          style: FontTextStyle.poppinsS20W7BlackColor),
+                    ),
+                  ),
+                  SizedBox(
+                    height: 3.h,
+                  ),
+                  Form(
+                    key: _formKey,
+                    child: Padding(
+                      padding: EdgeInsets.symmetric(horizontal: 5.w),
                       child: Column(
                         children: [
-                          SizedBox(height: 3.h),
+
                           CustomTextField(
-                              prefixIcon: const Icon(Icons.phone),
-                              hintName: "Enter Phone No",
-                              fieldController: phoneController,
-                              keyboard: TextInputType.phone,
-                              maxLines: 1,
-                              textInputAction: TextInputAction.done,
-                              validator: (str) {
-                                if (str!.isEmpty) {
-                                  return '* Is Required';
-                                } else if (str.length != 10) {
-                                  return '* Phone number must be of 10 digit';
-                                }
-                              }),
-                          SizedBox(
-                            height: 3.h,
-                          ),
-                          CustomTextField(
-                            suffixIcon: GestureDetector(
-                                onTap: () {
-                                  setState(() {
-                                    obscurePassword = !obscurePassword;
-                                  });
-                                },
-                                child: obscurePassword
-                                    ? const Icon(Icons.visibility_off)
-                                    : const Icon(Icons.visibility)),
-                            obscureText: obscurePassword,
-                            prefixIcon: const Icon(Icons.password),
-                            fieldController: passwordController,
-                            fieldName: "Password",
-                            hintName: " Password",
-                            keyboard: TextInputType.visiblePassword,
-                            maxLines: 1,
-                            textInputAction: TextInputAction.done,
+                            prefixIcon: Icon(Icons.email_outlined),
+                            fieldName: "Email",
+                            hintName: "Enter Your Email Id",
+                            // fieldController: _emailController,
+                            keyboard: TextInputType.emailAddress,
                             validator: (str) {
                               if (str!.isEmpty) {
                                 return '* Is Required';
+                              } else if (!RegExp(
+                                  r'^(([^<>()[\]\\.,;:\s@\"]+(\.[^<>()[\]\\.,;:\s@\"]+)*)|(\".+\"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$')
+                                  .hasMatch(str)) {
+                                return '* Enter valid email-ID';
                               }
+                            },
+                          ),
+                          SizedBox(
+                            height: 2.h,
+                          ),
+                          CustomTextField(  prefixIcon: Icon(Icons.lock),
+                            suffixIcon: GestureDetector
+                              (onTap: (){
+                              setState(() {
+                                obscurePassword=! obscurePassword;
+                              });
+
+                            },
+                                child: obscurePassword? Icon(Icons.visibility_off) : Icon(Icons.visibility)),
+                            obscureText: obscurePassword,
+                            maxLines: 1,
+                            fieldName: "Password",
+                            hintName: "Enter Your Password",
+                            keyboard: TextInputType.visiblePassword,
+                            // fieldController: _passwordController,
+                            validator: (str) {
+                              if (str!.isEmpty) {
+
+                                return '* Is Required';
+
+                              } else if (str.trim().length < 8) {
+                                return "Password must be least 8 character long!";
+                              }
+
                               return null;
                             },
                           ),
-                          SizedBox(height: 3.h),
-                          Center(
-                            child: SizedBox(
-                                height: 50, //height of button
-                                width: double.infinity, //width of button
-                                child: ElevatedButton(
-                                  style: ElevatedButton.styleFrom(
-                                    primary:
-                                    Colors.lime[200], //background color of button
-                                    elevation: 3,
-                                    shape: RoundedRectangleBorder(
-                                      //to set border radius to button
-                                        borderRadius: BorderRadius.circular(20)),
-                                  ),
-                                  onPressed: () async {
-                                    if (_formKey.currentState!.validate()) {
-                                      // ApiService()
-                                      //     .login(context, data: data())
-                                      //     .then((value) async {
-                                      //   String? token = await FirebaseMessaging
-                                      //       .instance
-                                      //       .getToken();
-                                      //   Preferances.setString(
-                                      //       "notificationToken", token);
-                                      // });
-                                    }
-                                  },
-                                  child: Text(
-                                    "Login",
-                                    style: FontTextStyle.poppinsS14W7BlackColor,
-                                  ),
-                                )),
+                          SizedBox(
+                            height: 5.h,
                           ),
-                          SizedBox(height: 2.h,),
+                          CustomButton(
+                            onTap: () {
+                              if (_formKey.currentState!.validate()) {
+                                Navigator.push(
+                                    context,
+                                    MaterialPageRoute(
+                                        builder: (context) => LoginScreen()));
+                                //  clearField();
 
+                              }
+
+                            },
+                            buttonText: "SIGN UP",
+                            textStyle: FontTextStyle.poppinsS14W4WhiteColor,
+                          ),
+                          SizedBox(
+                            height: 3.h,
+                          ),
+                          Row(
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            children: [
+                              GestureDetector(
+                                child: Container(
+                                  child: Text("Forgot Password?",
+                                      style: FontTextStyle.poppinsS14W4BlackColor),
+                                ),
+                                onTap: () {
+                                  Navigator.push(
+                                      context,
+                                      MaterialPageRoute(
+                                          builder: (context) => const LoginScreen()));
+                                },
+                              ),
+                            ],
+                          )
                         ],
                       ),
                     ),
-                  ),
-                  GestureDetector(
-                      //onTap:(){ Navigator.push(context, MaterialPageRoute(builder: (context) =>ForgotPasswordNumberScreen()));},
-                      child: Text("Forgot Password",style: FontTextStyle.poppinsS14W7BlackColor,)),
+                  )
                 ],
               ),
             ),
           ),
+
         ),
+
+
       ),
     );
   }
-  FormData data() {
-    return FormData.fromMap({"user_id": phoneController.text.trim(),"password":passwordController.text.trim()});
-  }
+  // FormData data() {
+  //   return FormData.fromMap({"user_id": phoneController.text.trim(),"password":passwordController.text.trim()});
+  // }
 }

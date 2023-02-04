@@ -1,7 +1,12 @@
 
+import 'package:ac_tech/Utils/color_utils.dart';
 import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
+import 'package:sizer/sizer.dart';
 
+import '../utils/font_utils.dart';
+import '../utils/image_utils.dart';
+import '../widgets/custom_btn.dart';
 import 'auth/login_screen.dart';
 import 'auth/signUp.dart';
 
@@ -42,15 +47,15 @@ class _HomeState extends State<Home> {
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.center,
               children: <Widget>[
-                SizedBox(height: 120),
+                const SizedBox(height: 120),
                 Image.asset(
-                  "asset/images/logo.png",
-                  scale: 2,
+                  ImageUtils.splashImage,
+                  height: 16.h,
                 ),
-                SizedBox(height: 30),
+                const SizedBox(height: 30),
                 RichText(
                   textAlign: TextAlign.center,
-                  text: TextSpan(
+                  text: const TextSpan(
                       style: TextStyle(
                         fontSize: 30,
                         color: Colors.black,
@@ -63,15 +68,15 @@ class _HomeState extends State<Home> {
                           ),
                         ],
                       ),
-                      children: const <TextSpan>[
-                        TextSpan(text: 'Welcome to'),
+                      children: <TextSpan>[
+                        TextSpan(text: 'Welcome to     '),
                         TextSpan(
-                            text: ' Celebration Station',
+                            text: ' Advance Computer Technology',
                             style: TextStyle(letterSpacing: 2.0))
                       ]),
                 ),
-                SizedBox(height: 30.0),
-                Center(
+                const SizedBox(height: 30.0),
+                const Center(
                   child: Text(
                     'Already Have an Account?',
                     style: TextStyle(
@@ -79,38 +84,24 @@ class _HomeState extends State<Home> {
                     ),
                   ),
                 ),
-                SizedBox(height: 20.0),
+                const SizedBox(height: 20.0),
                 Center(
                   child: SizedBox(
                       height: 50, //height of button
                       width: double.infinity, //width of button
-                      child: ElevatedButton(
-                        style: ElevatedButton.styleFrom(
-                          primary:
-                              Colors.lime[200], //background color of button
-                          elevation: 3,
-                          shape: RoundedRectangleBorder(
-                              //to set border radius to button
-                              borderRadius: BorderRadius.circular(20)),
-                        ),
-                        onPressed: () {
+                      child: CustomButton(
+                        onTap: () {
                           Navigator.push(
                             context,
-                            MaterialPageRoute(
-                                builder: (context) => const LoginScreen()),
+                            MaterialPageRoute(builder: (context) => const LoginScreen()),
                           );
                         },
-                        child: Text(
-                          "Login",
-                          style: TextStyle(
-                              fontWeight: FontWeight.bold,
-                              fontSize: 16.0,
-                              color: Colors.black),
-                        ),
-                      )),
+                        buttonText: "Login",
+                        textStyle: FontTextStyle.poppinsS14W4WhiteColor,
+                      ),),
                 ),
-                SizedBox(height: 15.0),
-                Center(
+                const SizedBox(height: 15.0),
+                const Center(
                   child: Text(
                     'Or',
                     style: TextStyle(
@@ -118,35 +109,26 @@ class _HomeState extends State<Home> {
                     ),
                   ),
                 ),
-                SizedBox(height: 15.0),
+                const SizedBox(height: 15.0),
                 Center(
                   child: SizedBox(
                       height: 50, //height of button
                       width: double.infinity, //width of button
-                      child: OutlinedButton(
-                        style: ElevatedButton.styleFrom(
-                          primary: Colors.white,
-                          side: BorderSide(color: Colors.lime),
-                          elevation: 3,
-                          shape: RoundedRectangleBorder(
-                              //to set border radius to button
-                              borderRadius: BorderRadius.circular(20)),
-                        ),
-                        onPressed: () {
+                      child: CustomButton(
+                        onTap: () {
                           Navigator.push(
                             context,
-                            MaterialPageRoute(builder: (context) => SignUp()),
+                            MaterialPageRoute(builder: (context) => const SignUp()),
                           );
+                          child: Container(
+                              decoration: BoxDecoration(
+                                color: ColorUtils.redColor,
+                              border: Border.all(color:ColorUtils.primaryColor),
+                              borderRadius: BorderRadius.circular(50  )));
                         },
-                        child: Text(
-                          "Sign Up",
-                          style: TextStyle(
-                            fontWeight: FontWeight.bold,
-                            fontSize: 16.0,
-                            color: Colors.black,
-                          ),
-                        ),
-                      )),
+                        buttonText: "Sign Up",
+                        textStyle: FontTextStyle.poppinsS14W4WhiteColor,
+                      ),),
                 ),
               ],
             ),

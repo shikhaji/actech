@@ -1,11 +1,16 @@
 
+import 'package:ac_tech/Utils/color_utils.dart';
+import 'package:ac_tech/views/auth/login_screen.dart';
 import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:sizer/sizer.dart';
 
 import '../../services/api_services.dart';
+import '../../utils/font_utils.dart';
 import '../../utils/loader.dart';
+import '../../widgets/custom_appbar.dart';
+import '../../widgets/custom_btn.dart';
 import '../../widgets/custom_text_field.dart';
 import 'otp_verification_screen.dart';
 
@@ -17,7 +22,10 @@ class SignUp extends StatefulWidget {
 }
 
 class _SignUpState extends State<SignUp> {
-  TextEditingController phone = TextEditingController();
+  final TextEditingController _emailController = TextEditingController();
+  final TextEditingController _passwordController = TextEditingController();
+  final TextEditingController _confirmPasswordController = TextEditingController();
+  bool obscurePassword=true;
   final _formKey = GlobalKey<FormState>();
 
   @override
@@ -28,144 +36,169 @@ class _SignUpState extends State<SignUp> {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      body: Container(
-        margin: EdgeInsets.only(left: 25, right: 25),
-        alignment: Alignment.center,
-        child: SingleChildScrollView(
-            child: Form(
-          key: _formKey,
-          child: Column(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: [
-              Image.asset(
-                "asset/images/logo.png",
-                scale: 2,
-              ),
-              SizedBox(
-                height: 25,
-              ),
-              Text(
-                "Sign Up",
-                style: TextStyle(fontSize: 22, fontWeight: FontWeight.bold),
-              ),
-              SizedBox(
-                height: 10,
-              ),
-              Text(
-                "We need to register your phone without getting started!",
-                style: TextStyle(
-                  fontSize: 16,
-                ),
-                textAlign: TextAlign.center,
-              ),
-              SizedBox(
-                height: 30,
-              ),
-              // Row(
-              //   children: [
-              //     Container(
-              //       decoration: BoxDecoration(
-              //           color: Colors.white,
-              //           border: Border.all(color: Colors.black, width: 1.5),
-              //           borderRadius: BorderRadius.circular(25.0)),
-              //       padding: EdgeInsets.symmetric(horizontal: 30, vertical: 20),
-              //       child: Center(
-              //         child: Text("+91"),
-              //       ),
-              //     ),
-              //     SizedBox(
-              //       width: 10,
-              //     ),
-              //     Expanded(
-              //       child: CustomTextField(
-              //         hintName: "Enter phone no.",
-              //         fieldController: phone,
-              //         keyboard: TextInputType.phone,
-              //         validator: (value) {
-              //           if (value!.isEmpty) {
-              //             return 'Please enter mobile number ';
-              //           } else if (value.length != 10) {
-              //             return 'Mobile Number must be of 10 digit';
-              //           } else {
-              //             return null;
-              //           }
-              //         },
-              //       ),
-              //     ),
-              //   ],
-              // ),
-              CustomTextField(
-                hintName: "Enter phone no.",
-                fieldController: phone,
-                keyboard: TextInputType.phone,
-                validator: (value) {
-                  if (value!.isEmpty) {
-                    return 'Please enter mobile number ';
-                  } else if (value.length != 10) {
-                    return 'Mobile Number must be of 10 digit';
-                  } else {
-                    return null;
-                  }
-                },
-              ),
-              SizedBox(
-                height: 20,
-              ),
-              // CustomButton(
-              //   onTap: () async{
-              //     if (_formKey.currentState!.validate()) {
-              //       ApiService().mobileVerify(context,
-              //           data: data(), mobile: "${phone.text.trim()}");
-              //     }
-              //   },
-              //   buttonText: "set the code",
-              //   height: 5.h,
-              //
-              //   textStyle: FontTextStyle.poppinsS14W4WhiteColor,
-              // ),
-              SizedBox(
-                width: double.infinity,
-                height: 45,
-                child: ElevatedButton(
-                    style: ElevatedButton.styleFrom(
-                        primary: Colors.lime,
-                        shape: RoundedRectangleBorder(
-                            borderRadius: BorderRadius.circular(10))),
-                    onPressed: () {
-                      // if (_formKey.currentState!.validate()) {
-                      //   ApiService().mobileVerify(context,
-                      //       data: data(), mobile: phone.text.trim()).then((value){
-                      //     if (value?.count == 0) {
-                      //       Loader.hideLoader();
-                      //       Navigator.push(
-                      //           context,
-                      //           MaterialPageRoute(
-                      //               builder: (context) => OtpVerificationScreen(
-                      //                 phoneNumber: "${phone.text}",status: "0",
-                      //               )));
-                      //     } else if (value?.count == 1) {
-                      //       Loader.hideLoader();
-                      //       Fluttertoast.showToast(
-                      //         msg: 'Your number is already register please login',
-                      //         backgroundColor: Colors.grey,
-                      //       );
-                      //     }
-                      //   });
-                      // }
-                    },
-                    child: const Text("Send the code")),
-              )
-            ],
+
+    return Container(
+      color: Colors.blueGrey,
+      child: SafeArea(
+        child: Scaffold(
+          appBar:AppBar(
+            backgroundColor: ColorUtils.whiteColor,
+            elevation: 0,
+            centerTitle: true,
+            leading: IconButton(
+              icon: Icon(Icons.close, color: Colors.black),
+              onPressed: () => Navigator.of(context).pop(),
+            ),
+            title: Text("Sign Up",style: TextStyle(color:ColorUtils.blackColor)),
+
           ),
-        )),
+          body: SingleChildScrollView(
+            child: Padding(
+              padding: EdgeInsets.all(2.0),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  SizedBox(
+                    height: 5.h,
+                  ),
+                  Padding(
+                    padding: const EdgeInsets.all(8.0),
+                    child: Container(
+                      child: Text("Create your Account",
+                          style: FontTextStyle.poppinsS20W7BlackColor),
+                    ),
+                  ),
+                  SizedBox(
+                    height: 3.h,
+                  ),
+                  Form(
+                    key: _formKey,
+                    child: Padding(
+                      padding: EdgeInsets.symmetric(horizontal: 5.w),
+                      child: Column(
+                        children: [
+                          const CustomTextField(
+                            fieldName: "Full Name",
+                            hintName: "",
+                            // fieldController: _emailController,
+                            keyboard: TextInputType.name,
+                           ),
+                          SizedBox(
+                            height: 2.h,
+                          ),
+                          const CustomTextField(
+                            prefixIcon: Icon(Icons.phone),
+                            fieldName: "Mobile Number",
+                            hintName: "",
+                            // fieldController: _emailController,
+                            keyboard: TextInputType.number,
+                          ),
+                          SizedBox(
+                            height: 2.h,
+                          ),
+                          CustomTextField(
+                            prefixIcon: Icon(Icons.email_outlined),
+                            fieldName: "Email",
+                            hintName: "Enter Your Email Id",
+                            // fieldController: _emailController,
+                            keyboard: TextInputType.emailAddress,
+                            validator: (str) {
+                              if (str!.isEmpty) {
+                                return '* Is Required';
+                              } else if (!RegExp(
+                                  r'^(([^<>()[\]\\.,;:\s@\"]+(\.[^<>()[\]\\.,;:\s@\"]+)*)|(\".+\"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$')
+                                  .hasMatch(str)) {
+                                return '* Enter valid email-ID';
+                              }
+                            },
+                          ),
+                          SizedBox(
+                            height: 2.h,
+                          ),
+                          CustomTextField(  prefixIcon: Icon(Icons.lock),
+                            suffixIcon: GestureDetector
+                              (onTap: (){
+                              setState(() {
+                                obscurePassword=! obscurePassword;
+                              });
+
+                            },
+                                child: obscurePassword? Icon(Icons.visibility_off) : Icon(Icons.visibility)),
+                            obscureText: obscurePassword,
+                            maxLines: 1,
+                            fieldName: "Password",
+                            hintName: "Enter Your Password",
+                            keyboard: TextInputType.visiblePassword,
+                            fieldController: _passwordController,
+                            validator: (str) {
+                              if (str!.isEmpty) {
+
+                                return '* Is Required';
+
+                              } else if (str.trim().length < 8) {
+                                return "Password must be least 8 character long!";
+                              }
+
+                              return null;
+                            },
+                          ),
+                          SizedBox(
+                            height: 5.h,
+                          ),
+                          CustomButton(
+                            onTap: () {
+                              if (_formKey.currentState!.validate()) {
+                                Navigator.push(
+                                    context,
+                                    MaterialPageRoute(
+                                        builder: (context) => LoginScreen()));
+                                //  clearField();
+
+                              }
+
+                            },
+                            buttonText: "SIGN UP",
+                            textStyle: FontTextStyle.poppinsS14W4WhiteColor,
+                          ),
+                          SizedBox(
+                            height: 3.h,
+                          ),
+                          Row(
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            children: [
+                              Container(
+                                child: Text("Already have an account?",
+                                    style: FontTextStyle.poppinsS14W4BlackColor),
+                              ),
+                              Container(
+                                  child: GestureDetector(
+                                    child: Text(" Sign In",
+                                        style:
+                                        FontTextStyle.poppinsS12HintColor),
+                                    onTap: () {
+                                      Navigator.push(
+                                          context,
+                                          MaterialPageRoute(
+                                              builder: (context) => const LoginScreen()));
+                                    },
+                                  )),
+                            ],
+                          )
+                        ],
+                      ),
+                    ),
+                  )
+                ],
+              ),
+            ),
+          ),
+
+        ),
+
+
       ),
     );
   }
 
-  FormData data() {
-    return FormData.fromMap({
-      "mobile": phone.text.trim(),
-    });
-  }
+
 }
