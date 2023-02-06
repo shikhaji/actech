@@ -1,174 +1,246 @@
-// import 'dart:async';
-//
-// import 'package:ac_tech/views/auth/registration_screen.dart';
-// import 'package:ac_tech/views/auth/reset_password_screen.dart';
-// import 'package:firebase_auth/firebase_auth.dart';
-// import 'package:flutter/cupertino.dart';
 // import 'package:flutter/material.dart';
-// import 'package:pin_code_text_field/pin_code_text_field.dart';
+// import 'package:sizer/sizer.dart';
 //
-//
-// import '../../services/functions.dart';
-// import '../../utils/loader.dart';
+// import '../../Utils/app_color.dart';
+// import '../../utils/app_text_style.dart';
+// import '../../widgets/primary_button.dart';
+// import '../../widgets/primary_textfield.dart';
 // import 'login_screen.dart';
+// import 'package:otp_text_field/otp_field.dart';
+// import 'package:otp_text_field/style.dart';
 //
 // class OtpVerificationScreen extends StatefulWidget {
-//   final String phoneNumber;
-//   final String status;
-//   const OtpVerificationScreen({Key? key, required this.phoneNumber,required this.status})
-//       : super(key: key);
+//   const OtpVerificationScreen({Key? key}) : super(key: key);
 //
 //   @override
 //   State<OtpVerificationScreen> createState() => _OtpVerificationScreenState();
 // }
 //
 // class _OtpVerificationScreenState extends State<OtpVerificationScreen> {
-//   TextEditingController _controller = TextEditingController(text: "");
-//   int pinLength = 6;
-//   int _seconds = -1;
-//   Timer? _timer;
-//   String _verificationId = '';
-//
-//   void _startTimer() {
-//     _seconds = 60;
-//     _timer = Timer.periodic(const Duration(seconds: 1), (timer) {
-//       setState(() {
-//         _seconds--;
-//         if (_seconds == 0) {
-//           timer.cancel();
-//         }
-//       });
-//     });
-//   }
-//
-//   @override
-//   void initState() {
-//     super.initState();
-//     WidgetsBinding.instance.addPostFrameCallback((_) async {
-//       await sendCode();
-//     });
-//   }
-//
+//   final _formKey = GlobalKey<FormState>();
 //   @override
 //   Widget build(BuildContext context) {
-//     return Scaffold(
-//       body: Container(
-//         margin: EdgeInsets.only(left: 25, right: 25),
-//         alignment: Alignment.center,
-//         child: SingleChildScrollView(
-//           child: Column(
-//             mainAxisAlignment: MainAxisAlignment.center,
-//             children: [
-//               Image.asset(
-//                 "asset/images/logo.png",
-//                 scale: 2,
-//               ),
-//               SizedBox(
-//                 height: 25,
-//               ),
-//               Text(
-//                 "OTP Verification",
-//                 style: TextStyle(fontSize: 22, fontWeight: FontWeight.bold),
-//               ),
-//               SizedBox(
-//                 height: 10,
-//               ),
-//               Text(
-//                 'Enter 6 digit code sent to your phone number ${widget.phoneNumber}',
-//                 style: TextStyle(
-//                   fontSize: 16,
-//                 ),
-//                 textAlign: TextAlign.center,
-//               ),
-//               SizedBox(
-//                 height: 30,
-//               ),
-//               Padding(
-//                 padding: EdgeInsets.symmetric(horizontal: 12),
-//                 child: PinCodeTextField(
-//                   autofocus: false,
-//                   controller: _controller,
-//                   hideCharacter: false,
-//                   highlight: false,
-//                   highlightColor: Theme.of(context).cardColor,
-//                   defaultBorderColor: Theme.of(context).cardColor,
-//                   hasTextBorderColor: Theme.of(context).cardColor,
-//                   highlightPinBoxColor: Theme.of(context).cardColor,
-//                   pinBoxColor: Theme.of(context).cardColor,
-//                   maxLength: pinLength,
-//                   onDone: (text) {
-//                     _controller.text = text;
-//                   },
-//                   pinBoxWidth: 45,
-//                   pinBoxHeight: 55,
-//                   hasUnderline: false,
-//                   pinBoxRadius: 10,
-//                   wrapAlignment: WrapAlignment.spaceAround,
-//                   pinBoxDecoration:
-//                       ProvidedPinBoxDecoration.defaultPinBoxDecoration,
-//                   pinTextStyle: TextStyle(fontSize: 22.0),
-//                   pinTextAnimatedSwitcherTransition:
-//                       ProvidedPinBoxTextAnimation.scalingTransition,
-//                   pinTextAnimatedSwitcherDuration: Duration(milliseconds: 300),
-//                   highlightAnimationBeginColor: Theme.of(context).cardColor,
-//                   highlightAnimationEndColor: Theme.of(context).cardColor,
-//                   keyboardType: TextInputType.number,
-//                 ),
-//               ),
-//               SizedBox(
-//                 height: 20,
-//               ),
-//               SizedBox(
-//                 width: double.infinity,
-//                 height: 45,
-//                 child: ElevatedButton(
-//                     style: ElevatedButton.styleFrom(
-//                         primary: Colors.lime,
-//                         shape: RoundedRectangleBorder(
-//                             borderRadius: BorderRadius.circular(10))),
-//                     onPressed: () async {
-//                      if(_controller.text == ""){
+//     return Container(
+//       color: Colors.blueGrey,
+//       child: SafeArea(
+//         child: Scaffold(
+//           appBar:AppBar(
+//             backgroundColor: ColorUtils.whiteColor,
+//             elevation: 0,
+//             centerTitle: true,
+//             leading: IconButton(
+//               icon: const Icon(Icons.close, color: Colors.black),
+//               onPressed: () => Navigator.of(context).pop(),
+//             ),
+//             // title: Text("Login",style: TextStyle(color:ColorUtils.blackColor)),
 //
-//                        CommonFunctions.toast("please enter OTP !!");
-//                      }else{
-//                        print("co_controller.text:=${_controller.text}");
-//                        AuthResult result = await _verify(_controller.text);
-//                        if (result.status) {
-//                          //Navigator.of(context).pop();
-//                        }
-//                      }
-//                     },
-//                     child: Text("Verify")),
-//               ),
-//               SizedBox(height: 40),
-//               if (_timer?.isActive ?? false)
-//                 Text(
-//                   _seconds.toString(),
-//                   style: TextStyle(
-//                     fontSize: 18,
-//                   ),
-//                 )
-//               else if (_seconds != -1)
-//                 GestureDetector(
-//                   onTap: () async => sendCode(),
-//                   child: Text(
-//                     'Resend Code',
-//                     style: TextStyle(
-//                         fontSize: 16,
-//                         color: Colors.red,
-//                         fontWeight: FontWeight.w500),
-//                   ),
-//                 ),
-//             ],
 //           ),
+//           body: SingleChildScrollView(
+//             child: Padding(
+//               padding: EdgeInsets.all(2.0),
+//               child: Column(
+//                 crossAxisAlignment: CrossAxisAlignment.start,
+//                 children: [
+//                   SizedBox(
+//                     height:10.h,
+//                   ),
+//                   Center(
+//                     child: Text("OTP Verification",
+//                         style: FontTextStyle.poppinsS18W7BlackColor),
+//                   ),
+//                   SizedBox(
+//                     height: 2.h,
+//                   ),
+//                   Center(child: Text("Enter 4 digit code sent to your phone number",style: FontTextStyle.poppinsS10HintColor)),
+//                   Center(child: Text("7486981727",style: FontTextStyle.poppinsS10HintColor)),
+//                   SizedBox(
+//                     height: 2.h,
+//                   ),
+//                   OTPTextField(
+//                     length: 4,
+//                     width: MediaQuery.of(context).size.width,
+//                     fieldWidth: 30,
+//                     style: TextStyle(
+//                         fontSize: 25
+//                     ),
+//                     textFieldAlignment: MainAxisAlignment.spaceAround,
+//                     fieldStyle: FieldStyle.underline,
+//                     onCompleted: (pin) {
+//                       print("Completed: " + pin);
+//                     },
+//                   ),
+//                   SizedBox(
+//                     height: 5.h,
+//                   ),
+//                   Form(
+//                     key: _formKey,
+//                     child: Padding(
+//                       padding: EdgeInsets.symmetric(horizontal: 5.w),
+//                       child: Column(
+//                         children: [
+//
+//
+//
+//                           SizedBox(
+//                             height: 5.h,
+//                           ),
+//                           CustomButton(
+//                             onTap: () {
+//                               if (_formKey.currentState!.validate()) {
+//                                 Navigator.push(
+//                                     context,
+//                                     MaterialPageRoute(
+//                                         builder: (context) => LoginScreen()));
+//                                 //  clearField();
+//
+//                               }
+//
+//                             },
+//                             buttonText: "Send the code",
+//                             textStyle: FontTextStyle.montserratS12W4WhiteColor,
+//                           ),
+//
+//                         ],
+//                       ),
+//                     ),
+//                   )
+//                 ],
+//               ),
+//             ),
+//           ),
+//
 //         ),
+//
+//
 //       ),
 //     );
 //   }
-//
+// }
+
+
+import 'dart:async';
+
+import 'package:flutter/material.dart';
+import 'package:pin_code_text_field/pin_code_text_field.dart';
+import 'package:sizer/sizer.dart';
+
+import '../../utils/app_color.dart';
+import '../../utils/app_text_style.dart';
+import '../../utils/function.dart';
+import '../../utils/image_utils.dart';
+import '../../utils/validation_mixin.dart';
+import 'package:firebase_auth/firebase_auth.dart';
+import '../../widgets/app_text.dart';
+import '../../widgets/custom_size_box.dart';
+import '../../widgets/primary_button.dart';
+import '../../widgets/scrollview.dart';
+
+class OtpVerificationScreen extends StatefulWidget {
+
+
+  const OtpVerificationScreen({Key? key}) : super(key: key);
+
+  @override
+  State<OtpVerificationScreen> createState() => _OtpVerificationScreenState();
+}
+
+class _OtpVerificationScreenState extends State<OtpVerificationScreen>
+    with ValidationMixin {
+  TextEditingController _controller = TextEditingController(text: "");
+  int pinLength = 6;
+  int _seconds = -1;
+  Timer? _timer;
+  String _verificationId = '';
+
+  void _startTimer() {
+    _seconds = 60;
+    _timer = Timer.periodic(const Duration(seconds: 1), (timer) {
+      setState(() {
+        _seconds--;
+        if (_seconds == 0) {
+          timer.cancel();
+        }
+      });
+    });
+  }
+
+  @override
+  void initState() {
+    super.initState();
+    WidgetsBinding.instance.addPostFrameCallback((_) async {
+
+    });
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      backgroundColor: AppColor.white,
+      body: SafeArea(
+        child: CustomScroll(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            SizedBoxH34(),
+            SizedBoxH34(),
+            SizedBoxH34(),
+            Center(
+              child: Image.asset(
+                ImageUtils.splashImage,
+                height: 20.h,
+              ),),
+            SizedBoxH28(),
+            SizedBoxH28(),
+            appText("OTP Verification", style: AppTextStyle.title),
+            SizedBoxH6(),
+            appText(
+                "Enter 6 digit code sent to your phone number",
+                style: AppTextStyle.subTitle),
+            SizedBoxH28(),
+            appText("Enter OTP", style: AppTextStyle.lable),
+            SizedBoxH8(),
+            PinCodeTextField(
+              autofocus: false,
+              controller: _controller,
+              hideCharacter: false,
+              highlight: false,
+              highlightColor: Theme.of(context).cardColor,
+              defaultBorderColor: Theme.of(context).cardColor,
+              hasTextBorderColor: Theme.of(context).cardColor,
+              highlightPinBoxColor: Theme.of(context).cardColor,
+              pinBoxColor: AppColor.textFieldColor,
+              maxLength: pinLength,
+              onDone: (text) {
+                _controller.text = text;
+              },
+              pinBoxWidth: 45,
+              pinBoxHeight: 55,
+              hasUnderline: false,
+              pinBoxRadius: 10,
+              wrapAlignment: WrapAlignment.spaceAround,
+              pinBoxDecoration:
+              ProvidedPinBoxDecoration.defaultPinBoxDecoration,
+              pinTextStyle: const TextStyle(fontSize: 22.0),
+              pinTextAnimatedSwitcherTransition:
+              ProvidedPinBoxTextAnimation.scalingTransition,
+              pinTextAnimatedSwitcherDuration:
+              const Duration(milliseconds: 300),
+              highlightAnimationBeginColor: Theme.of(context).cardColor,
+              highlightAnimationEndColor: Theme.of(context).cardColor,
+              keyboardType: TextInputType.number,
+            ),
+            SizedBoxH20(),
+            PrimaryButton(
+                lable: "Verify OTP",
+                onPressed: () async {}),
+          ],
+        ),
+      ),
+    );
+  }
+
 //   Future<void> sendCode() async {
 //     await FirebaseAuth.instance.verifyPhoneNumber(
-//       phoneNumber: "${"+91"}${widget.phoneNumber}",
+//       phoneNumber: "${"+91"}${widget.arguments?.phoneNumber}",
 //       verificationCompleted: (PhoneAuthCredential credential) {},
 //       verificationFailed: (FirebaseAuthException e) {
 //         if (e.code == 'web-context-cancelled') {
@@ -201,23 +273,17 @@
 //       );
 //
 //       UserCredential credential =
-//           await FirebaseAuth.instance.signInWithCredential(authCredential);
-//       if(widget.status=="0"){
-//         CommonFunctions.toast("Register successfully !!");
-//         Navigator.push(
-//             context,
-//             MaterialPageRoute(
-//                 builder: (context) => RegistrationScrenn(
-//                   mobileNumber: widget.phoneNumber,
-//                 )));
-//       }else{
+//       await FirebaseAuth.instance.signInWithCredential(authCredential);
+//       if (widget.arguments?.otpStatus == 1) {
 //         CommonFunctions.toast("otp verify successfully !!");
-//         Navigator.push(
-//             context,
-//             MaterialPageRoute(
-//                 builder: (context) =>ResetPasswordScreen(
-//                   mobileNumber: widget.phoneNumber,
-//                 )));
+//         Navigator.pushNamed(context, Routs.resetPassword,arguments:
+//         OtpArguments(phoneNumber: widget.arguments?.phoneNumber));
+//
+//       } else {
+//         CommonFunctions.toast("otp verify successfully !!");
+//         Navigator.pushNamed(context, Routs.signUp,
+//             arguments:
+//             OtpArguments(phoneNumber: widget.arguments?.phoneNumber));
 //       }
 //
 //       Loader.hideLoader();
@@ -242,5 +308,5 @@
 //       }
 //       return AuthResult(status: false);
 //     }
-//   }
-// }
+//     }
+ }

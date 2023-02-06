@@ -1,7 +1,6 @@
-
 import 'dart:math';
 
-import 'package:flutter/material.dart';
+import 'package:flutter/cupertino.dart';
 
 class ScreenUtil {
   static const Size defaultSize = Size(360, 690);
@@ -22,18 +21,18 @@ class ScreenUtil {
 
   factory ScreenUtil() {
     assert(
-      _instance != null,
-      '\nEnsure to initialize ScreenUtil before accessing it.\nPlease execute the init method : ScreenUtil.init()',
+    _instance != null,
+    '\nEnsure to initialize ScreenUtil before accessing it.\nPlease execute the init method : ScreenUtil.init()',
     );
     return _instance!;
   }
 
   static void init(
-    BoxConstraints constraints, {
-    Orientation orientation = Orientation.portrait,
-    Size designSize = defaultSize,
-    bool allowFontScaling = false,
-  }) {
+      BoxConstraints constraints, {
+        Orientation orientation = Orientation.portrait,
+        Size designSize = defaultSize,
+        bool allowFontScaling = false,
+      }) {
     _instance ??= ScreenUtil._();
     _instance!
       ..uiSize = designSize
@@ -69,6 +68,12 @@ class ScreenUtil {
 
   double get scaleText => min(scaleWidth, scaleHeight);
 
+  Widget setVerticalSpacing(num height) => SizedBox(height: setHeight(height));
+
+  Widget setVerticalSpacingFromWidth(num height) {
+    return SizedBox(height: setWidth(height));
+  }
+
   double setWidth(num width) => width * scaleWidth;
 
   double setHeight(num height) => height * scaleHeight;
@@ -78,9 +83,9 @@ class ScreenUtil {
   double setSp(num fontSize, {bool? allowFontScalingSelf}) =>
       allowFontScalingSelf == null
           ? (allowFontScaling
-              ? (fontSize * scaleText * textScaleFactor)
-              : fontSize * scaleText)
+          ? (fontSize * scaleText * textScaleFactor)
+          : fontSize * scaleText)
           : (allowFontScalingSelf
-              ? (fontSize * scaleText * textScaleFactor)
-              : (fontSize * scaleText));
+          ? (fontSize * scaleText * textScaleFactor)
+          : (fontSize * scaleText));
 }

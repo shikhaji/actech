@@ -1,17 +1,24 @@
+import 'package:ac_tech/views/auth/mobile_verification_screen.dart';
+import 'package:ac_tech/views/auth/signUp.dart';
+import 'package:dio/dio.dart';
 
 import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/material.dart';
+import 'package:fluttertoast/fluttertoast.dart';
 import 'package:sizer/sizer.dart';
 
 import '../../services/api_services.dart';
-import 'package:dio/dio.dart';
-import 'package:flutter/cupertino.dart';
 
-import '../../services/shared_preference.dart';
-import '../../utils/color_utils.dart';
-import '../../utils/font_utils.dart';
-import '../../widgets/custom_btn.dart';
-import '../../widgets/custom_text_field.dart';
+import '../../utils/app_color.dart';
+
+import '../../utils/app_text_style.dart';
+import '../../utils/image_utils.dart';
+import '../../utils/validation_mixin.dart';
+import '../../widgets/app_text.dart';
+import '../../widgets/custom_size_box.dart';
+import '../../widgets/primary_button.dart';
+import '../../widgets/primary_textfield.dart';
+import '../../widgets/scrollview.dart';
 
 class LoginScreen extends StatefulWidget {
   const LoginScreen({Key? key}) : super(key: key);
@@ -20,154 +27,118 @@ class LoginScreen extends StatefulWidget {
   State<LoginScreen> createState() => _LoginScreenState();
 }
 
-class _LoginScreenState extends State<LoginScreen> {
-  TextEditingController phoneController = TextEditingController();
-  TextEditingController passwordController = TextEditingController();
+class _LoginScreenState extends State<LoginScreen> with ValidationMixin {
+  final TextEditingController _phone = TextEditingController();
+  final TextEditingController _password = TextEditingController();
   bool obscurePassword = true;
   final _formKey = GlobalKey<FormState>();
+
   @override
   Widget build(BuildContext context) {
-    return Container(
-      color: Colors.blueGrey,
-      child: SafeArea(
-        child: Scaffold(
-          appBar:AppBar(
-            backgroundColor: ColorUtils.whiteColor,
-            elevation: 0,
-            centerTitle: true,
-            leading: IconButton(
-              icon: Icon(Icons.close, color: Colors.black),
-              onPressed: () => Navigator.of(context).pop(),
-            ),
-            title: Text("Login",style: TextStyle(color:ColorUtils.blackColor)),
-
-          ),
-          body: SingleChildScrollView(
-            child: Padding(
-              padding: EdgeInsets.all(2.0),
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  SizedBox(
-                    height: 5.h,
+    return Scaffold(
+      backgroundColor: AppColor.white,
+      body: SafeArea(
+          child: Form(
+            key: _formKey,
+            child: CustomScroll(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                SizedBoxH34(),
+                SizedBoxH34(),
+                SizedBoxH34(),
+                Center(
+                  child: Image.asset(
+                    ImageUtils.splashImage,
+                    height: 20.h,
                   ),
-                  Padding(
-                    padding: const EdgeInsets.all(8.0),
-                    child: Container(
-                      child: Text("Login to your Account",
-                          style: FontTextStyle.poppinsS20W7BlackColor),
-                    ),
-                  ),
-                  SizedBox(
-                    height: 3.h,
-                  ),
-                  Form(
-                    key: _formKey,
-                    child: Padding(
-                      padding: EdgeInsets.symmetric(horizontal: 5.w),
-                      child: Column(
-                        children: [
+                ),
+                SizedBoxH28(),
+                SizedBoxH28(),
+                appText("Login", style: AppTextStyle.title),
+                SizedBoxH6(),
+                appText("Please login with phone number and password",
+                    style: AppTextStyle.subTitle),
+                SizedBoxH28(),
+                appText("Phone number", style: AppTextStyle.lable),
+                SizedBoxH8(),
+                PrimaryTextField(
+                  controller: _phone,
+                  hintText: "Enter phone number",
+                  validator: mobileNumberValidator,
+                  prefix: const Icon(Icons.phone),
+                  keyboardInputType: TextInputType.phone,
+                ),
+                SizedBoxH10(),
+                appText("Password", style: AppTextStyle.lable),
+                SizedBoxH8(),
+                PrimaryTextField(
+                  controller: _password,
+                  hintText: "Enter password",
+                  validator: passwordValidator,
+                  prefix: const Icon(Icons.password),
+                  suffix: GestureDetector(
+                      onTap: () {
+                        setState(() {
+                          obscurePassword = !obscurePassword;
+                        });
+                      },
+                      child: obscurePassword
+                          ? const Icon(Icons.visibility_off)
+                          : const Icon(Icons.visibility)),
+                  obscureText: obscurePassword,
+                ),
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.end,
+                  children: [
+                    TextButton(
+                        onPressed: () {},
+                        child:
+                        appText("Forgot password?", style: AppTextStyle.lable))
+                  ],
+                ),
+                SizedBoxH8(),
+                PrimaryButton(
+                    lable: "Login",
+                    onPressed: () async{
 
-                          CustomTextField(
-                            prefixIcon: Icon(Icons.email_outlined),
-                            fieldName: "Email",
-                            hintName: "Enter Your Email Id",
-                            // fieldController: _emailController,
-                            keyboard: TextInputType.emailAddress,
-                            validator: (str) {
-                              if (str!.isEmpty) {
-                                return '* Is Required';
-                              } else if (!RegExp(
-                                  r'^(([^<>()[\]\\.,;:\s@\"]+(\.[^<>()[\]\\.,;:\s@\"]+)*)|(\".+\"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$')
-                                  .hasMatch(str)) {
-                                return '* Enter valid email-ID';
-                              }
-                            },
-                          ),
-                          SizedBox(
-                            height: 2.h,
-                          ),
-                          CustomTextField(  prefixIcon: Icon(Icons.lock),
-                            suffixIcon: GestureDetector
-                              (onTap: (){
-                              setState(() {
-                                obscurePassword=! obscurePassword;
-                              });
+                      if (_formKey.currentState!.validate()) {
 
-                            },
-                                child: obscurePassword? Icon(Icons.visibility_off) : Icon(Icons.visibility)),
-                            obscureText: obscurePassword,
-                            maxLines: 1,
-                            fieldName: "Password",
-                            hintName: "Enter Your Password",
-                            keyboard: TextInputType.visiblePassword,
-                            // fieldController: _passwordController,
-                            validator: (str) {
-                              if (str!.isEmpty) {
 
-                                return '* Is Required';
+                        }
 
-                              } else if (str.trim().length < 8) {
-                                return "Password must be least 8 character long!";
-                              }
 
-                              return null;
-                            },
-                          ),
-                          SizedBox(
-                            height: 5.h,
-                          ),
-                          CustomButton(
-                            onTap: () {
-                              if (_formKey.currentState!.validate()) {
-                                Navigator.push(
-                                    context,
-                                    MaterialPageRoute(
-                                        builder: (context) => LoginScreen()));
-                                //  clearField();
 
-                              }
-
-                            },
-                            buttonText: "SIGN UP",
-                            textStyle: FontTextStyle.poppinsS14W4WhiteColor,
-                          ),
-                          SizedBox(
-                            height: 3.h,
-                          ),
-                          Row(
-                            mainAxisAlignment: MainAxisAlignment.center,
-                            children: [
-                              GestureDetector(
-                                child: Container(
-                                  child: Text("Forgot Password?",
-                                      style: FontTextStyle.poppinsS14W4BlackColor),
-                                ),
-                                onTap: () {
-                                  Navigator.push(
-                                      context,
-                                      MaterialPageRoute(
-                                          builder: (context) => const LoginScreen()));
-                                },
-                              ),
-                            ],
-                          )
-                        ],
+                    }),
+                SizedBoxH18(),
+                GestureDetector(
+                  onTap: () {},
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      appText(
+                        "You don’t have an account? ",
+                        style: AppTextStyle.subTitle,
                       ),
-                    ),
-                  )
-                ],
-              ),
+                      GestureDetector(
+                        onTap:(){
+                          Navigator.push(
+                            context,
+                              MaterialPageRoute(
+                                  builder: (context) =>MobileVerificationScreen()));
+                                //  clearField();
+                                },
+                        child: appText(
+                          "Sign Up",
+                          style: AppTextStyle.redTextStyle
+                              .copyWith(color: AppColor.primaryLightColor),
+                        ),
+                      ),
+                    ],
+                  ),
+                ),
+              ],
             ),
-          ),
-
-        ),
-
-
-      ),
+          )),
     );
   }
-  // FormData data() {
-  //   return FormData.fromMap({"user_id": phoneController.text.trim(),"password":passwordController.text.trim()});
-  // }
 }

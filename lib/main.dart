@@ -1,4 +1,5 @@
 import 'package:ac_tech/utils/screen_utils.dart';
+import 'package:ac_tech/views/auth/login_screen.dart';
 import 'package:ac_tech/views/splash/splash_screen.dart';
 import 'package:bot_toast/bot_toast.dart';
 import 'package:firebase_messaging/firebase_messaging.dart';
@@ -52,7 +53,7 @@ class MyApp extends StatelessWidget {
       return GetMaterialApp(
         themeMode: ThemeMode.system,
         debugShowCheckedModeBanner: false,
-        initialRoute: "${SplashScreen()}",
+        // initialRoute: "${SplashScreen()}",
         home: SplashScreen(),
         // LoginScreen(),
         //RegistrationScreen(),

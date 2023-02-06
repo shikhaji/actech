@@ -1,204 +1,115 @@
-
-import 'package:ac_tech/Utils/color_utils.dart';
-import 'package:ac_tech/views/auth/login_screen.dart';
 import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:sizer/sizer.dart';
 
 import '../../services/api_services.dart';
-import '../../utils/font_utils.dart';
-import '../../utils/loader.dart';
-import '../../widgets/custom_appbar.dart';
-import '../../widgets/custom_btn.dart';
-import '../../widgets/custom_text_field.dart';
-import 'otp_verification_screen.dart';
+import '../../utils/app_color.dart';
+import '../../utils/app_sizes.dart';
+import '../../utils/app_text_style.dart';
+import '../../utils/image_utils.dart';
+import '../../utils/validation_mixin.dart';
+import '../../widgets/app_text.dart';
+import '../../widgets/custom_size_box.dart';
+import '../../widgets/primary_button.dart';
+import '../../widgets/primary_textfield.dart';
+import '../../widgets/scrollview.dart';
 
-class SignUp extends StatefulWidget {
-  const SignUp({Key? key}) : super(key: key);
+class SignUpScreen extends StatefulWidget {
+  // final OtpArguments? arguments;
+  const SignUpScreen({Key? key}) : super(key: key);
 
   @override
-  State<SignUp> createState() => _SignUpState();
+  State<SignUpScreen> createState() => _SignUpScreenState();
 }
 
-class _SignUpState extends State<SignUp> {
-  final TextEditingController _emailController = TextEditingController();
-  final TextEditingController _passwordController = TextEditingController();
-  final TextEditingController _confirmPasswordController = TextEditingController();
-  bool obscurePassword=true;
+class _SignUpScreenState extends State<SignUpScreen> with ValidationMixin {
+  final TextEditingController _name = TextEditingController();
+  final TextEditingController _phone = TextEditingController();
+  final TextEditingController _password = TextEditingController();
+  final TextEditingController _referCode = TextEditingController();
+  final TextEditingController _categories = TextEditingController();
+  bool obscurePassword = true;
   final _formKey = GlobalKey<FormState>();
-
-  @override
-  void initState() {
-    // TODO: implement initState
-    super.initState();
-  }
-
   @override
   Widget build(BuildContext context) {
+    return Scaffold(
+      backgroundColor: AppColor.white,
+      body: SafeArea(
+          child: Form(
+            key: _formKey,
+            child: CustomScroll(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                SizedBoxH34(),
+                Center(
+                  child: Image.asset(
+                    ImageUtils.splashImage,
+                    height: 20.h,
+                  ),
+                ),
+                SizedBoxH28(),
+                appText("Sign Up", style: AppTextStyle.title),
+                SizedBoxH6(),
+                appText("Fill your details to continue",
+                    style: AppTextStyle.subTitle),
+                SizedBoxH28(),
+                appText("Name", style: AppTextStyle.lable),
+                SizedBoxH8(),
+                PrimaryTextField(
+                  controller: _name,
+                  prefix: const Icon(Icons.perm_identity),
+                  hintText: "Enter your name",
+                ),
+                SizedBoxH10(),
+                appText("Phone number", style: AppTextStyle.lable),
+                SizedBoxH8(),
+                PrimaryTextField(
+                  controller: _phone,
+                  keyboardInputType: TextInputType.phone,
+                  validator: mobileNumberValidator,
+                  readOnly: true,
+                  prefix: const Icon(Icons.phone),
+                  // hintText: "${widget.arguments?.phoneNumber}",
+                ),
+                SizedBoxH10(),
+                appText("Password", style: AppTextStyle.lable),
+                SizedBoxH8(),
+                PrimaryTextField(
+                  hintText: "Enter password",
+                  controller: _password,
+                  validator: passwordValidator,
+                  prefix: const Icon(Icons.password),
+                  suffix: GestureDetector(
+                      onTap: () {
+                        setState(() {
+                          obscurePassword = !obscurePassword;
+                        });
+                      },
+                      child: obscurePassword
+                          ? const Icon(Icons.visibility_off)
+                          : const Icon(Icons.visibility)),
+                  obscureText: obscurePassword,
+                ),
+                SizedBoxH10(),
+                appText("Refer Code", style: AppTextStyle.lable),
+                SizedBoxH8(),
+                PrimaryTextField(
+                  controller: _referCode,
+                  hintText: "Enter refer code",
+                ),
+                SizedBoxH8(),
+                PrimaryButton(
+                    lable: "Sign Up",
+                    onPressed: () {
+                      if (_formKey.currentState!.validate()) {
 
-    return Container(
-      color: Colors.blueGrey,
-      child: SafeArea(
-        child: Scaffold(
-          appBar:AppBar(
-            backgroundColor: ColorUtils.whiteColor,
-            elevation: 0,
-            centerTitle: true,
-            leading: IconButton(
-              icon: Icon(Icons.close, color: Colors.black),
-              onPressed: () => Navigator.of(context).pop(),
+
+                      }
+                    }),
+              ],
             ),
-            title: Text("Sign Up",style: TextStyle(color:ColorUtils.blackColor)),
-
-          ),
-          body: SingleChildScrollView(
-            child: Padding(
-              padding: EdgeInsets.all(2.0),
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  SizedBox(
-                    height: 5.h,
-                  ),
-                  Padding(
-                    padding: const EdgeInsets.all(8.0),
-                    child: Container(
-                      child: Text("Create your Account",
-                          style: FontTextStyle.poppinsS20W7BlackColor),
-                    ),
-                  ),
-                  SizedBox(
-                    height: 3.h,
-                  ),
-                  Form(
-                    key: _formKey,
-                    child: Padding(
-                      padding: EdgeInsets.symmetric(horizontal: 5.w),
-                      child: Column(
-                        children: [
-                          const CustomTextField(
-                            fieldName: "Full Name",
-                            hintName: "",
-                            // fieldController: _emailController,
-                            keyboard: TextInputType.name,
-                           ),
-                          SizedBox(
-                            height: 2.h,
-                          ),
-                          const CustomTextField(
-                            prefixIcon: Icon(Icons.phone),
-                            fieldName: "Mobile Number",
-                            hintName: "",
-                            // fieldController: _emailController,
-                            keyboard: TextInputType.number,
-                          ),
-                          SizedBox(
-                            height: 2.h,
-                          ),
-                          CustomTextField(
-                            prefixIcon: Icon(Icons.email_outlined),
-                            fieldName: "Email",
-                            hintName: "Enter Your Email Id",
-                            // fieldController: _emailController,
-                            keyboard: TextInputType.emailAddress,
-                            validator: (str) {
-                              if (str!.isEmpty) {
-                                return '* Is Required';
-                              } else if (!RegExp(
-                                  r'^(([^<>()[\]\\.,;:\s@\"]+(\.[^<>()[\]\\.,;:\s@\"]+)*)|(\".+\"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$')
-                                  .hasMatch(str)) {
-                                return '* Enter valid email-ID';
-                              }
-                            },
-                          ),
-                          SizedBox(
-                            height: 2.h,
-                          ),
-                          CustomTextField(  prefixIcon: Icon(Icons.lock),
-                            suffixIcon: GestureDetector
-                              (onTap: (){
-                              setState(() {
-                                obscurePassword=! obscurePassword;
-                              });
-
-                            },
-                                child: obscurePassword? Icon(Icons.visibility_off) : Icon(Icons.visibility)),
-                            obscureText: obscurePassword,
-                            maxLines: 1,
-                            fieldName: "Password",
-                            hintName: "Enter Your Password",
-                            keyboard: TextInputType.visiblePassword,
-                            fieldController: _passwordController,
-                            validator: (str) {
-                              if (str!.isEmpty) {
-
-                                return '* Is Required';
-
-                              } else if (str.trim().length < 8) {
-                                return "Password must be least 8 character long!";
-                              }
-
-                              return null;
-                            },
-                          ),
-                          SizedBox(
-                            height: 5.h,
-                          ),
-                          CustomButton(
-                            onTap: () {
-                              if (_formKey.currentState!.validate()) {
-                                Navigator.push(
-                                    context,
-                                    MaterialPageRoute(
-                                        builder: (context) => LoginScreen()));
-                                //  clearField();
-
-                              }
-
-                            },
-                            buttonText: "SIGN UP",
-                            textStyle: FontTextStyle.poppinsS14W4WhiteColor,
-                          ),
-                          SizedBox(
-                            height: 3.h,
-                          ),
-                          Row(
-                            mainAxisAlignment: MainAxisAlignment.center,
-                            children: [
-                              Container(
-                                child: Text("Already have an account?",
-                                    style: FontTextStyle.poppinsS14W4BlackColor),
-                              ),
-                              Container(
-                                  child: GestureDetector(
-                                    child: Text(" Sign In",
-                                        style:
-                                        FontTextStyle.poppinsS12HintColor),
-                                    onTap: () {
-                                      Navigator.push(
-                                          context,
-                                          MaterialPageRoute(
-                                              builder: (context) => const LoginScreen()));
-                                    },
-                                  )),
-                            ],
-                          )
-                        ],
-                      ),
-                    ),
-                  )
-                ],
-              ),
-            ),
-          ),
-
-        ),
-
-
-      ),
+          )),
     );
   }
-
-
 }
