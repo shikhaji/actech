@@ -5,10 +5,11 @@ import 'package:ac_tech/widgets/app_text.dart';
 import 'package:flutter/material.dart';
 import 'package:sizer/sizer.dart';
 
-import '../utils/image_utils.dart';
-import '../widgets/custom_size_box.dart';
-import '../widgets/primary_button.dart';
-import 'auth/signUp.dart';
+import '../../utils/app_assets.dart';
+import '../../utils/image_utils.dart';
+import '../../widgets/custom_size_box.dart';
+import '../../widgets/primary_button.dart';
+import '../auth/signUp.dart';
 
 class WelcomeScreen extends StatefulWidget {
   const WelcomeScreen({Key? key}) : super(key: key);
@@ -31,7 +32,7 @@ class _WelcomeScreenState extends State<WelcomeScreen> {
               children: <Widget>[
                 SizedBoxH120(),
                 Image.asset(
-                  ImageUtils.splashImage,
+                  AppAsset.splashImage,
                   height: 20.h,
                 ),
                 SizedBoxH30(),

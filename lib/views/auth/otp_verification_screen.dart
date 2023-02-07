@@ -1,129 +1,14 @@
-// import 'package:flutter/material.dart';
-// import 'package:sizer/sizer.dart';
-//
-// import '../../Utils/app_color.dart';
-// import '../../utils/app_text_style.dart';
-// import '../../widgets/primary_button.dart';
-// import '../../widgets/primary_textfield.dart';
-// import 'login_screen.dart';
-// import 'package:otp_text_field/otp_field.dart';
-// import 'package:otp_text_field/style.dart';
-//
-// class OtpVerificationScreen extends StatefulWidget {
-//   const OtpVerificationScreen({Key? key}) : super(key: key);
-//
-//   @override
-//   State<OtpVerificationScreen> createState() => _OtpVerificationScreenState();
-// }
-//
-// class _OtpVerificationScreenState extends State<OtpVerificationScreen> {
-//   final _formKey = GlobalKey<FormState>();
-//   @override
-//   Widget build(BuildContext context) {
-//     return Container(
-//       color: Colors.blueGrey,
-//       child: SafeArea(
-//         child: Scaffold(
-//           appBar:AppBar(
-//             backgroundColor: ColorUtils.whiteColor,
-//             elevation: 0,
-//             centerTitle: true,
-//             leading: IconButton(
-//               icon: const Icon(Icons.close, color: Colors.black),
-//               onPressed: () => Navigator.of(context).pop(),
-//             ),
-//             // title: Text("Login",style: TextStyle(color:ColorUtils.blackColor)),
-//
-//           ),
-//           body: SingleChildScrollView(
-//             child: Padding(
-//               padding: EdgeInsets.all(2.0),
-//               child: Column(
-//                 crossAxisAlignment: CrossAxisAlignment.start,
-//                 children: [
-//                   SizedBox(
-//                     height:10.h,
-//                   ),
-//                   Center(
-//                     child: Text("OTP Verification",
-//                         style: FontTextStyle.poppinsS18W7BlackColor),
-//                   ),
-//                   SizedBox(
-//                     height: 2.h,
-//                   ),
-//                   Center(child: Text("Enter 4 digit code sent to your phone number",style: FontTextStyle.poppinsS10HintColor)),
-//                   Center(child: Text("7486981727",style: FontTextStyle.poppinsS10HintColor)),
-//                   SizedBox(
-//                     height: 2.h,
-//                   ),
-//                   OTPTextField(
-//                     length: 4,
-//                     width: MediaQuery.of(context).size.width,
-//                     fieldWidth: 30,
-//                     style: TextStyle(
-//                         fontSize: 25
-//                     ),
-//                     textFieldAlignment: MainAxisAlignment.spaceAround,
-//                     fieldStyle: FieldStyle.underline,
-//                     onCompleted: (pin) {
-//                       print("Completed: " + pin);
-//                     },
-//                   ),
-//                   SizedBox(
-//                     height: 5.h,
-//                   ),
-//                   Form(
-//                     key: _formKey,
-//                     child: Padding(
-//                       padding: EdgeInsets.symmetric(horizontal: 5.w),
-//                       child: Column(
-//                         children: [
-//
-//
-//
-//                           SizedBox(
-//                             height: 5.h,
-//                           ),
-//                           CustomButton(
-//                             onTap: () {
-//                               if (_formKey.currentState!.validate()) {
-//                                 Navigator.push(
-//                                     context,
-//                                     MaterialPageRoute(
-//                                         builder: (context) => LoginScreen()));
-//                                 //  clearField();
-//
-//                               }
-//
-//                             },
-//                             buttonText: "Send the code",
-//                             textStyle: FontTextStyle.montserratS12W4WhiteColor,
-//                           ),
-//
-//                         ],
-//                       ),
-//                     ),
-//                   )
-//                 ],
-//               ),
-//             ),
-//           ),
-//
-//         ),
-//
-//
-//       ),
-//     );
-//   }
-// }
 
 
 import 'dart:async';
 
+import 'package:ac_tech/views/auth/signUp.dart';
 import 'package:flutter/material.dart';
 import 'package:pin_code_text_field/pin_code_text_field.dart';
 import 'package:sizer/sizer.dart';
 
+import '../../routes/arguments.dart';
+import '../../utils/app_assets.dart';
 import '../../utils/app_color.dart';
 import '../../utils/app_text_style.dart';
 import '../../utils/function.dart';
@@ -136,9 +21,9 @@ import '../../widgets/primary_button.dart';
 import '../../widgets/scrollview.dart';
 
 class OtpVerificationScreen extends StatefulWidget {
+  final OtpArguments? arguments;
 
-
-  const OtpVerificationScreen({Key? key}) : super(key: key);
+  const OtpVerificationScreen({Key? key, this.arguments}) : super(key: key);
 
   @override
   State<OtpVerificationScreen> createState() => _OtpVerificationScreenState();
@@ -185,7 +70,7 @@ class _OtpVerificationScreenState extends State<OtpVerificationScreen>
             SizedBoxH34(),
             Center(
               child: Image.asset(
-                ImageUtils.splashImage,
+                AppAsset.splashImage,
                 height: 20.h,
               ),),
             SizedBoxH28(),
@@ -231,7 +116,13 @@ class _OtpVerificationScreenState extends State<OtpVerificationScreen>
             SizedBoxH20(),
             PrimaryButton(
                 lable: "Verify OTP",
-                onPressed: () async {}),
+                onPressed: () async {
+                  Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                          builder: (context) =>SignUpScreen()));
+                  //  clearField();
+                }),
           ],
         ),
       ),

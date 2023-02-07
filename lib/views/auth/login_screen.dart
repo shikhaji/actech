@@ -1,5 +1,8 @@
+import 'package:ac_tech/utils/app_assets.dart';
+import 'package:ac_tech/views/auth/forgot_password_screen.dart';
 import 'package:ac_tech/views/auth/mobile_verification_screen.dart';
 import 'package:ac_tech/views/auth/signUp.dart';
+import 'package:ac_tech/views/dashboard/main_home_screen.dart';
 import 'package:dio/dio.dart';
 
 import 'package:firebase_messaging/firebase_messaging.dart';
@@ -7,6 +10,7 @@ import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:sizer/sizer.dart';
 
+import '../../routes/app_routes.dart';
 import '../../services/api_services.dart';
 
 import '../../utils/app_color.dart';
@@ -48,7 +52,7 @@ class _LoginScreenState extends State<LoginScreen> with ValidationMixin {
                 SizedBoxH34(),
                 Center(
                   child: Image.asset(
-                    ImageUtils.splashImage,
+                    AppAsset.splashImage,
                     height: 20.h,
                   ),
                 ),
@@ -91,7 +95,12 @@ class _LoginScreenState extends State<LoginScreen> with ValidationMixin {
                   mainAxisAlignment: MainAxisAlignment.end,
                   children: [
                     TextButton(
-                        onPressed: () {},
+                        onPressed: () {
+                          Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                  builder: (context) =>ForgotPasswordScreen()));
+                        },
                         child:
                         appText("Forgot password?", style: AppTextStyle.lable))
                   ],
@@ -104,8 +113,13 @@ class _LoginScreenState extends State<LoginScreen> with ValidationMixin {
                       if (_formKey.currentState!.validate()) {
 
 
+
                         }
 
+                        Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                                builder: (context) =>MainHomeScreen()));
 
 
                     }),

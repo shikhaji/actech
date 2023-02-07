@@ -4,6 +4,7 @@ import 'package:fluttertoast/fluttertoast.dart';
 import 'package:sizer/sizer.dart';
 
 import '../../services/api_services.dart';
+import '../../utils/app_assets.dart';
 import '../../utils/app_color.dart';
 import '../../utils/app_sizes.dart';
 import '../../utils/app_text_style.dart';
@@ -26,6 +27,7 @@ class SignUpScreen extends StatefulWidget {
 class _SignUpScreenState extends State<SignUpScreen> with ValidationMixin {
   final TextEditingController _name = TextEditingController();
   final TextEditingController _phone = TextEditingController();
+  final TextEditingController _email = TextEditingController();
   final TextEditingController _password = TextEditingController();
   final TextEditingController _referCode = TextEditingController();
   final TextEditingController _categories = TextEditingController();
@@ -44,7 +46,7 @@ class _SignUpScreenState extends State<SignUpScreen> with ValidationMixin {
                 SizedBoxH34(),
                 Center(
                   child: Image.asset(
-                    ImageUtils.splashImage,
+                    AppAsset.splashImage,
                     height: 20.h,
                   ),
                 ),
@@ -73,6 +75,16 @@ class _SignUpScreenState extends State<SignUpScreen> with ValidationMixin {
                   // hintText: "${widget.arguments?.phoneNumber}",
                 ),
                 SizedBoxH10(),
+                appText("Email id", style: AppTextStyle.lable),
+                SizedBoxH8(),
+                PrimaryTextField(
+                  controller: _email,
+                  keyboardInputType: TextInputType.emailAddress,
+                  validator: emailValidator,
+                  prefix: const Icon(Icons.email),
+                  hintText: "Enter your email",
+                ),
+                SizedBoxH10(),
                 appText("Password", style: AppTextStyle.lable),
                 SizedBoxH8(),
                 PrimaryTextField(
@@ -92,11 +104,11 @@ class _SignUpScreenState extends State<SignUpScreen> with ValidationMixin {
                   obscureText: obscurePassword,
                 ),
                 SizedBoxH10(),
-                appText("Refer Code", style: AppTextStyle.lable),
+                appText("Center Code", style: AppTextStyle.lable),
                 SizedBoxH8(),
                 PrimaryTextField(
                   controller: _referCode,
-                  hintText: "Enter refer code",
+                  hintText: "Enter center code",
                 ),
                 SizedBoxH8(),
                 PrimaryButton(

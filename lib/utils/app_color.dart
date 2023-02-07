@@ -9,8 +9,9 @@
   class AppColor {
     AppColor._();
 
-    static const Color primaryColor = Color(0xFF1466D9);
+    static const Color primaryColor = Color(0xFF335EF7);
     static const Color primaryLightColor = Color(0xCA3289F6);
+    static const Color drawerBackground = Color(0xCA2571F3);
     static const Color red = Color(0xffF41111);
     static const Color grey = Color(0xff869497);
     static const Color darkGrey = Color(0xff808080);

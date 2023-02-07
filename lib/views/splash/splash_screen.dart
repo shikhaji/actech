@@ -1,11 +1,11 @@
 import 'dart:async';
-import 'package:ac_tech/views/welcome_screen.dart';
+import 'package:ac_tech/utils/app_assets.dart';
+import 'package:ac_tech/views/splash/welcome_screen.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:sizer/sizer.dart';
 import '../../services/shared_preference.dart';
 import '../../utils/image_utils.dart';
-import '../dashboard/dashboard.dart';
 
 class SplashScreen extends StatefulWidget {
   const SplashScreen({Key? key}) : super(key: key);
@@ -46,7 +46,7 @@ class _SplashScreenState extends State<SplashScreen> {
         child: Scaffold(
       body: Center(
           child:Image.asset(
-            ImageUtils.splashImage,
+            AppAsset.splashImage,
             height: 25.h,
           ),
       ),

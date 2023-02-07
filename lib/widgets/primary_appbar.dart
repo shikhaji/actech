@@ -82,7 +82,7 @@ class _SecondaryAppBarState extends State<SecondaryAppBar> {
         centerTitle: true,
         title: appText(
           widget.title ?? "",
-          style: AppTextStyle.appBarTextTitle,
+          style: AppTextStyle.appBarTextTitle.copyWith(color: AppColor.black),
         ),
         actions: [
           Padding(
