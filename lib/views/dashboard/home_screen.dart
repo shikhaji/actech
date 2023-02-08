@@ -148,7 +148,12 @@ class _HomeScreenState extends State<HomeScreen> {
                               SizedBoxH6(),
                               Row(
                                 children: [
-                                  // Image.asset(AppAsset.star,height: 1,width: 1,),
+                                  SizedBox(
+                                    height: 15,
+                                    width: 15,
+                                    child: Image.asset(AppAsset.star),
+                                  ),
+                                  SizedBoxW6(),
                                   appText(ratings,
                                       style: AppTextStyle.alertSubtitle
                                           .copyWith(fontSize: Sizes.s16.h)),
