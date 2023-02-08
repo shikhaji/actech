@@ -2,6 +2,7 @@ import 'package:ac_tech/widgets/custom_size_box.dart';
 import 'package:carousel_slider/carousel_controller.dart';
 import 'package:flutter/material.dart';
 
+import '../../utils/app_assets.dart';
 import '../../utils/app_color.dart';
 import '../../utils/app_sizes.dart';
 import '../../utils/app_text_style.dart';
@@ -53,10 +54,9 @@ class _ProfileScreenState extends State<ProfileScreen> {
                   decoration: BoxDecoration(
                       shape: BoxShape.circle,
                       image: DecorationImage(
+                        image: AssetImage(AppAsset.userImage),
                         fit: BoxFit.cover,
-                        image: NetworkImage(
-                            "https://www.desktopbackground.org/download/1024x768/2014/01/01/694300_daniels-statistics-analysis-name-meaning-list-of-firstnames_1920x1200_h.jpg"),
-                      ))),
+                        ))),
             ),
              SizedBoxH10(),
              Column(

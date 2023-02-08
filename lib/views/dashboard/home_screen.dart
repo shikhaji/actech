@@ -3,6 +3,7 @@ import 'package:carousel_slider/carousel_controller.dart';
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:sizer/sizer.dart';
 
 import '../../utils/app_assets.dart';
 import '../../utils/app_color.dart';
@@ -80,7 +81,7 @@ class _HomeScreenState extends State<HomeScreen> {
                   itemBuilder: (context, inx) {
                     return CoursesListContainer(
                         "UI Design",
-                        "https://mobignosis.com/wp-content/uploads/2019/10/Flutter.png",
+                        // "https://mobignosis.com/wp-content/uploads/2019/10/Flutter.png",
                         "10 Lessons",
                         "4.5",
                         "₹999");
@@ -103,7 +104,7 @@ class _HomeScreenState extends State<HomeScreen> {
     );
 
   }
-  Widget CoursesListContainer(String name,String imgpath,String lessons,String ratings,String amount){
+  Widget CoursesListContainer(String name,String lessons,String ratings,String amount){
     return Column(
       children: [
         Container(
@@ -128,11 +129,12 @@ class _HomeScreenState extends State<HomeScreen> {
                               width: Sizes.s120.h,
                               decoration: BoxDecoration(
                                   borderRadius: BorderRadius.circular(15),
-                                  shape: BoxShape.rectangle,
-                                  image: DecorationImage(
-                                    fit: BoxFit.cover,
-                                    image: NetworkImage("${imgpath}"),
-                                  ))),
+                               image: DecorationImage(
+                                 image: AssetImage(AppAsset.android),
+                               ),
+                              ),
+                          ),
+
                           SizedBoxW8(),
                           Column(
                             mainAxisAlignment: MainAxisAlignment.start,

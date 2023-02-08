@@ -29,13 +29,18 @@ class AppAsset {
   static const String bookmarkFill = "${iconPath}bookmark_fill.png";
 
   //HOME PAGE
-
+  static const flutter = "${imagePath}flutter.jpg";
 
   //DRAWER IMAGE
 
   static const String drawerBackground = "${imagePath}drawer_background.svg";
 
-  //services Page
+  //COURSES Page
+  static const android = "${imagePath}android.jpg";
 
+  //ORDER Page
+  static const python = "${imagePath}python.png";
 
+  //USER Page
+  static const userImage = "${imagePath}user.jpg";
 }

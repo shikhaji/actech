@@ -152,9 +152,8 @@ class DrawerWidget extends StatelessWidget {
                     decoration: BoxDecoration(
                         shape: BoxShape.circle,
                         image: DecorationImage(
+                          image: AssetImage(AppAsset.userImage),
                           fit: BoxFit.cover,
-                          image: NetworkImage(
-                              "https://www.desktopbackground.org/download/1024x768/2014/01/01/694300_daniels-statistics-analysis-name-meaning-list-of-firstnames_1920x1200_h.jpg"),
                         ))),
                 ScreenUtil().setVerticalSpacing(10),
                 Text(

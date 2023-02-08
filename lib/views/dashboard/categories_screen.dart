@@ -74,7 +74,6 @@ class _CategoriesScreenState extends State<CategoriesScreen> {
                   itemBuilder: (context, inx) {
                     return CoursesListContainer(
                         "UI Design",
-                        "https://mobignosis.com/wp-content/uploads/2019/10/Flutter.png",
                         "10 Lessons",
                         "4.5",
                         "₹999");
@@ -95,7 +94,7 @@ class _CategoriesScreenState extends State<CategoriesScreen> {
           },
         ));
   }
-  Widget CoursesListContainer(String name,String imgpath,String lessons,String ratings,String amount){
+  Widget CoursesListContainer(String name,String lessons,String ratings,String amount){
     return Column(
       children: [
         Container(
@@ -121,10 +120,11 @@ class _CategoriesScreenState extends State<CategoriesScreen> {
                               decoration: BoxDecoration(
                                   borderRadius: BorderRadius.circular(15),
                                   shape: BoxShape.rectangle,
-                                  image: DecorationImage(
-                                    fit: BoxFit.cover,
-                                    image: NetworkImage("${imgpath}"),
-                                  ))),
+                                image: DecorationImage(
+                                  image: AssetImage(AppAsset.flutter),
+                                ),
+                              ),
+                          ),
                           SizedBoxW8(),
                           Column(
                             mainAxisAlignment: MainAxisAlignment.start,
