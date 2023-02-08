@@ -102,6 +102,7 @@ class _MyOrderScreenState extends State<MyOrderScreen> {
                                   shape: BoxShape.rectangle,
                                 image: DecorationImage(
                                   image: AssetImage(AppAsset.python),
+                                  fit: BoxFit.fitHeight,
                                 ),
                               ),
                           ),

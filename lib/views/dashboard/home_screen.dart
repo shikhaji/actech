@@ -131,6 +131,7 @@ class _HomeScreenState extends State<HomeScreen> {
                                   borderRadius: BorderRadius.circular(15),
                                image: DecorationImage(
                                  image: AssetImage(AppAsset.android),
+                                 fit: BoxFit.fitHeight,
                                ),
                               ),
                           ),
