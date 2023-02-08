@@ -21,6 +21,7 @@ class ResetPasswordScreen extends StatefulWidget {
 class _ResetPasswordScreenState extends State<ResetPasswordScreen>
     with ValidationMixin {
   final TextEditingController _password = TextEditingController();
+  final TextEditingController _confirmPassword = TextEditingController();
   bool obscurePassword = true;
   bool obscurePassword1 = true;
   final _formKey = GlobalKey<FormState>();
@@ -73,7 +74,7 @@ class _ResetPasswordScreenState extends State<ResetPasswordScreen>
                 appText("Confirm Password", style: AppTextStyle.lable),
                 SizedBoxH8(),
                 PrimaryTextField(
-                  controller: _password,
+                  controller: _confirmPassword,
                   hintText: "Enter confirm password",
                   validator: passwordValidator,
                   prefix: const Icon(Icons.password),
