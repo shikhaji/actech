@@ -1,10 +1,14 @@
+import 'package:ac_tech/widgets/custom_size_box.dart';
 import 'package:carousel_slider/carousel_controller.dart';
 import 'package:flutter/material.dart';
 
+import '../../utils/app_color.dart';
 import '../../utils/app_sizes.dart';
+import '../../utils/app_text_style.dart';
 import '../../utils/screen_utils.dart';
 import '../../widgets/drawer_widget.dart';
 import '../../widgets/primary_appbar.dart';
+import '../../widgets/scrollview.dart';
 
 class ProfileScreen extends StatefulWidget {
   const ProfileScreen({Key? key}) : super(key: key);
@@ -39,11 +43,106 @@ class _ProfileScreenState extends State<ProfileScreen> {
           ),
           child: const DrawerWidget(),
         ),
-        // body: CustomScroll(
-        //   children: [
-        //
-        //   ],
-        // ),
+        body: CustomScroll(
+          children: [
+            SizedBoxH34(),
+            Center(
+              child: Container(
+                  height: Sizes.s100.h,
+                  width: Sizes.s100.h,
+                  decoration: BoxDecoration(
+                      shape: BoxShape.circle,
+                      image: DecorationImage(
+                        fit: BoxFit.cover,
+                        image: NetworkImage(
+                            "https://www.desktopbackground.org/download/1024x768/2014/01/01/694300_daniels-statistics-analysis-name-meaning-list-of-firstnames_1920x1200_h.jpg"),
+                      ))),
+            ),
+             SizedBoxH10(),
+             Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Text(
+                  "Provisioning Tech",
+                  style: AppTextStyle.headingTextTile2
+                      .copyWith(fontSize: Sizes.s22),
+                ),
+                Text(
+                  "Provisioning@gmail.com",
+                  style: AppTextStyle.lable.copyWith(fontSize: Sizes.s16),
+                )
+              ],
+            ),
+            SizedBoxH20(),
+            SizedBoxH20(),
+            Container(
+              width: double.infinity,
+              decoration: BoxDecoration(
+                color: AppColor.textFieldColor,
+                borderRadius: BorderRadius.circular(15)
+              ),
+              child: _ProfileListTile.asset(
+                title: 'Edit Profile',
+                onTap: () {},
+                child: Icon(Icons.perm_identity),
+              ),
+            ),
+            SizedBoxH18(),
+            Container(
+              width: double.infinity,
+              decoration: BoxDecoration(
+                  color: AppColor.textFieldColor,
+                  borderRadius: BorderRadius.circular(15)
+              ),
+              child: _ProfileListTile.asset(
+                title: 'My Order',
+                onTap: () {},
+                child: Icon(Icons.format_list_bulleted_sharp),
+              ),
+            ),
+        SizedBoxH18(),
+        Container(
+          width: double.infinity,
+          decoration: BoxDecoration(
+              color: AppColor.textFieldColor,
+              borderRadius: BorderRadius.circular(15)
+          ),
+          child: _ProfileListTile.asset(
+            title: 'Terms & Conditions',
+            onTap: () {},
+            child: Icon(Icons.local_police_outlined),
+          ),
+        ),
+            SizedBoxH18(),
+            Container(
+              width: double.infinity,
+              decoration: BoxDecoration(
+                  color: AppColor.textFieldColor,
+                  borderRadius: BorderRadius.circular(15)
+              ),
+              child: _ProfileListTile.asset(
+                title: 'Privacy Policy',
+                onTap: () {
+                  // Navigator.pushNamed(context, Routs.privacyPolicy);
+                },
+                child: Icon(Icons.policy),
+            ),
+            ),
+            SizedBoxH18(),
+            Container(
+              width: double.infinity,
+              decoration: BoxDecoration(
+                  color: AppColor.textFieldColor,
+                  borderRadius: BorderRadius.circular(15)
+              ),
+              child: _ProfileListTile.asset(
+                title: 'About Us',
+                onTap: () {},
+                child: const Icon(Icons.account_box),
+              ),
+            ),
+          ],
+        ),
         appBar: SecondaryAppBar(
           title: "Profile",
           isLeading: true,
@@ -55,24 +154,33 @@ class _ProfileScreenState extends State<ProfileScreen> {
   }
 }
 
-class Indicator extends StatelessWidget {
-  final bool isActive;
-  const Indicator({
-    Key? key,
-    required this.isActive,
-  }) : super(key: key);
+class _ProfileListTile extends StatelessWidget {
+  final Widget child;
+  final String title;
+  final VoidCallback onTap;
+
+  _ProfileListTile.asset({
+    required this.onTap,
+    required this.title,
+    required this.child,
+  });
 
   @override
   Widget build(BuildContext context) {
-    return AnimatedContainer(
-      duration: const Duration(milliseconds: 350),
-      height: 10.0,
-      margin: const EdgeInsets.symmetric(horizontal: 3.0),
-      width: isActive ? 10.0 : 10.0,
-      decoration: BoxDecoration(
-          color: isActive ? Colors.black : Colors.black,
-          borderRadius: BorderRadius.circular(8.0),
-          border: Border.all(color: Colors.black, width: 2.0)),
+    return ListTile(
+      leading: child,
+      title: Text(
+        title,
+        style: AppTextStyle.lable,
+      ),
+      trailing: const Icon(
+        Icons.chevron_right,
+        color: Colors.black,
+      ),
+      onTap: () {
+        Navigator.pop(context);
+        onTap();
+      },
     );
   }
 }
