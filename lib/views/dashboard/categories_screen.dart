@@ -122,6 +122,7 @@ class _CategoriesScreenState extends State<CategoriesScreen> {
                                   shape: BoxShape.rectangle,
                                 image: DecorationImage(
                                   image: AssetImage(AppAsset.flutter),
+                                  fit: BoxFit.fitHeight,
                                 ),
                               ),
                           ),
