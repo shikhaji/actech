@@ -1,14 +1,19 @@
+import 'package:ac_tech/utils/app_text_style.dart';
 import 'package:carousel_slider/carousel_controller.dart';
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
+import '../../utils/app_assets.dart';
 import '../../utils/app_color.dart';
 import '../../utils/app_sizes.dart';
+import '../../utils/constant.dart';
 import '../../utils/screen_utils.dart';
+import '../../widgets/app_text.dart';
 import '../../widgets/custom_size_box.dart';
 import '../../widgets/drawer_widget.dart';
 import '../../widgets/primary_appbar.dart';
+import '../../widgets/primary_button.dart';
 import '../../widgets/primary_textfield.dart';
 import '../../widgets/scrollview.dart';
 
@@ -53,56 +58,36 @@ class _HomeScreenState extends State<HomeScreen> {
               hintText: "Search Here",
               suffix: Icon(CupertinoIcons.search),
             ),
-            SizedBox(
-              width: double.infinity,
-              child: CarouselSlider.builder(
-                  carouselController: buttonCarouselController,
-                  itemCount: sliderImageList.length ?? 0,
-                  itemBuilder: (BuildContext context, int itemIndex,
-                      int pageViewIndex) =>
-                      Padding(
-                          padding: const EdgeInsets.only(right: 3, left: 3),
-                          child: Container(
-                            decoration: BoxDecoration(
-                                borderRadius: BorderRadius.circular(12),
-                                image: DecorationImage(
-                                    image: NetworkImage(
-                                      'https://appointment.doctoroncalls.in/uploads/${sliderImageList[itemIndex].sliderImage}',
-                                    ),
-                                    fit: BoxFit.cover)),
-                          )),
-                  options: CarouselOptions(
-                    onPageChanged: (index, _) {
-                      setState(() {
-                        _selectedSliderIndex = index;
-                      });
-                    },
-                    aspectRatio: 12 / 8,
-                    viewportFraction: 1,
-                    initialPage: 0,
-                    autoPlay: false,
-                    enableInfiniteScroll: false,
-                    autoPlayInterval: const Duration(seconds: 3),
-                    autoPlayAnimationDuration:
-                    const Duration(milliseconds: 800),
-                    autoPlayCurve: Curves.fastOutSlowIn,
-                    enlargeCenterPage: true,
-                    scrollDirection: Axis.horizontal,
-                  )),
-            ),
-            SizedBoxH18(),
+
+            SizedBoxH120(),
+            SizedBoxH120(),
             Row(
-              mainAxisAlignment: MainAxisAlignment.center,
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
-                ...List.generate(
-                  sliderImageList.length,
-                      (index) => Indicator(
-                      isActive: _selectedSliderIndex == index ? true : false),
-                )
+                Text("Recommended Courses ",style: AppTextStyle.alertSubtitle),
+                Text("See All",style: AppTextStyle.subTitle.copyWith(color: AppColor.primaryColor),)
               ],
             ),
-            SizedBoxH18(),
-            // Row
+            SizedBoxH10(),
+            Container(
+              height: Sizes.s300,
+                child:SingleChildScrollView(
+                  child: ListView.builder(
+                    padding: EdgeInsets.symmetric(vertical: Sizes.s20.h),
+                    shrinkWrap: true,
+                    physics: const NeverScrollableScrollPhysics(),
+                    itemCount: 5,
+                    itemBuilder: (context, inx) {
+                      return CoursesListContainer(
+                          "UI Design",
+                          "https://mobignosis.com/wp-content/uploads/2019/10/Flutter.png",
+                          "10 Lessons",
+                          "4.5",
+                          "₹999");
+                    },
+                  ),
+                ),
+            ),
             //Container
 
           ],
@@ -114,7 +99,92 @@ class _HomeScreenState extends State<HomeScreen> {
             onBackPressed: () {
               openDrawer();
             },
-            ));
+            )
+    );
+
+  }
+  Widget CoursesListContainer(String name,String imgpath,String lessons,String ratings,String amount){
+    return Column(
+      children: [
+        Container(
+          alignment: Alignment.center,
+          decoration: BoxDecoration(
+              color: AppColor.textFieldColor,
+              borderRadius: BorderRadius.circular(textFieldBorderRadius),
+              ),
+          child: Padding(
+            padding: const EdgeInsets.all(8.0),
+            child: Column(
+              children: [
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+
+                    Container(
+                      child: Row(
+                        children: [
+                          Container(
+                              height: Sizes.s80.h,
+                              width: Sizes.s120.h,
+                              decoration: BoxDecoration(
+                                  borderRadius: BorderRadius.circular(15),
+                                  shape: BoxShape.rectangle,
+                                  image: DecorationImage(
+                                    fit: BoxFit.cover,
+                                    image: NetworkImage("${imgpath}"),
+                                  ))),
+                          SizedBoxW8(),
+                          Column(
+                            mainAxisAlignment: MainAxisAlignment.start,
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              appText(name,
+                                  style: AppTextStyle.alertSubtitle
+                                      .copyWith(fontSize: Sizes.s16.h)),
+                              SizedBoxH6(),
+                              appText(lessons,
+                                  style: AppTextStyle.alertSubtitle
+                                      .copyWith(fontSize: Sizes.s16.h)),
+                              SizedBoxH6(),
+                              Row(
+                                children: [
+                                  // Image.asset(AppAsset.star,height: 1,width: 1,),
+                                  appText(ratings,
+                                      style: AppTextStyle.alertSubtitle
+                                          .copyWith(fontSize: Sizes.s16.h)),
+                                ],
+                              ),
+                              SizedBoxH6(),
+                            ],
+                          ),
+                        ],
+                      ),
+                    ),
+
+                    Column(
+                      children: [
+                        SizedBox(
+                            height: 30,
+                            width: 20,
+                          child: Image.asset(AppAsset.bookmark),
+                        ),
+                        SizedBoxH8(),
+                        appText(amount,
+                            style: AppTextStyle.headingTextTile
+                                .copyWith(fontSize: Sizes.s18.h,color: AppColor.primaryColor)),
+                      ],
+                    ),
+                  ],
+                ),
+              ],
+            ),
+          ),
+        ),
+        SizedBoxH10(),
+      ],
+    );
+
+
   }
 }
 
@@ -139,3 +209,4 @@ class Indicator extends StatelessWidget {
     );
   }
 }
+
