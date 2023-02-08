@@ -24,6 +24,9 @@ class AppAsset {
 
   static const String categoryFill = "${iconPath}categories_fill.png";
   static const String category = "${iconPath}categories.png";
+  static const String star = "${iconPath}star.png";
+  static const String bookmark = "${iconPath}bookmark.png";
+  static const String bookmarkFill = "${iconPath}bookmark_fill.png";
 
   //HOME PAGE
 
