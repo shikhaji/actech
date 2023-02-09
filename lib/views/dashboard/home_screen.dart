@@ -1,4 +1,5 @@
 import 'package:ac_tech/utils/app_text_style.dart';
+import 'package:ac_tech/views/dashboard/course_details_screen.dart';
 import 'package:carousel_slider/carousel_controller.dart';
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:flutter/cupertino.dart';
@@ -70,22 +71,30 @@ class _HomeScreenState extends State<HomeScreen> {
               ],
             ),
             SizedBoxH10(),
-            Container(
-              height: Sizes.s320,
-              child: SingleChildScrollView(
-                child: ListView.builder(
-                  padding: EdgeInsets.symmetric(vertical: Sizes.s20.h),
-                  shrinkWrap: true,
-                  physics: const NeverScrollableScrollPhysics(),
-                  itemCount: 5,
-                  itemBuilder: (context, inx) {
-                    return CoursesListContainer(
-                        "UI Design",
-                        // "https://mobignosis.com/wp-content/uploads/2019/10/Flutter.png",
-                        "10 Lessons",
-                        "4.5",
-                        "₹999");
-                  },
+            GestureDetector(
+              onTap: (){
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(builder: (context) => CourseDetailsScreen()),
+                );
+              },
+              child: Container(
+                height: Sizes.s320,
+                child: SingleChildScrollView(
+                  child: ListView.builder(
+                    padding: EdgeInsets.symmetric(vertical: Sizes.s20.h),
+                    shrinkWrap: true,
+                    physics: const NeverScrollableScrollPhysics(),
+                    itemCount: 5,
+                    itemBuilder: (context, inx) {
+                      return CoursesListContainer(
+                          "UI Design",
+                          // "https://mobignosis.com/wp-content/uploads/2019/10/Flutter.png",
+                          "10 Lessons",
+                          "4.5",
+                          "₹999");
+                    },
+                  ),
                 ),
               ),
             ),

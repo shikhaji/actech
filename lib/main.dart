@@ -1,5 +1,8 @@
 import 'package:ac_tech/utils/screen_utils.dart';
 import 'package:ac_tech/views/auth/login_screen.dart';
+import 'package:ac_tech/views/dashboard/course_details_screen.dart';
+import 'package:ac_tech/views/dashboard/home_screen.dart';
+import 'package:ac_tech/views/dashboard/main_home_screen.dart';
 import 'package:ac_tech/views/splash/splash_screen.dart';
 import 'package:bot_toast/bot_toast.dart';
 import 'package:firebase_messaging/firebase_messaging.dart';
@@ -54,7 +57,7 @@ class MyApp extends StatelessWidget {
         themeMode: ThemeMode.system,
         debugShowCheckedModeBanner: false,
         // initialRoute: "${SplashScreen()}",
-        home: SplashScreen(),
+        home: MainHomeScreen(),
         // LoginScreen(),
         //RegistrationScreen(),
         navigatorObservers: [BotToastNavigatorObserver()],

@@ -4,6 +4,7 @@ class AppAsset {
   static const String imagePath = "assets/images/";
   static const String iconPath = "assets/icons/";
   static const String temPath = "assets/temporary/";
+  static const String videoPath = "assets/videos/";
 
   //splash screen(png)
   static const String splash = "${imagePath}splash_img.jpg";
@@ -27,6 +28,7 @@ class AppAsset {
   static const String star = "${iconPath}star.png";
   static const String bookmark = "${iconPath}bookmark.png";
   static const String bookmarkFill = "${iconPath}bookmark_fill.png";
+  static const String view = "${iconPath}views.png";
 
   //HOME PAGE
   static const flutter = "${imagePath}flutter.jpg";
@@ -43,4 +45,7 @@ class AppAsset {
 
   //USER Page
   static const userImage = "${imagePath}user.jpg";
+
+  //Videos
+  static const sampleVideo = "${videoPath}sample.mp4";
 }
