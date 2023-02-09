@@ -57,7 +57,7 @@ class MyApp extends StatelessWidget {
         themeMode: ThemeMode.system,
         debugShowCheckedModeBanner: false,
         // initialRoute: "${SplashScreen()}",
-        home: MainHomeScreen(),
+        home: SplashScreen(),
         // LoginScreen(),
         //RegistrationScreen(),
         navigatorObservers: [BotToastNavigatorObserver()],

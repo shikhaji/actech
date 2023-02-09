@@ -1,9 +1,8 @@
+import 'package:ac_tech/services/api_services.dart';
 import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:sizer/sizer.dart';
-
-import '../../services/api_services.dart';
 import '../../utils/app_assets.dart';
 import '../../utils/app_color.dart';
 import '../../utils/app_sizes.dart';
@@ -70,7 +69,6 @@ class _SignUpScreenState extends State<SignUpScreen> with ValidationMixin {
                   controller: _phone,
                   keyboardInputType: TextInputType.phone,
                   validator: mobileNumberValidator,
-                  readOnly: true,
                   prefix: const Icon(Icons.phone),
                   // hintText: "${widget.arguments?.phoneNumber}",
                 ),
@@ -115,8 +113,16 @@ class _SignUpScreenState extends State<SignUpScreen> with ValidationMixin {
                     lable: "Sign Up",
                     onPressed: () {
                       if (_formKey.currentState!.validate()) {
-
-
+                        FormData data() {
+                          return FormData.fromMap({
+                            "name": _name.text.trim(),
+                            "email": _email.text.trim(),
+                            "mobile": _phone.text.trim(),
+                            "password": _password.text.trim(),
+                            "referal_code": _referCode.text.trim(),
+                          });
+                        }
+                        ApiService().signUp(context,data:data());
                       }
                     }),
               ],
