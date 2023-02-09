@@ -39,8 +39,7 @@ class _CourseDetailsScreenState extends State<CourseDetailsScreen> {
   late VideoPlayerController _controller;
   final File newFile = File('File');
   int _currentIndex= 0;
-  void _playVideo({int index = 0, bool init= false,required File file}){
-    if(index < 0 || index >= videos.length)
+  void _playVideo({required File file}){
     _controller =VideoPlayerController.asset(AppAsset.sampleVideo)
     ..addListener(() => setState(() {}))
     ..setLooping(true)
@@ -240,27 +239,3 @@ class Indicator extends StatelessWidget {
     );
   }
 }
-
-class Video{
-  final String name;
-  final String url;
-  final String thumbnail;
-
-  const Video({
-    required this.name,
-    required this.url,
-    required this.thumbnail,
-  });
-}
-const videos=[
-  Video(
-      name: 'Intro',
-      url:AppAsset.sampleVideo,
-      thumbnail: 'https://www.formget.com/wp-content/uploads/2015/03/introduction-to-android.png'
-  ),
-  Video(
-      name: 'MVC',
-      url:AppAsset.sampleVideo,
-      thumbnail: 'https://www.formget.com/wp-content/uploads/2015/03/introduction-to-android.png'
-  ),
-];
