@@ -100,14 +100,14 @@ class ApiService {
             "Auth-Key": 'simplerestapi',
           }),
           data: data);
-      if (response.statusMessage == "OK") {
+      if (response.statusMessage == 'ok' && response.statusCode == 200) {
         LoginModel responseData = LoginModel.fromJson(response.data);
         Preferances.setString("userId", responseData.id);
         Preferances.setString("Token", responseData.token);
 
         Loader.hideLoader();
 
-        CommonFunctions.toast("login successfully");
+        CommonFunctions.toast("Login Successful");
         Navigator.pushNamed(context, Routs.mainHome);
 
         return responseData;
