@@ -83,8 +83,6 @@ class _OtpVerificationScreenState extends State<OtpVerificationScreen>
             appText(
                 "Enter 6 digit code sent to your phone number",
                 style: AppTextStyle.subTitle),
-            SizedBoxH6(),
-            Text("${widget.arguments?.phoneNumber}",style: AppTextStyle.subTitle),
             SizedBoxH28(),
             appText("Enter OTP", style: AppTextStyle.lable),
             SizedBoxH8(),
