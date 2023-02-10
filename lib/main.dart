@@ -1,4 +1,6 @@
+import 'package:ac_tech/routes/app_routes.dart';
 import 'package:ac_tech/utils/screen_utils.dart';
+import 'package:ac_tech/utils/theme_utils.dart';
 import 'package:ac_tech/views/auth/login_screen.dart';
 import 'package:ac_tech/views/dashboard/course_details_screen.dart';
 import 'package:ac_tech/views/dashboard/home_screen.dart';
@@ -53,14 +55,19 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     final botToastBuilder = BotToastInit();
     return Sizer(builder: (context, orientation, deviceType) {
-      return GetMaterialApp(
-        themeMode: ThemeMode.system,
+      return MaterialApp(
+        // themeMode: ThemeMode.system,
+        // debugShowCheckedModeBanner: false,
+        // // initialRoute: "${SplashScreen()}",
+        // home: SplashScreen(),
+        // // LoginScreen(),
+        // //RegistrationScreen(),
+        // navigatorObservers: [BotToastNavigatorObserver()],
         debugShowCheckedModeBanner: false,
-        // initialRoute: "${SplashScreen()}",
-        home: MainHomeScreen(),
-        // LoginScreen(),
-        //RegistrationScreen(),
-        navigatorObservers: [BotToastNavigatorObserver()],
+        themeMode: ThemeMode.system,
+        theme: ThemeUtils.lightTheme,
+        initialRoute: Routs.splash,
+        onGenerateRoute: RoutGenerator.generateRoute,
         builder: (context, child) {
           return ScrollConfiguration(
             behavior: const _ScrollBehaviorModified(),

@@ -1,7 +1,9 @@
 
+import 'package:ac_tech/views/auth/reset_password_screen.dart';
 import 'package:ac_tech/views/dashboard/main_home_screen.dart';
 import 'package:flutter/material.dart';
 
+import '../services/shared_preferences.dart';
 import '../views/auth/login_screen.dart';
 import '../views/auth/mobile_verification_screen.dart';
 import '../views/auth/otp_verification_screen.dart';
@@ -39,7 +41,7 @@ class RoutGenerator {
       //   return MaterialPageRoute(builder: (_) => const ResetPasswordScreen());
 
       case Routs.signUp:
-        return MaterialPageRoute(builder: (_) => const SignUpScreen());
+        return MaterialPageRoute(builder: (_) => SignUpScreen(arguments: arguments as OtpArguments,));
 
 
       case Routs.otp:
@@ -55,6 +57,10 @@ class RoutGenerator {
       case Routs.mainHome:
         return MaterialPageRoute(
             builder: (_) => const MainHomeScreen());
+
+      case Routs.resetPassword:
+        return MaterialPageRoute(
+            builder: (_) => ResetPasswordScreen(arguments: arguments as OtpArguments,));
 
       default:
         return null;

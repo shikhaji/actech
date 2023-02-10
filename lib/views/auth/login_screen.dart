@@ -11,8 +11,8 @@ import 'package:fluttertoast/fluttertoast.dart';
 import 'package:sizer/sizer.dart';
 
 import '../../routes/app_routes.dart';
-import '../../services/api_services.dart';
 
+import '../../services/api_services.dart';
 import '../../utils/app_color.dart';
 
 import '../../utils/app_text_style.dart';
@@ -111,17 +111,15 @@ class _LoginScreenState extends State<LoginScreen> with ValidationMixin {
                     onPressed: () async{
 
                       if (_formKey.currentState!.validate()) {
+                          FormData data() {
+                          return FormData.fromMap({
+                          "user_id": _phone.text.trim(),
+                          "password": _password.text.trim(),
+                          });
+                          }
+                          ApiService().login(context,data:data());
 
-
-
-                        }
-
-                        Navigator.push(
-                            context,
-                            MaterialPageRoute(
-                                builder: (context) =>MainHomeScreen()));
-
-
+                          }
                     }),
                 SizedBoxH18(),
                 GestureDetector(

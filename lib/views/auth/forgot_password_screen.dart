@@ -1,10 +1,16 @@
+
 import 'package:ac_tech/views/auth/reset_password_screen.dart';
+import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
 import 'package:sizer/sizer.dart';
 
+import '../../routes/app_routes.dart';
+import '../../routes/arguments.dart';
+import '../../services/api_services.dart';
 import '../../utils/app_assets.dart';
 import '../../utils/app_color.dart';
 import '../../utils/app_text_style.dart';
+import '../../utils/function.dart';
 import '../../utils/validation_mixin.dart';
 import '../../widgets/app_text.dart';
 import '../../widgets/custom_size_box.dart';
@@ -48,11 +54,9 @@ class _ForgotPasswordScreenState extends State<ForgotPasswordScreen>
                 SizedBoxH28(),
                 appText("Forgot Password", style: AppTextStyle.title),
                 SizedBoxH6(),
-                appText("Enter registered phone number and we will",
+                Text("Enter registered phone number and we will send you an OTP",
                     style: AppTextStyle.subTitle),
-                appText("send you an OTP",
-                    style: AppTextStyle.subTitle),
-                SizedBoxH28(),
+                SizedBoxH18(),
                 appText("Phone number", style: AppTextStyle.lable),
                 SizedBoxH8(),
                 PrimaryTextField(
@@ -66,11 +70,27 @@ class _ForgotPasswordScreenState extends State<ForgotPasswordScreen>
                 PrimaryButton(
                     lable: "Send OTP",
                     onPressed: () {
-                      Navigator.push(
-                          context,
-                          MaterialPageRoute(
-                              builder: (context) =>ResetPasswordScreen()));
-                    }),
+                      if (_formKey.currentState!.validate()) {
+                        FormData data() {
+                          return FormData.fromMap({
+                            "mobile": _phone.text.trim(),
+                          });
+                        }
+                        ApiService().mobileVerifyApi(context, data: data())
+                            .then((value) {
+                          if (value!.status == 200) {
+                            if (value.count == 1) {
+                              Navigator.pushNamed(context, Routs.resetPassword,
+                                  arguments: OtpArguments(
+                                      phoneNumber: _phone.text.trim()));
+                            } else if (value.count == 0) {
+                              CommonFunctions.toast("Your number is not registered Please signUp");
+
+                            }
+                          }
+                        });
+                      }
+                      }),
                 SizedBoxH18(),
 
               ],

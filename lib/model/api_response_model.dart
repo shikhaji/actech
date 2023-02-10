@@ -1,22 +1,25 @@
 import 'package:fluttertoast/fluttertoast.dart';
 
 class ApiResponseModel<T> {
-  int? status;
-  String? message;
+  bool? success;
+  String message;
+  T response;
+  int statusCode;
 
   ApiResponseModel({
-
+    this.success,
     required this.message,
-
-    required this.status,
+    required this.response,
+    required this.statusCode,
   });
 
-  factory ApiResponseModel.fromJson(String message, int statusCode) {
+  factory ApiResponseModel.fromJson(
+      Map<String, dynamic> parsedData, int statusCode) {
     return ApiResponseModel(
-
-      message: message,
-
-      status: statusCode,
+      success: parsedData['success'],
+      message: parsedData['message'] ?? '',
+      response: parsedData['data'] ?? "",
+      statusCode: statusCode,
     );
   }
 
@@ -34,4 +37,3 @@ class ApiResponseModel<T> {
     }
   }
 }
-

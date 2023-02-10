@@ -4,7 +4,6 @@ import 'package:ac_tech/views/splash/welcome_screen.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:sizer/sizer.dart';
-import '../../services/shared_preference.dart';
 import '../../utils/image_utils.dart';
 
 class SplashScreen extends StatefulWidget {
