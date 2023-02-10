@@ -100,21 +100,18 @@ class ApiService {
             "Auth-Key": 'simplerestapi',
           }),
           data: data);
-      if (response.statusCode == 200 ) {
-        LoginModel responseData = LoginModel.fromJson(response.data);
+      LoginModel responseData = LoginModel.fromJson(response.data);
+      if (responseData.message == "ok" ) {
         Preferances.setString("userId", responseData.id);
         Preferances.setString("Token", responseData.token);
-
         Loader.hideLoader();
-
         CommonFunctions.toast("login successfully");
       Navigator.pushNamed(context, Routs.mainHome);
-        debugPrint('responseData ----- > ${response.data}');
+
         return responseData;
       } else {
-        CommonFunctions.toast("Invalid Login Credential");
         Loader.hideLoader();
-        print("here");
+        CommonFunctions.toast("Invalid Login Credential");
         throw Exception(response.data);
       }
     } on DioError catch (e) {
