@@ -1,6 +1,5 @@
 import 'package:ac_tech/services/shared_preferences.dart';
 import 'package:dio/dio.dart';
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 
@@ -8,6 +7,7 @@ import '../API/dio_client.dart';
 import '../API/url.dart';
 import '../model/login_model.dart';
 import '../model/mobile_verify_model.dart';
+import '../model/slider_model.dart';
 import '../routes/app_routes.dart';
 import '../utils/function.dart';
 import '../utils/loader.dart';
@@ -100,20 +100,21 @@ class ApiService {
             "Auth-Key": 'simplerestapi',
           }),
           data: data);
-      if (response.statusMessage == 'ok' && response.statusCode == 200) {
+      if (response.statusCode == 200 ) {
         LoginModel responseData = LoginModel.fromJson(response.data);
         Preferances.setString("userId", responseData.id);
         Preferances.setString("Token", responseData.token);
 
         Loader.hideLoader();
 
-        CommonFunctions.toast("Login Successful");
-        Navigator.pushNamed(context, Routs.mainHome);
-
+        CommonFunctions.toast("login successfully");
+      Navigator.pushNamed(context, Routs.mainHome);
+        debugPrint('responseData ----- > ${response.data}');
         return responseData;
       } else {
-        CommonFunctions.toast("Invalid Login Credential ");
+        CommonFunctions.toast("Invalid Login Credential");
         Loader.hideLoader();
+        print("here");
         throw Exception(response.data);
       }
     } on DioError catch (e) {
@@ -160,4 +161,48 @@ class ApiService {
       throw e.error;
     }
   }
+
+  //-----------------------SLIDER API-----------------------//
+  // Future<SliderModel> slider() async {
+  //   try {
+  //     Loader.showLoader();
+  //     Response response;
+  //     response = await dio.post(EndPoints.slider);
+  //     if (response.statusCode == 200) {
+  //       SliderModel responseData = SliderModel.fromJson(response.data);
+  //       Loader.hideLoader();
+  //       debugPrint('responseData ----- > ${response.data}');
+  //       return responseData;
+  //     } else {
+  //       Loader.hideLoader();
+  //       throw Exception(response.data);
+  //     }
+  //   } on DioError catch (e) {
+  //     Loader.hideLoader();
+  //     debugPrint('Dio E  $e');
+  //     throw e.error;
+  //   }
+  // }
+  Future<SliderModel> slider(BuildContext context,) async {
+    try {
+      Loader.showLoader();
+      Response response;
+      response = await dio.post(EndPoints.slider);
+
+      if (response.statusCode == 200) {
+        SliderModel responseData = SliderModel.fromJson(response.data);
+        Loader.hideLoader();
+        debugPrint('responseData ----- > ${response.data}');
+        return responseData;
+      } else {
+        Loader.hideLoader();
+        throw Exception(response.data);
+      }
+    } on DioError catch (e) {
+      Loader.hideLoader();
+      debugPrint('Dio E  $e');
+      throw e.error;
+    }
+  }
+
  }

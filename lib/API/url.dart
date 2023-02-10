@@ -8,5 +8,6 @@ class EndPoints {
   static const String signUp = '$baseUrl/$post/add_student_account';
   static const String updatePassword = '$baseUrl/$post/update_reset_pasword';
   static const String login = '$baseUrl/$get/login';
+  static const String slider = '$baseUrl/$get/get_slidder';
 
 }
