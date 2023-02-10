@@ -7,6 +7,7 @@ import 'package:flutter/material.dart';
 import 'package:pin_code_text_field/pin_code_text_field.dart';
 import 'package:sizer/sizer.dart';
 
+import '../../routes/app_routes.dart';
 import '../../routes/arguments.dart';
 import '../../utils/app_assets.dart';
 import '../../utils/app_color.dart';
@@ -32,6 +33,7 @@ class OtpVerificationScreen extends StatefulWidget {
 class _OtpVerificationScreenState extends State<OtpVerificationScreen>
     with ValidationMixin {
   TextEditingController _controller = TextEditingController(text: "");
+
   int pinLength = 6;
   int _seconds = -1;
   Timer? _timer;
@@ -52,6 +54,7 @@ class _OtpVerificationScreenState extends State<OtpVerificationScreen>
   @override
   void initState() {
     super.initState();
+    debugPrint("${widget.arguments?.phoneNumber}");
     WidgetsBinding.instance.addPostFrameCallback((_) async {
 
     });
@@ -80,6 +83,8 @@ class _OtpVerificationScreenState extends State<OtpVerificationScreen>
             appText(
                 "Enter 6 digit code sent to your phone number",
                 style: AppTextStyle.subTitle),
+            SizedBoxH6(),
+            Text("${widget.arguments?.phoneNumber}",style: AppTextStyle.subTitle),
             SizedBoxH28(),
             appText("Enter OTP", style: AppTextStyle.lable),
             SizedBoxH8(),
@@ -117,12 +122,14 @@ class _OtpVerificationScreenState extends State<OtpVerificationScreen>
             PrimaryButton(
                 lable: "Verify OTP",
                 onPressed: () async {
-                  Navigator.push(
-                      context,
-                      MaterialPageRoute(
-                          builder: (context) =>SignUpScreen()));
-                  //  clearField();
-                }),
+                  Navigator.pushNamed(context, Routs.signUp,
+                      arguments:
+                      OtpArguments(phoneNumber: widget.arguments?.phoneNumber)
+                  );
+
+                 //  clearField();
+                }
+                ),
           ],
         ),
       ),

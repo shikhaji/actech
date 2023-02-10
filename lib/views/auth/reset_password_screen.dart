@@ -1,6 +1,9 @@
+import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
 import 'package:sizer/sizer.dart';
 
+import '../../routes/arguments.dart';
+import '../../services/api_services.dart';
 import '../../utils/app_assets.dart';
 import '../../utils/app_color.dart';
 import '../../utils/app_text_style.dart';
@@ -12,7 +15,9 @@ import '../../widgets/primary_textfield.dart';
 import '../../widgets/scrollview.dart';
 
 class ResetPasswordScreen extends StatefulWidget {
-  const ResetPasswordScreen({Key? key}) : super(key: key);
+  final OtpArguments? arguments;
+  const ResetPasswordScreen({Key? key, this.arguments}) : super(key: key);
+
 
   @override
   State<ResetPasswordScreen> createState() => _ResetPasswordScreenState();
@@ -76,7 +81,9 @@ class _ResetPasswordScreenState extends State<ResetPasswordScreen>
                 PrimaryTextField(
                   controller: _confirmPassword,
                   hintText: "Enter confirm password",
-                  validator: passwordValidator,
+                  validator: (value) {
+                    return confirmPasswordValidator(value!, _password.text.trim());
+                  },
                   prefix: const Icon(Icons.password),
                   suffix: GestureDetector(
                       onTap: () {
@@ -93,10 +100,18 @@ class _ResetPasswordScreenState extends State<ResetPasswordScreen>
                 PrimaryButton(
                     lable: "Reset",
                     onPressed: () {
-                      // Navigator.push(
-                      //     context,
-                      //     MaterialPageRoute(
-                      //         builder: (context) =>OtpVerificationScreen()));
+                      if (_formKey.currentState!.validate()) {
+                        debugPrint("password ${_password.text.trim()}");
+                        FormData data() {
+                          return FormData.fromMap({
+                            "phone": widget.arguments?.phoneNumber,
+                            "password": _password.text.trim(),
+                          });
+                        }
+
+
+                        ApiService().UpdatePassword(context, data: data());
+                      }
                     }),
               ],
             ),

@@ -3,6 +3,7 @@ import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:sizer/sizer.dart';
+import '../../routes/arguments.dart';
 import '../../utils/app_assets.dart';
 import '../../utils/app_color.dart';
 import '../../utils/app_sizes.dart';
@@ -16,8 +17,9 @@ import '../../widgets/primary_textfield.dart';
 import '../../widgets/scrollview.dart';
 
 class SignUpScreen extends StatefulWidget {
-  // final OtpArguments? arguments;
-  const SignUpScreen({Key? key}) : super(key: key);
+  final OtpArguments? arguments;
+  const SignUpScreen({Key? key, this.arguments}) : super(key: key);
+
 
   @override
   State<SignUpScreen> createState() => _SignUpScreenState();
@@ -32,6 +34,13 @@ class _SignUpScreenState extends State<SignUpScreen> with ValidationMixin {
   final TextEditingController _categories = TextEditingController();
   bool obscurePassword = true;
   final _formKey = GlobalKey<FormState>();
+
+  @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+    debugPrint("${widget.arguments?.phoneNumber}");
+  }
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -67,10 +76,11 @@ class _SignUpScreenState extends State<SignUpScreen> with ValidationMixin {
                 SizedBoxH8(),
                 PrimaryTextField(
                   controller: _phone,
+                  readOnly: true,
                   keyboardInputType: TextInputType.phone,
                   validator: mobileNumberValidator,
                   prefix: const Icon(Icons.phone),
-                  // hintText: "${widget.arguments?.phoneNumber}",
+                  hintText: "${widget.arguments?.phoneNumber}",
                 ),
                 SizedBoxH10(),
                 appText("Email id", style: AppTextStyle.lable),
