@@ -8,7 +8,9 @@ import '../views/auth/login_screen.dart';
 import '../views/auth/mobile_verification_screen.dart';
 import '../views/auth/otp_verification_screen.dart';
 import '../views/auth/signUp.dart';
+import '../views/dashboard/course_details_screen.dart';
 import '../views/dashboard/fquestionScreen.dart';
+import '../views/dashboard/video_player_screen.dart';
 import '../views/splash/splash_screen.dart';
 import 'arguments.dart';
 
@@ -22,6 +24,8 @@ class Routs {
   static const String mobileVerification = "/mobile_verification_screen";
   static const String mainHome = "/main_home_screen";
   static const String fquestion = "/fquestionScreen";
+  static const String courseDetail = "/course_details_screen";
+  static const String videoPlayer = "/video_player_screen";
 
 }
 
@@ -67,6 +71,14 @@ class RoutGenerator {
       case Routs.fquestion:
         return MaterialPageRoute(
             builder: (_) => FquestionScreen());
+
+      case Routs.videoPlayer:
+        return MaterialPageRoute(
+            builder: (_) => VideoPlayerScreen());
+
+      case Routs.courseDetail:
+        return MaterialPageRoute(
+            builder: (_) => CourseDetailsScreen());
 
       default:
         return null;
