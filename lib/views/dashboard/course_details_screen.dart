@@ -1,5 +1,6 @@
 import 'dart:io';
 
+import 'package:ac_tech/views/dashboard/video_player_screen.dart';
 import 'package:ac_tech/views/dashboard/home_screen.dart';
 import 'package:carousel_slider/carousel_controller.dart';
 import 'package:flutter/cupertino.dart';
@@ -35,34 +36,8 @@ class _CourseDetailsScreenState extends State<CourseDetailsScreen> {
   List sliderImageList = [];
   List latestNewsList = [];
 
-  //VIDEO PLAYER
-  late VideoPlayerController _controller;
-  final File newFile = File('File');
-  int _currentIndex= 0;
-  void _playVideo({required File file}){
-    _controller =VideoPlayerController.asset(AppAsset.sampleVideo)
-    ..addListener(() => setState(() {}))
-    ..setLooping(true)
-    ..initialize().then((value) => _controller.play());
-  }
 
-  // String _videoDuration(Duration duration){
-  //   String twoDigits(int n) => n.toString().padLeft(2, '0');
-  //   final hours = twoDigits(duration.inHours);
-  //   final minutes = twoDigits(duration.inMinutes.remainder(60));
-  //   final seconds = twoDigits(duration.inSeconds.remainder(60));
-  //
-  //   return[
-  //     if (duration.inHours > 0) hours,
-  //     minutes,
-  //     seconds,
-  //   ].join(':');
-  // }
-  @override
-  void initState() {
-    super.initState();
-    _playVideo(file :newFile);
-  }
+
 
   Widget build(BuildContext context) {
     return Scaffold(
@@ -72,15 +47,14 @@ class _CourseDetailsScreenState extends State<CourseDetailsScreen> {
           children: [
             SizedBoxH10(),
             Container(
-                  // decoration: BoxDecoration(
-                  //   borderRadius: BorderRadius.circular(15),
-                  //   image: DecorationImage(
-                  //     image: AssetImage(AppAsset.android),
-                  //     fit: BoxFit.cover,
-                  //   ),
-                  // ),
+                  decoration: BoxDecoration(
+                    borderRadius: BorderRadius.circular(15),
+                    image: DecorationImage(
+                      image: AssetImage(AppAsset.flutter),
+                      fit: BoxFit.cover,
+                    ),
+                  ),
               height: Sizes.s200.h,
-              child:VideoPlayer(_controller),
 
               ),
             SizedBoxH34(),
@@ -140,11 +114,7 @@ class _CourseDetailsScreenState extends State<CourseDetailsScreen> {
     );
 
   }
-  @override
-  void dispose() {
-    super.dispose();
-    _controller.dispose();
-  }
+
   Widget CoursesListContainer(String name,String minutes){
     return Column(
       children: [
@@ -200,7 +170,15 @@ class _CourseDetailsScreenState extends State<CourseDetailsScreen> {
                         SizedBox(
                           height: 30,
                           width: 25,
-                          child: Image.asset(AppAsset.playButton),
+                          child: GestureDetector(
+                              onTap:(){
+                                Navigator.push(
+                                    context,
+                                    MaterialPageRoute(
+                                        builder: (context) =>VideoPlayerScreen()));
+                                //  clearField();
+                              },
+                              child: Image.asset(AppAsset.playButton)),
                         ),
                       ],
                     ),

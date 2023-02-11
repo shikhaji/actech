@@ -106,7 +106,7 @@ class ApiService {
         Preferances.setString("userId", responseData.id);
         Preferances.setString("Token", responseData.token);
         Loader.hideLoader();
-        CommonFunctions.toast("login successfully");
+        CommonFunctions.toast("Login Successful");
       Navigator.pushNamed(context, Routs.mainHome);
 
         return responseData;
