@@ -1,8 +1,11 @@
 import 'package:ac_tech/model/course_category_model.dart';
 import 'package:ac_tech/services/api_services.dart';
+import 'package:ac_tech/utils/function.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
+import '../../routes/app_routes.dart';
+import '../../routes/arguments.dart';
 import '../../utils/app_assets.dart';
 import '../../utils/app_color.dart';
 import '../../utils/app_sizes.dart';
@@ -17,6 +20,7 @@ import '../../widgets/primary_textfield.dart';
 import '../../widgets/scrollview.dart';
 
 class CategoriesScreen extends StatefulWidget {
+
   const CategoriesScreen({Key? key}) : super(key: key);
 
   @override
@@ -84,10 +88,14 @@ class _CategoriesScreenState extends State<CategoriesScreen> {
                   itemCount: getAllCourses.length,
                   itemBuilder: (context, inx) {
                     return CoursesListContainer(
+                        image:getAllCourses[inx].courseImage ?? "",
                         name:getAllCourses[inx].ccName ?? "",
                         lessons: '10 Lessons',
-                        ratings: "3.4",
-                        amount: getAllCourses[inx].ccCommision ?? "",);
+                        amount: getAllCourses[inx].ccCommision ?? "",
+                        ccid: getAllCourses[inx].ccId ?? "",
+                        ccstatus: getAllCourses[inx].ccStatus ?? "",
+                    );
+
                   },
                 ),
               ),
@@ -106,92 +114,137 @@ class _CategoriesScreenState extends State<CategoriesScreen> {
         ));
   }
   Widget CoursesListContainer(
-  {required String name,
+  {required String image,
+  required String name,
   required String lessons,
-  required String ratings,
-  required String amount,}
+  required String amount,
+  required String ccid,
+  required String ccstatus,
+  }
       ){
     return Column(
       children: [
-        Container(
-          alignment: Alignment.center,
-          decoration: BoxDecoration(
-            color: AppColor.textFieldColor,
-            borderRadius: BorderRadius.circular(textFieldBorderRadius),
-          ),
-          child: Padding(
-            padding: const EdgeInsets.all(8.0),
-            child: Column(
-              children: [
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: [
+        GestureDetector(
+          onTap: (){
+            if(ccstatus=="0"){
+              Navigator.pushNamed(context, Routs.courseDetail,
+                  arguments: OtpArguments(
+                      ccId:ccid,
+                      ccName:name,
+                      ccImg:image,
 
-                    Expanded(
-                      child: Row(
-                        children: [
-                          Container(
-                              height: Sizes.s80.h,
-                              width: Sizes.s120.h,
-                              decoration: BoxDecoration(
-                                  borderRadius: BorderRadius.circular(15),
-                                  shape: BoxShape.rectangle,
-                                image: DecorationImage(
-                                  image: AssetImage(AppAsset.flutter),
-                                  fit: BoxFit.fitHeight,
-                                ),
-                              ),
-                          ),
-                          SizedBoxW8(),
-                      Column(
-                              mainAxisAlignment: MainAxisAlignment.start,
-                              crossAxisAlignment: CrossAxisAlignment.start,
-                              children: [
-                                appText(name,
-                                    style: AppTextStyle.alertSubtitle
-                                        .copyWith(fontSize: Sizes.s14.h),
-                                ),
-                                SizedBoxH6(),
-                                appText(lessons,
-                                    style: AppTextStyle.alertSubtitle
-                                        .copyWith(fontSize: Sizes.s14.h)),
-                                SizedBoxH6(),
-                                Row(
-                                  children: [
-                                    SizedBox(
-                                      height: 15,
-                                      width: 15,
-                                      child: Image.asset(AppAsset.star),
-                                    ),
-                                    SizedBoxW6(),
-                                    appText(ratings,
-                                        style: AppTextStyle.alertSubtitle
-                                            .copyWith(fontSize: Sizes.s14.h)),
-                                  ],
-                                ),
-                                SizedBoxH6(),
-                              ],
-                            ),
-                        ],
-                      ),
-                    ),
-
-                    Column(
+                  ));
+            }else{
+              showDialog(
+                context: context,
+                builder: (ctx) => AlertDialog(
+                  title: Text(
+                    "Payment for $name course",
+                    style: AppTextStyle.alertSubtitle,
+                  ),
+                  content: Text(
+                    "Amount: ${amount}",
+                    style: AppTextStyle.subTitle,
+                  ),
+                  actions: <Widget>[
+                    Row(
+                      mainAxisAlignment:
+                      MainAxisAlignment.spaceBetween,
                       children: [
-                        SizedBox(
-                          height: 30,
-                          width: 20,
-                          child: Image.asset(AppAsset.bookmark),
+                        TextButton(
+                          onPressed: () {
+                            Navigator.of(ctx).pop();
+                          },
+                          child: Container(
+                            color: Colors.white,
+                            padding: const EdgeInsets.all(14),
+                            child: const Text("Cancel"),
+                          ),
                         ),
-                        SizedBoxH8(),
-                        appText(amount,
-                            style: AppTextStyle.headingTextTile
-                                .copyWith(fontSize: Sizes.s18.h,color: AppColor.primaryColor)),
+                        TextButton(
+                          onPressed: () async {
+                            Navigator.pop(context);
+                          },
+                          child: Container(
+                            color: Colors.white,
+                            padding: const EdgeInsets.all(14),
+                            child: const Text("Pay Now"),
+                          ),
+                        ),
                       ],
                     ),
                   ],
                 ),
-              ],
+              );
+            }
+
+          },
+          child: Container(
+            alignment: Alignment.center,
+            decoration: BoxDecoration(
+              color: AppColor.textFieldColor,
+              borderRadius: BorderRadius.circular(textFieldBorderRadius),
+            ),
+            child: Padding(
+              padding: const EdgeInsets.all(8.0),
+              child: Column(
+                children: [
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+
+                      Expanded(
+                        child: Row(
+                          children: [
+                            Container(
+                                height: Sizes.s80.h,
+                                width: Sizes.s120.h,
+                                decoration: BoxDecoration(
+                                    borderRadius: BorderRadius.circular(15),
+                                    shape: BoxShape.rectangle,
+                                  image: DecorationImage(
+                                    image:  NetworkImage("https://www.actechindia.org/uploads/${image}"),
+                                    fit: BoxFit.fitHeight,
+                                  ),
+                                ),
+                            ),
+                            SizedBoxW8(),
+                        Column(
+                                mainAxisAlignment: MainAxisAlignment.start,
+                                crossAxisAlignment: CrossAxisAlignment.start,
+                                children: [
+                                  appText(name,
+                                      style: AppTextStyle.alertSubtitle
+                                          .copyWith(fontSize: Sizes.s14.h),
+                                  ),
+                                  SizedBoxH8(),
+                                  appText(lessons,
+                                      style: AppTextStyle.alertSubtitle)
+
+
+                                ],
+                              ),
+                          ],
+                        ),
+                      ),
+
+                      Column(
+                        children: [
+                          SizedBox(
+                            height: 30,
+                            width: 20,
+                            child: Image.asset(AppAsset.bookmark),
+                          ),
+                          SizedBoxH8(),
+                          appText(amount,
+                              style: AppTextStyle.headingTextTile
+                                  .copyWith(fontSize: Sizes.s18.h,color: AppColor.primaryColor)),
+                        ],
+                      ),
+                    ],
+                  ),
+                ],
+              ),
             ),
           ),
         ),
