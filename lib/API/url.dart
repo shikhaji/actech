@@ -10,5 +10,7 @@ class EndPoints {
   static const String login = '$baseUrl/$get/login';
   static const String slider = '$baseUrl/$get/get_slidder';
   static const String fquestion = '$baseUrl/$get/get_all_fquestion';
+  static const String getAllCourseCategory = '$baseUrl/$get/get_all_course_category';
+  static const String getAllCourseCategoryId = '$baseUrl/$get/get_all_course_by_categoryid';
 
 }
