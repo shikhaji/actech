@@ -78,7 +78,9 @@ class RoutGenerator {
 
       case Routs.courseDetail:
         return MaterialPageRoute(
-            builder: (_) => CourseDetailsScreen());
+            builder: (_) => CourseDetailsScreen(
+              arguments: arguments as OtpArguments,
+            ));
 
       default:
         return null;

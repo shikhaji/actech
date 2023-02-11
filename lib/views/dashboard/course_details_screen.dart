@@ -3,10 +3,14 @@ import 'dart:io';
 import 'package:ac_tech/views/dashboard/video_player_screen.dart';
 import 'package:ac_tech/views/dashboard/home_screen.dart';
 import 'package:carousel_slider/carousel_controller.dart';
+import 'package:dio/dio.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:video_player/video_player.dart';
 
+import '../../model/course_categoryid_model.dart';
+import '../../routes/arguments.dart';
+import '../../services/api_services.dart';
 import '../../utils/app_assets.dart';
 import '../../utils/app_color.dart';
 import '../../utils/app_sizes.dart';
@@ -21,28 +25,42 @@ import '../../widgets/primary_textfield.dart';
 import '../../widgets/scrollview.dart';
 
 class CourseDetailsScreen extends StatefulWidget {
-  const CourseDetailsScreen({Key? key}) : super(key: key);
+  final OtpArguments? arguments;
+  const CourseDetailsScreen({Key? key, this.arguments}) : super(key: key);
 
   @override
   State<CourseDetailsScreen> createState() => _CourseDetailsScreenState();
 }
 
 class _CourseDetailsScreenState extends State<CourseDetailsScreen> {
+  List<Course> getAllCourseDetails=[];
 
-  final GlobalKey<ScaffoldState> _scaffoldKey = GlobalKey<ScaffoldState>();
-  CarouselController buttonCarouselController = CarouselController();
-  final TextEditingController _search = TextEditingController();
+  @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
 
-  List sliderImageList = [];
-  List latestNewsList = [];
+    callApi();
+  }
 
 
+  Future<void> callApi() async {
+    FormData data() {
+      return FormData.fromMap({
+        "cc_id": widget.arguments?.ccId,
+      });
+    }
+    ApiService().categoryById(context,data: data()).then((value){
 
+      setState(() {
+        getAllCourseDetails=value.course!;
+      });
+    });
 
+  }
+  @override
   Widget build(BuildContext context) {
     return Scaffold(
-        key: _scaffoldKey,
-
         body: CustomScroll(
           children: [
             SizedBoxH10(),
@@ -50,7 +68,7 @@ class _CourseDetailsScreenState extends State<CourseDetailsScreen> {
                   decoration: BoxDecoration(
                     borderRadius: BorderRadius.circular(15),
                     image: DecorationImage(
-                      image: AssetImage(AppAsset.flutter),
+                      image:  NetworkImage("https://www.actechindia.org/uploads/${widget.arguments?.ccImg}"),
                       fit: BoxFit.cover,
                     ),
                   ),
@@ -77,10 +95,10 @@ class _CourseDetailsScreenState extends State<CourseDetailsScreen> {
             SizedBoxH20(),
             Align(
                 alignment: Alignment.topLeft,
-                child: appText("Flutter Beginners",style: AppTextStyle.title)
+                child: appText("${widget.arguments?.ccName}",style: AppTextStyle.title)
             ),
             SizedBoxH10(),
-            Text("Lorem ipsum dolor sit amet. Ad culpa quia aut facilis accusantium autdolores quisquam aut sunt voluptatibus et Quis similique. Ex magni eiuseum harum ipsa hic rerum accusamus aut sint molestias. Aut consecteturtotam sit nihil vitae ex voluptatibus accusantium ut suscipit quae aut iureeaque et ",style: AppTextStyle.subTitle),
+            Text("${widget.arguments?.ccId}"),
             SizedBoxH30(),
             Row(
               children:[Text("5 Lessons (8 hours)",style: AppTextStyle.alertSubtitle)],
@@ -93,11 +111,12 @@ class _CourseDetailsScreenState extends State<CourseDetailsScreen> {
                   padding: EdgeInsets.symmetric(vertical: Sizes.s20.h),
                   shrinkWrap: true,
                   physics: const NeverScrollableScrollPhysics(),
-                  itemCount: 5,
+                  itemCount: getAllCourseDetails.length,
                   itemBuilder: (context, inx) {
                     return CoursesListContainer(
-                        "UI Design",
-                        "20 Minutes");
+                       image: getAllCourseDetails[inx].courseImage ?? "",
+                       name: getAllCourseDetails[inx].ccName ?? "",
+                       minutes: "20 Minutes");
                   },
                 ),
               ),
@@ -107,7 +126,7 @@ class _CourseDetailsScreenState extends State<CourseDetailsScreen> {
           ],
         ),
         appBar: SecondaryAppBar(
-          title: "UI Design",
+          title: "${widget.arguments?.ccName}",
           isLeading: true,
           leadingIcon: Icons.arrow_back,
         )
@@ -115,7 +134,12 @@ class _CourseDetailsScreenState extends State<CourseDetailsScreen> {
 
   }
 
-  Widget CoursesListContainer(String name,String minutes){
+  Widget CoursesListContainer({
+    required String image,
+    required String name,
+    required String minutes,
+
+  }){
     return Column(
       children: [
         Container(
@@ -141,7 +165,7 @@ class _CourseDetailsScreenState extends State<CourseDetailsScreen> {
                             decoration: BoxDecoration(
                               borderRadius: BorderRadius.circular(15),
                               image: DecorationImage(
-                                image: AssetImage(AppAsset.flutter),
+                                image: NetworkImage("https://www.actechindia.org/uploads/${image}"),
                                 fit: BoxFit.cover,
                               ),
                             ),
@@ -216,4 +240,5 @@ class Indicator extends StatelessWidget {
           border: Border.all(color: Colors.black, width: 2.0)),
     );
   }
+
 }

@@ -7,6 +7,7 @@ import 'package:fluttertoast/fluttertoast.dart';
 
 import '../API/dio_client.dart';
 import '../API/url.dart';
+import '../model/course_categoryid_model.dart';
 import '../model/login_model.dart';
 import '../model/mobile_verify_model.dart';
 import '../model/slider_model.dart';
@@ -221,6 +222,37 @@ class ApiService {
         GetAllCourseCategory responseData = GetAllCourseCategory.fromJson(response.data);
         Loader.hideLoader();
         debugPrint('responseData ----- > ${response.data}');
+        return responseData;
+      } else {
+        Loader.hideLoader();
+        throw Exception(response.data);
+      }
+    } on DioError catch (e) {
+      Loader.hideLoader();
+      debugPrint('Dio E  $e');
+      throw e.error;
+    }
+  }
+
+  //----------------------------COURSE CATEGORY BY ID API-----------------------//
+  Future<GetAllCourseCategoryId> categoryById(
+      BuildContext context, {
+        FormData? data,
+      }) async {
+    try {
+      Loader.showLoader();
+      Response response;
+      response = await dio.post(EndPoints.getAllCourseCategoryId,
+          options: Options(headers: {
+            "Client-Service": "frontend-client",
+            "Auth-Key": 'simplerestapi',
+          }),
+          data: data);
+
+      if (response.statusCode == 200) {
+        GetAllCourseCategoryId responseData = GetAllCourseCategoryId.fromJson(response.data);
+        Loader.hideLoader();
+        debugPrint('responseData ----- > $responseData');
         return responseData;
       } else {
         Loader.hideLoader();
