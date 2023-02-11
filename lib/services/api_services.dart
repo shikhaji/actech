@@ -1,3 +1,4 @@
+import 'package:ac_tech/model/fquestion_model.dart';
 import 'package:ac_tech/services/shared_preferences.dart';
 import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
@@ -160,26 +161,7 @@ class ApiService {
   }
 
   //-----------------------SLIDER API-----------------------//
-  // Future<SliderModel> slider() async {
-  //   try {
-  //     Loader.showLoader();
-  //     Response response;
-  //     response = await dio.post(EndPoints.slider);
-  //     if (response.statusCode == 200) {
-  //       SliderModel responseData = SliderModel.fromJson(response.data);
-  //       Loader.hideLoader();
-  //       debugPrint('responseData ----- > ${response.data}');
-  //       return responseData;
-  //     } else {
-  //       Loader.hideLoader();
-  //       throw Exception(response.data);
-  //     }
-  //   } on DioError catch (e) {
-  //     Loader.hideLoader();
-  //     debugPrint('Dio E  $e');
-  //     throw e.error;
-  //   }
-  // }
+
   Future<SliderModel> slider(BuildContext context,) async {
     try {
       Loader.showLoader();
@@ -188,6 +170,30 @@ class ApiService {
 
       if (response.statusCode == 200) {
         SliderModel responseData = SliderModel.fromJson(response.data);
+        Loader.hideLoader();
+        debugPrint('responseData ----- > ${response.data}');
+        return responseData;
+      } else {
+        Loader.hideLoader();
+        throw Exception(response.data);
+      }
+    } on DioError catch (e) {
+      Loader.hideLoader();
+      debugPrint('Dio E  $e');
+      throw e.error;
+    }
+  }
+
+  //-----------------------FAQ API-----------------------//
+
+  Future<FquestionModel> fquestion(BuildContext context,) async {
+    try {
+      Loader.showLoader();
+      Response response;
+      response = await dio.post(EndPoints.fquestion);
+
+      if (response.statusCode == 200) {
+        FquestionModel responseData = FquestionModel.fromJson(response.data);
         Loader.hideLoader();
         debugPrint('responseData ----- > ${response.data}');
         return responseData;

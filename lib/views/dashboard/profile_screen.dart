@@ -2,6 +2,7 @@ import 'package:ac_tech/widgets/custom_size_box.dart';
 import 'package:carousel_slider/carousel_controller.dart';
 import 'package:flutter/material.dart';
 
+import '../../routes/app_routes.dart';
 import '../../utils/app_assets.dart';
 import '../../utils/app_color.dart';
 import '../../utils/app_sizes.dart';
@@ -95,6 +96,21 @@ class _ProfileScreenState extends State<ProfileScreen> {
                   borderRadius: BorderRadius.circular(15)
               ),
               child: _ProfileListTile.asset(
+                title: 'FAQ',
+                onTap: () {
+                  Navigator.pushNamed(context, Routs.fquestion);
+                },
+                child: Icon(Icons.format_list_bulleted_sharp),
+              ),
+            ),
+            SizedBoxH18(),
+            Container(
+              width: double.infinity,
+              decoration: BoxDecoration(
+                  color: AppColor.textFieldColor,
+                  borderRadius: BorderRadius.circular(15)
+              ),
+              child: _ProfileListTile.asset(
                 title: 'My Order',
                 onTap: () {},
                 child: Icon(Icons.format_list_bulleted_sharp),
@@ -178,7 +194,6 @@ class _ProfileListTile extends StatelessWidget {
         color: Colors.black,
       ),
       onTap: () {
-        Navigator.pop(context);
         onTap();
       },
     );

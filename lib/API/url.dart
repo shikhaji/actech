@@ -9,5 +9,6 @@ class EndPoints {
   static const String updatePassword = '$baseUrl/$post/update_reset_pasword';
   static const String login = '$baseUrl/$get/login';
   static const String slider = '$baseUrl/$get/get_slidder';
+  static const String fquestion = '$baseUrl/$get/get_all_fquestion';
 
 }

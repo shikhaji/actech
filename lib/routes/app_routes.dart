@@ -8,6 +8,7 @@ import '../views/auth/login_screen.dart';
 import '../views/auth/mobile_verification_screen.dart';
 import '../views/auth/otp_verification_screen.dart';
 import '../views/auth/signUp.dart';
+import '../views/dashboard/fquestionScreen.dart';
 import '../views/splash/splash_screen.dart';
 import 'arguments.dart';
 
@@ -20,6 +21,7 @@ class Routs {
   static const String otp = "/otp_verification_screen";
   static const String mobileVerification = "/mobile_verification_screen";
   static const String mainHome = "/main_home_screen";
+  static const String fquestion = "/fquestionScreen";
 
 }
 
@@ -61,6 +63,10 @@ class RoutGenerator {
       case Routs.resetPassword:
         return MaterialPageRoute(
             builder: (_) => ResetPasswordScreen(arguments: arguments as OtpArguments,));
+
+      case Routs.fquestion:
+        return MaterialPageRoute(
+            builder: (_) => FquestionScreen());
 
       default:
         return null;
