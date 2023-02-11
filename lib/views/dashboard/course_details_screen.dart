@@ -32,7 +32,7 @@ class _CourseDetailsScreenState extends State<CourseDetailsScreen> {
   final GlobalKey<ScaffoldState> _scaffoldKey = GlobalKey<ScaffoldState>();
   CarouselController buttonCarouselController = CarouselController();
   final TextEditingController _search = TextEditingController();
-  int _selectedSliderIndex = 0;
+
   List sliderImageList = [];
   List latestNewsList = [];
 

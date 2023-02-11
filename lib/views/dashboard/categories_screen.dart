@@ -1,5 +1,5 @@
-import 'package:carousel_slider/carousel_controller.dart';
-import 'package:carousel_slider/carousel_slider.dart';
+import 'package:ac_tech/model/course_category_model.dart';
+import 'package:ac_tech/services/api_services.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
@@ -24,14 +24,25 @@ class CategoriesScreen extends StatefulWidget {
 }
 
 class _CategoriesScreenState extends State<CategoriesScreen> {
+  List<Course> getAllCourses=[];
   final GlobalKey<ScaffoldState> _scaffoldKey = GlobalKey<ScaffoldState>();
-  CarouselController buttonCarouselController = CarouselController();
   final TextEditingController _search = TextEditingController();
-  // int _selectedSliderIndex = 0;
-  List sliderImageList = [];
-  List latestNewsList = [];
+
+
+
   void openDrawer() {
     _scaffoldKey.currentState?.openDrawer();
+  }
+
+  @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+    ApiService().getAllCourses(context).then((value){
+      setState(() {
+        getAllCourses=value.course!;
+      });
+    });
   }
   @override
   Widget build(BuildContext context) {
@@ -70,13 +81,13 @@ class _CategoriesScreenState extends State<CategoriesScreen> {
                   padding: EdgeInsets.symmetric(vertical: Sizes.s20.h),
                   shrinkWrap: true,
                   physics: const NeverScrollableScrollPhysics(),
-                  itemCount: 10,
+                  itemCount: getAllCourses.length,
                   itemBuilder: (context, inx) {
                     return CoursesListContainer(
-                        "UI Design",
-                        "10 Lessons",
-                        "4.5",
-                        "₹999");
+                        name:getAllCourses[inx].ccName ?? "",
+                        lessons: '10 Lessons',
+                        ratings: "3.4",
+                        amount: getAllCourses[inx].ccCommision ?? "",);
                   },
                 ),
               ),
@@ -94,7 +105,12 @@ class _CategoriesScreenState extends State<CategoriesScreen> {
           },
         ));
   }
-  Widget CoursesListContainer(String name,String lessons,String ratings,String amount){
+  Widget CoursesListContainer(
+  {required String name,
+  required String lessons,
+  required String ratings,
+  required String amount,}
+      ){
     return Column(
       children: [
         Container(
@@ -111,7 +127,7 @@ class _CategoriesScreenState extends State<CategoriesScreen> {
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
 
-                    Container(
+                    Expanded(
                       child: Row(
                         children: [
                           Container(
@@ -127,34 +143,35 @@ class _CategoriesScreenState extends State<CategoriesScreen> {
                               ),
                           ),
                           SizedBoxW8(),
-                          Column(
-                            mainAxisAlignment: MainAxisAlignment.start,
-                            crossAxisAlignment: CrossAxisAlignment.start,
-                            children: [
-                              appText(name,
-                                  style: AppTextStyle.alertSubtitle
-                                      .copyWith(fontSize: Sizes.s16.h)),
-                              SizedBoxH6(),
-                              appText(lessons,
-                                  style: AppTextStyle.alertSubtitle
-                                      .copyWith(fontSize: Sizes.s16.h)),
-                              SizedBoxH6(),
-                              Row(
-                                children: [
-                                  SizedBox(
-                                    height: 15,
-                                    width: 15,
-                                    child: Image.asset(AppAsset.star),
-                                  ),
-                                  SizedBoxW6(),
-                                  appText(ratings,
-                                      style: AppTextStyle.alertSubtitle
-                                          .copyWith(fontSize: Sizes.s16.h)),
-                                ],
-                              ),
-                              SizedBoxH6(),
-                            ],
-                          ),
+                      Column(
+                              mainAxisAlignment: MainAxisAlignment.start,
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: [
+                                appText(name,
+                                    style: AppTextStyle.alertSubtitle
+                                        .copyWith(fontSize: Sizes.s14.h),
+                                ),
+                                SizedBoxH6(),
+                                appText(lessons,
+                                    style: AppTextStyle.alertSubtitle
+                                        .copyWith(fontSize: Sizes.s14.h)),
+                                SizedBoxH6(),
+                                Row(
+                                  children: [
+                                    SizedBox(
+                                      height: 15,
+                                      width: 15,
+                                      child: Image.asset(AppAsset.star),
+                                    ),
+                                    SizedBoxW6(),
+                                    appText(ratings,
+                                        style: AppTextStyle.alertSubtitle
+                                            .copyWith(fontSize: Sizes.s14.h)),
+                                  ],
+                                ),
+                                SizedBoxH6(),
+                              ],
+                            ),
                         ],
                       ),
                     ),
