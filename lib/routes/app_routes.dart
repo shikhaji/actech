@@ -1,5 +1,7 @@
 
 import 'package:ac_tech/views/auth/reset_password_screen.dart';
+import 'package:ac_tech/views/dashboard/course_details_screen.dart';
+import 'package:ac_tech/views/dashboard/video_player_screen.dart';
 import 'package:ac_tech/views/dashboard/main_home_screen.dart';
 import 'package:flutter/material.dart';
 
@@ -20,6 +22,8 @@ class Routs {
   static const String otp = "/otp_verification_screen";
   static const String mobileVerification = "/mobile_verification_screen";
   static const String mainHome = "/main_home_screen";
+  static const String courseDetail = "/course_details_screen";
+  static const String videoPlayer = "/video_player_screen";
 
 }
 
@@ -61,6 +65,14 @@ class RoutGenerator {
       case Routs.resetPassword:
         return MaterialPageRoute(
             builder: (_) => ResetPasswordScreen(arguments: arguments as OtpArguments,));
+
+      case Routs.videoPlayer:
+        return MaterialPageRoute(
+            builder: (_) => VideoPlayerScreen());
+
+      case Routs.courseDetail:
+        return MaterialPageRoute(
+            builder: (_) => CourseDetailsScreen());
 
       default:
         return null;
