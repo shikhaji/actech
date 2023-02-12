@@ -3,6 +3,7 @@ import 'package:ac_tech/services/api_services.dart';
 import 'package:ac_tech/utils/function.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:razorpay_flutter/razorpay_flutter.dart';
 
 import '../../routes/app_routes.dart';
 import '../../routes/arguments.dart';
@@ -31,6 +32,7 @@ class _CategoriesScreenState extends State<CategoriesScreen> {
   List<Course> getAllCourses=[];
   final GlobalKey<ScaffoldState> _scaffoldKey = GlobalKey<ScaffoldState>();
   final TextEditingController _search = TextEditingController();
+  late var _razorpay;
 
 
 
@@ -42,12 +44,31 @@ class _CategoriesScreenState extends State<CategoriesScreen> {
   void initState() {
     // TODO: implement initState
     super.initState();
+    _razorpay = Razorpay();
+    _razorpay.on(Razorpay.EVENT_PAYMENT_SUCCESS, _handlePaymentSuccess);
+    _razorpay.on(Razorpay.EVENT_PAYMENT_ERROR, _handlePaymentError);
+    _razorpay.on(Razorpay.EVENT_EXTERNAL_WALLET, _handleExternalWallet);
     ApiService().getAllCourses(context).then((value){
       setState(() {
-        getAllCourses=value.course!;
+        getAllCourses=value.course;
       });
     });
   }
+  String? paymentId;
+
+  void _handlePaymentSuccess(PaymentSuccessResponse response) {
+    paymentId = response.paymentId;
+    //Paymnet sucess api call;
+  }
+
+  void _handlePaymentError(PaymentFailureResponse response) {
+    print("Payment Fail");
+  }
+
+  void _handleExternalWallet(ExternalWalletResponse response) {
+    // Do something when an external wallet is selected
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -126,7 +147,7 @@ class _CategoriesScreenState extends State<CategoriesScreen> {
       children: [
         GestureDetector(
           onTap: (){
-            if(ccstatus=="0"){
+            if(ccstatus=="1"){
               Navigator.pushNamed(context, Routs.courseDetail,
                   arguments: OtpArguments(
                       ccId:ccid,
@@ -163,7 +184,23 @@ class _CategoriesScreenState extends State<CategoriesScreen> {
                         ),
                         TextButton(
                           onPressed: () async {
+                            Razorpay razorpay = Razorpay();
                             Navigator.pop(context);
+                            var options = {
+                              'key': 'rzp_test_YoriHE0YT6XVEs',
+                              'amount': int.parse(amount) * 100,
+                              'name': 'Ac-Tech',
+                              'description': 'Course Purchased',
+                              'send_sms_hash': true,
+                              'prefill': {
+                                'contact': 'Yashil Patel',
+                                'email': 'yashil@gmail.com',
+                                'phone': '9979966965',
+                              },
+                            };
+                            razorpay.open(options);
+                            razorpay.on(Razorpay.EVENT_PAYMENT_SUCCESS,
+                                _handlePaymentSuccess);
                           },
                           child: Container(
                             color: Colors.white,
