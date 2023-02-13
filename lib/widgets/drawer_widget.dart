@@ -24,7 +24,7 @@ class DrawerWidget extends StatefulWidget {
 }
 
 class _DrawerState extends State<DrawerWidget> {
-  List myProfileData=[];
+  Course? myProfileData;
 
   @override
   void initState() {
@@ -39,13 +39,13 @@ class _DrawerState extends State<DrawerWidget> {
 
     FormData data() {
       return FormData.fromMap({
-        "login_id":id?.replaceAll('"', '').replaceAll('"', '').toString(),
+        "loginid":id?.replaceAll('"', '').replaceAll('"', '').toString(),
       });
     }
     print("login id $id");
     ApiService().myProfile(context,data: data()).then((value){
       setState(() {
-        myProfileData=value.course! as List;
+        myProfileData=value.course!;
       });
     });
 
@@ -192,12 +192,12 @@ class _DrawerState extends State<DrawerWidget> {
                         ))),
                 ScreenUtil().setVerticalSpacing(10),
                 Text(
-                  "Provisioning Tech",
+                  "${myProfileData?.branchName}",
                   style: AppTextStyle.appBarTextTitle
                       .copyWith(color: AppColor.white),
                 ),
                 Text(
-                  "Provisioning@gmail.com",
+                  "${myProfileData?.branchEmail}",
                   style: AppTextStyle.lable.copyWith(color: AppColor.white),
                 )
               ],

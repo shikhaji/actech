@@ -1,8 +1,12 @@
 import 'package:ac_tech/widgets/custom_size_box.dart';
 import 'package:carousel_slider/carousel_controller.dart';
+import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
 
+import '../../model/my_profile_model.dart';
 import '../../routes/app_routes.dart';
+import '../../services/api_services.dart';
+import '../../services/shared_preferences.dart';
 import '../../utils/app_assets.dart';
 import '../../utils/app_color.dart';
 import '../../utils/app_sizes.dart';
@@ -21,13 +25,37 @@ class ProfileScreen extends StatefulWidget {
 
 class _ProfileScreenState extends State<ProfileScreen> {
   final GlobalKey<ScaffoldState> _scaffoldKey = GlobalKey<ScaffoldState>();
-  CarouselController buttonCarouselController = CarouselController();
-  final TextEditingController _search = TextEditingController();
-  // int _selectedSliderIndex = 0;
-  List sliderImageList = [];
-  List latestNewsList = [];
+
+
   void openDrawer() {
     _scaffoldKey.currentState?.openDrawer();
+  }
+
+  Course? myProfileData;
+
+  @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+
+    callApi();
+  }
+
+  Future<void> callApi() async {
+    String? id = await Preferances.getString("userId");
+
+    FormData data() {
+      return FormData.fromMap({
+        "loginid":id?.replaceAll('"', '').replaceAll('"', '').toString(),
+      });
+    }
+    print("login id $id");
+    ApiService().myProfile(context,data: data()).then((value){
+      setState(() {
+        myProfileData=value.course!;
+      });
+    });
+
   }
   @override
   Widget build(BuildContext context) {
@@ -61,15 +89,15 @@ class _ProfileScreenState extends State<ProfileScreen> {
             ),
              SizedBoxH10(),
              Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
+              crossAxisAlignment: CrossAxisAlignment.center,
               children: [
                 Text(
-                  "Provisioning Tech",
+                  "${myProfileData?.branchName ?? ""}",
                   style: AppTextStyle.headingTextTile2
                       .copyWith(fontSize: Sizes.s22),
                 ),
                 Text(
-                  "Provisioning@gmail.com",
+                  "${myProfileData?.branchEmail ?? ""}",
                   style: AppTextStyle.lable.copyWith(fontSize: Sizes.s16),
                 )
               ],
