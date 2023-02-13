@@ -31,8 +31,11 @@ class CategoriesScreen extends StatefulWidget {
 class _CategoriesScreenState extends State<CategoriesScreen> {
   List<Course> getAllCourses=[];
   final GlobalKey<ScaffoldState> _scaffoldKey = GlobalKey<ScaffoldState>();
-  final TextEditingController _search = TextEditingController();
+  final TextEditingController _searchController = TextEditingController();
   late var _razorpay;
+
+  List<Course> allCourseListRes = [];
+  bool _isSearching = false;
 
 
 
@@ -48,18 +51,47 @@ class _CategoriesScreenState extends State<CategoriesScreen> {
     _razorpay.on(Razorpay.EVENT_PAYMENT_SUCCESS, _handlePaymentSuccess);
     _razorpay.on(Razorpay.EVENT_PAYMENT_ERROR, _handlePaymentError);
     _razorpay.on(Razorpay.EVENT_EXTERNAL_WALLET, _handleExternalWallet);
-    ApiService().getAllCourses(context).then((value){
-      setState(() {
-        getAllCourses=value.course;
-      });
-    });
+   callApi();
   }
+  Future<void> callApi()async {
+    GetAllCourseCategory? _getAllCourseCategory= await ApiService().getAllCourses(context);
+    if(_getAllCourseCategory != null){
+
+      getAllCourses = _getAllCourseCategory.course!
+          .map((e) => Course.fromJson(e.toJson()))
+          .toList();
+      allCourseListRes = _getAllCourseCategory.course!
+          .map((e) => Course.fromJson(e.toJson()))
+          .toList();
+      setState(() {});
+    }
+  }
+
+  Future<void> _onSearchHandler(String qurey) async {
+    if (qurey.isNotEmpty) {
+      _isSearching = true;
+      getAllCourses = _isSearching ? searchCourse(qurey) : getAllCourses;
+    } else {
+      getAllCourses.clear();
+      getAllCourses = allCourseListRes;
+      _isSearching = false;
+    }
+    setState(() {});
+  }
+
+  List<Course> searchCourse(String qurey) {
+    return allCourseListRes
+        .where((e) => e.ccName!.toLowerCase().contains(qurey.toLowerCase()))
+        .toList();
+  }
+
   String? paymentId;
 
   void _handlePaymentSuccess(PaymentSuccessResponse response) {
     paymentId = response.paymentId;
     //Paymnet sucess api call;
   }
+
 
   void _handlePaymentError(PaymentFailureResponse response) {
     print("Payment Fail");
@@ -89,9 +121,28 @@ class _CategoriesScreenState extends State<CategoriesScreen> {
           children: [
             SizedBoxH18(),
             PrimaryTextField(
-              controller: _search,
-              hintText: "Search Here",
-              suffix: Icon(CupertinoIcons.search),
+              controller: _searchController,
+              onChanged: _onSearchHandler,
+              hintText: 'Search Doctor',
+              color: AppColor.textFieldColor,
+              suffix: _isSearching
+                  ? InkWell(
+                onTap: () {
+                  _searchController.clear();
+                  _isSearching = false;
+                  getAllCourses.clear();
+                  getAllCourses = allCourseListRes;
+                  setState(() {});
+                },
+                child: const Padding(
+                  padding: EdgeInsets.only(right: 10),
+                  child: Icon(
+                    Icons.clear,
+                    color: Colors.black,
+                  ),
+                ),
+              )
+                  : null,
             ),
 
            Align(

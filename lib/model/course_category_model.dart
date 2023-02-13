@@ -10,14 +10,14 @@ String getAllCourseCategoryToJson(GetAllCourseCategory data) => json.encode(data
 
 class GetAllCourseCategory {
   GetAllCourseCategory({
-    required this.status,
-    required this.message,
-    required this.course,
+     this.status,
+     this.message,
+     this.course,
   });
 
-  int status;
-  String message;
-  List<Course> course;
+  int? status;
+  String? message;
+  List<Course> ?course;
 
   factory GetAllCourseCategory.fromJson(Map<String, dynamic> json) => GetAllCourseCategory(
     status: json["status"],
@@ -28,32 +28,29 @@ class GetAllCourseCategory {
   Map<String, dynamic> toJson() => {
     "status": status,
     "message": message,
-    "course": List<dynamic>.from(course.map((x) => x.toJson())),
+    "course": List<dynamic>.from(course!.map((x) => x.toJson())),
   };
 }
 
 class Course {
   Course({
-    required this.ccId,
-    required this.ccTt,
-    required this.ccName,
-    required this.ccStatus,
-    required this.ccCommision,
-    required this.courseImage,
-    required this.ccTotalLessons,
+     this.ccId,
+     this.ccName,
+     this.ccStatus,
+     this.ccCommision,
+     this.courseImage,
+     this.ccTotalLessons,
   });
 
-  String ccId;
-  DateTime ccTt;
-  String ccName;
-  String ccStatus;
-  String ccCommision;
-  String courseImage;
-  String ccTotalLessons;
+  String? ccId;
+  String? ccName;
+  String? ccStatus;
+  String? ccCommision;
+  String? courseImage;
+  String? ccTotalLessons;
 
   factory Course.fromJson(Map<String, dynamic> json) => Course(
     ccId: json["CC_ID"],
-    ccTt: DateTime.parse(json["CC_TT"]),
     ccName: json["CC_NAME"],
     ccStatus: json["CC_STATUS"],
     ccCommision: json["CC_COMMISION"],
@@ -63,7 +60,6 @@ class Course {
 
   Map<String, dynamic> toJson() => {
     "CC_ID": ccId,
-    "CC_TT": ccTt.toIso8601String(),
     "CC_NAME": ccName,
     "CC_STATUS": ccStatus,
     "CC_COMMISION": ccCommision,

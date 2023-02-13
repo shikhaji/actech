@@ -43,7 +43,7 @@ void main() {
   //   sound: true,
   // );
   runApp(const MyApp());
-  disableCapture();
+  // disableCapture();
 }
 
 class MyApp extends StatelessWidget {
@@ -100,6 +100,6 @@ class _ScrollBehaviorModified extends ScrollBehavior {
     }
   }
 }
-disableCapture() async{
-  await FlutterWindowManager.addFlags(FlutterWindowManager.FLAG_SECURE);
-}
+// disableCapture() async{
+//   await FlutterWindowManager.addFlags(FlutterWindowManager.FLAG_SECURE);
+// }
