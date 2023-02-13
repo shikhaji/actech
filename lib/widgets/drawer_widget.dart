@@ -192,12 +192,12 @@ class _DrawerState extends State<DrawerWidget> {
                         ))),
                 ScreenUtil().setVerticalSpacing(10),
                 Text(
-                  "${myProfileData?.branchName}",
+                  "${myProfileData?.branchName ?? ""}",
                   style: AppTextStyle.appBarTextTitle
                       .copyWith(color: AppColor.white),
                 ),
                 Text(
-                  "${myProfileData?.branchEmail}",
+                  "${myProfileData?.branchEmail ?? ""}",
                   style: AppTextStyle.lable.copyWith(color: AppColor.white),
                 )
               ],

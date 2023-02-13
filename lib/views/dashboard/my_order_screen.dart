@@ -87,7 +87,7 @@ class _MyOrderScreenState extends State<MyOrderScreen> {
                     image: myOrderList[inx].courseImage ?? "",
                     name:myOrderList[inx].ccName ?? "",
                     lessons: myOrderList[inx].ccTotalLessons ?? "",
-                    amount: myOrderList[inx].ccCommision ?? "",);
+                    amount:"₹${myOrderList[inx].ccCommision ?? ""}",);
               },
             ),
           ],
@@ -159,11 +159,6 @@ class _MyOrderScreenState extends State<MyOrderScreen> {
 
                     Column(
                       children: [
-                        SizedBox(
-                          height: 30,
-                          width: 20,
-                          child: Image.asset(AppAsset.bookmarkFill),
-                        ),
                         SizedBoxH8(),
                         appText(amount,
                             style: AppTextStyle.headingTextTile

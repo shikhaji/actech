@@ -1,15 +1,12 @@
 import 'package:ac_tech/routes/app_routes.dart';
 import 'package:ac_tech/utils/screen_utils.dart';
 import 'package:ac_tech/utils/theme_utils.dart';
-import 'package:ac_tech/views/auth/login_screen.dart';
-import 'package:ac_tech/views/dashboard/course_details_screen.dart';
-import 'package:ac_tech/views/dashboard/home_screen.dart';
-import 'package:ac_tech/views/dashboard/main_home_screen.dart';
-import 'package:ac_tech/views/splash/splash_screen.dart';
+import 'package:flutter_windowmanager/flutter_windowmanager.dart';
 import 'package:bot_toast/bot_toast.dart';
 import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_local_notifications/flutter_local_notifications.dart';
+import 'package:flutter_windowmanager/flutter_windowmanager.dart';
 import 'package:get/get_navigation/src/root/get_material_app.dart';
 import 'package:sizer/sizer.dart';
 import 'package:firebase_core/firebase_core.dart';
@@ -46,6 +43,7 @@ void main() {
   //   sound: true,
   // );
   runApp(const MyApp());
+  disableCapture();
 }
 
 class MyApp extends StatelessWidget {
@@ -66,7 +64,7 @@ class MyApp extends StatelessWidget {
         debugShowCheckedModeBanner: false,
         themeMode: ThemeMode.system,
         theme: ThemeUtils.lightTheme,
-        initialRoute: Routs.splash,
+        initialRoute: Routs.mainHome,
         onGenerateRoute: RoutGenerator.generateRoute,
         builder: (context, child) {
           return ScrollConfiguration(
@@ -101,4 +99,7 @@ class _ScrollBehaviorModified extends ScrollBehavior {
         return const ClampingScrollPhysics();
     }
   }
+}
+disableCapture() async{
+  await FlutterWindowManager.addFlags(FlutterWindowManager.FLAG_SECURE);
 }

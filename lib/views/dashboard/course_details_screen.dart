@@ -193,8 +193,8 @@ class _CourseDetailsScreenState extends State<CourseDetailsScreen> {
                     Column(
                       children: [
                         SizedBox(
-                          height: 30,
-                          width: 25,
+                          height: 90,
+                          width: 35,
                           child: GestureDetector(
                               onTap:(){
                                 Navigator.push(
