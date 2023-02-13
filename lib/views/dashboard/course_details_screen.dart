@@ -11,6 +11,7 @@ import 'package:video_player/video_player.dart';
 import '../../model/course_categoryid_model.dart';
 import '../../routes/arguments.dart';
 import '../../services/api_services.dart';
+import '../../services/shared_preferences.dart';
 import '../../utils/app_assets.dart';
 import '../../utils/app_color.dart';
 import '../../utils/app_sizes.dart';
@@ -45,6 +46,7 @@ class _CourseDetailsScreenState extends State<CourseDetailsScreen> {
 
 
   Future<void> callApi() async {
+
     FormData data() {
       return FormData.fromMap({
         "cc_id": widget.arguments?.ccId,
@@ -114,8 +116,8 @@ class _CourseDetailsScreenState extends State<CourseDetailsScreen> {
                   itemCount: getAllCourseDetails.length,
                   itemBuilder: (context, inx) {
                     return CoursesListContainer(
-                       image: getAllCourseDetails[inx].courseImage ?? "",
-                       name: getAllCourseDetails[inx].ccName ?? "",
+
+                       name: getAllCourseDetails[inx].clName ?? "",
                        minutes: "20 Minutes");
                   },
                 ),
@@ -135,7 +137,6 @@ class _CourseDetailsScreenState extends State<CourseDetailsScreen> {
   }
 
   Widget CoursesListContainer({
-    required String image,
     required String name,
     required String minutes,
 
@@ -165,7 +166,7 @@ class _CourseDetailsScreenState extends State<CourseDetailsScreen> {
                             decoration: BoxDecoration(
                               borderRadius: BorderRadius.circular(15),
                               image: DecorationImage(
-                                image: NetworkImage("https://www.actechindia.org/uploads/${image}"),
+                                image:  NetworkImage("https://www.actechindia.org/uploads/${widget.arguments?.ccImg}"),
                                 fit: BoxFit.cover,
                               ),
                             ),

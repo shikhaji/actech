@@ -1,10 +1,14 @@
 import 'package:ac_tech/widgets/primary_button.dart';
+import 'package:dio/dio.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:flutter_svg/svg.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:shared_preferences/shared_preferences.dart';
-import '../routes/app_routes.dart';
+
+import '../model/my_profile_model.dart';
+import '../services/api_services.dart';
+import '../services/shared_preferences.dart';
 import '../utils/app_assets.dart';
 import '../utils/app_color.dart';
 import '../utils/app_sizes.dart';
@@ -12,9 +16,40 @@ import '../utils/app_text_style.dart';
 import '../utils/screen_utils.dart';
 import '../views/Auth/login_screen.dart';
 
-class DrawerWidget extends StatelessWidget {
-  const DrawerWidget({super.key});
+class DrawerWidget extends StatefulWidget {
 
+  const DrawerWidget({Key? key}) : super(key: key);
+  @override
+  State<DrawerWidget> createState() => _DrawerState();
+}
+
+class _DrawerState extends State<DrawerWidget> {
+  List myProfileData=[];
+
+  @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+
+    callApi();
+  }
+
+  Future<void> callApi() async {
+    String? id = await Preferances.getString("userId");
+
+    FormData data() {
+      return FormData.fromMap({
+        "login_id":id?.replaceAll('"', '').replaceAll('"', '').toString(),
+      });
+    }
+    print("login id $id");
+    ApiService().myProfile(context,data: data()).then((value){
+      setState(() {
+        myProfileData=value.course! as List;
+      });
+    });
+
+  }
   @override
   Widget build(BuildContext context) {
     return AnnotatedRegion<SystemUiOverlayStyle>(
@@ -172,6 +207,10 @@ class DrawerWidget extends StatelessWidget {
       ),
     );
   }
+
+
+
+
 }
 
 class _DrawerMenuListTile extends StatelessWidget {
@@ -204,3 +243,4 @@ class _DrawerMenuListTile extends StatelessWidget {
     );
   }
 }
+
