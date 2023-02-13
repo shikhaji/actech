@@ -1,6 +1,9 @@
-import 'package:carousel_slider/carousel_controller.dart';
+import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
 
+import '../../model/my_order_list_model.dart';
+import '../../services/api_services.dart';
+import '../../services/shared_preferences.dart';
 import '../../utils/app_assets.dart';
 import '../../utils/app_color.dart';
 import '../../utils/app_sizes.dart';
@@ -21,15 +24,39 @@ class MyOrderScreen extends StatefulWidget {
 }
 
 class _MyOrderScreenState extends State<MyOrderScreen> {
+  List<Course> myOrderList=[];
   final GlobalKey<ScaffoldState> _scaffoldKey = GlobalKey<ScaffoldState>();
-  CarouselController buttonCarouselController = CarouselController();
-  final TextEditingController _search = TextEditingController();
-  // int _selectedSliderIndex = 0;
-  List sliderImageList = [];
-  List latestNewsList = [];
+
+
+
   void openDrawer() {
     _scaffoldKey.currentState?.openDrawer();
   }
+  @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+
+    callApi();
+  }
+
+  Future<void> callApi() async {
+    String? id = await Preferances.getString("userId");
+
+    FormData data() {
+      return FormData.fromMap({
+        "login_id":id?.replaceAll('"', '').replaceAll('"', '').toString(),
+      });
+    }
+    print("login id $id");
+    ApiService().myOrderList(context,data: data()).then((value){
+      setState(() {
+        myOrderList=value.course!;
+      });
+    });
+
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -54,13 +81,13 @@ class _MyOrderScreenState extends State<MyOrderScreen> {
               padding: EdgeInsets.symmetric(vertical: Sizes.s20.h),
               shrinkWrap: true,
               physics: const NeverScrollableScrollPhysics(),
-              itemCount: 10,
+              itemCount: myOrderList.length,
               itemBuilder: (context, inx) {
                 return CoursesListContainer(
-                    "UI Design",
-                    "10 Lessons",
-                    "4.5",
-                    "₹999");
+                    image: myOrderList[inx].courseImage ?? "",
+                    name:myOrderList[inx].ccName ?? "",
+                    lessons: myOrderList[inx].ccTotalLessons ?? "",
+                    amount: myOrderList[inx].ccCommision ?? "",);
               },
             ),
           ],
@@ -74,7 +101,12 @@ class _MyOrderScreenState extends State<MyOrderScreen> {
           },
         ));
   }
-  Widget CoursesListContainer(String name,String lessons,String ratings,String amount){
+  Widget CoursesListContainer({
+    required String image,
+    required String name,
+    required String lessons,
+    required String amount,
+  }){
     return Column(
       children: [
         Container(
@@ -95,17 +127,18 @@ class _MyOrderScreenState extends State<MyOrderScreen> {
                       child: Row(
                         children: [
                           Container(
-                              height: Sizes.s80.h,
-                              width: Sizes.s120.h,
-                              decoration: BoxDecoration(
-                                  borderRadius: BorderRadius.circular(15),
-                                  shape: BoxShape.rectangle,
-                                image: DecorationImage(
-                                  image: AssetImage(AppAsset.python),
-                                  fit: BoxFit.fitHeight,
-                                ),
+                            height: Sizes.s80.h,
+                            width: Sizes.s120.h,
+                            decoration: BoxDecoration(
+                              borderRadius: BorderRadius.circular(15),
+                              shape: BoxShape.rectangle,
+                              image: DecorationImage(
+                                image:  NetworkImage("https://www.actechindia.org/uploads/${image}"),
+                                fit: BoxFit.fitHeight,
                               ),
+                            ),
                           ),
+
                           SizedBoxW8(),
                           Column(
                             mainAxisAlignment: MainAxisAlignment.start,
@@ -118,21 +151,6 @@ class _MyOrderScreenState extends State<MyOrderScreen> {
                               appText(lessons,
                                   style: AppTextStyle.alertSubtitle
                                       .copyWith(fontSize: Sizes.s16.h)),
-                              SizedBoxH6(),
-                              Row(
-                                children: [
-                                  SizedBox(
-                                    height: 15,
-                                    width: 15,
-                                    child: Image.asset(AppAsset.star),
-                                  ),
-                                  SizedBoxW6(),
-                                  appText(ratings,
-                                      style: AppTextStyle.alertSubtitle
-                                          .copyWith(fontSize: Sizes.s16.h)),
-                                ],
-                              ),
-                              SizedBoxH6(),
                             ],
                           ),
                         ],
@@ -166,25 +184,3 @@ class _MyOrderScreenState extends State<MyOrderScreen> {
   }
 }
 
-
-class Indicator extends StatelessWidget {
-  final bool isActive;
-  const Indicator({
-    Key? key,
-    required this.isActive,
-  }) : super(key: key);
-
-  @override
-  Widget build(BuildContext context) {
-    return AnimatedContainer(
-      duration: const Duration(milliseconds: 350),
-      height: 10.0,
-      margin: const EdgeInsets.symmetric(horizontal: 3.0),
-      width: isActive ? 10.0 : 10.0,
-      decoration: BoxDecoration(
-          color: isActive ? Colors.black : Colors.black,
-          borderRadius: BorderRadius.circular(8.0),
-          border: Border.all(color: Colors.black, width: 2.0)),
-    );
-  }
-}

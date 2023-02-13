@@ -111,7 +111,7 @@ class _CategoriesScreenState extends State<CategoriesScreen> {
                     return CoursesListContainer(
                         image:getAllCourses[inx].courseImage ?? "",
                         name:getAllCourses[inx].ccName ?? "",
-                        lessons: '10 Lessons',
+                        lessons: "${getAllCourses[inx].ccTotalLessons ?? ""} Lessons",
                         amount: getAllCourses[inx].ccCommision ?? "",
                         ccid: getAllCourses[inx].ccId ?? "",
                         ccstatus: getAllCourses[inx].ccStatus ?? "",

@@ -34,36 +34,52 @@ class GetAllCourseCategoryId {
 
 class Course {
   Course({
+    required this.clTt,
     required this.ccId,
-    required this.ccTt,
-    required this.ccName,
-    required this.ccStatus,
-    required this.ccCommision,
-    required this.courseImage,
+    required this.clName,
+    required this.clStatus,
+    required this.clId,
+    required this.courseCode,
+    required this.courseDuration,
+    required this.courseEligibility,
+    required this.coursePdf,
+    required this.clVideoUrl,
   });
 
+  DateTime clTt;
   String ccId;
-  DateTime ccTt;
-  String ccName;
-  String ccStatus;
-  String ccCommision;
-  String courseImage;
+  String clName;
+  String clStatus;
+  String clId;
+  String courseCode;
+  String courseDuration;
+  String courseEligibility;
+  String coursePdf;
+  String clVideoUrl;
 
   factory Course.fromJson(Map<String, dynamic> json) => Course(
+    clTt: DateTime.parse(json["CL_TT"]),
     ccId: json["CC_ID"],
-    ccTt: DateTime.parse(json["CC_TT"]),
-    ccName: json["CC_NAME"],
-    ccStatus: json["CC_STATUS"],
-    ccCommision: json["CC_COMMISION"],
-    courseImage: json["COURSE_IMAGE"],
+    clName: json["CL_NAME"],
+    clStatus: json["CL_STATUS"],
+    clId: json["CL_ID"],
+    courseCode: json["COURSE_CODE"],
+    courseDuration: json["COURSE_DURATION"],
+    courseEligibility: json["COURSE_ELIGIBILITY"],
+    coursePdf: json["COURSE_PDF"],
+    clVideoUrl: json["CL_VIDEO_URL"],
   );
 
   Map<String, dynamic> toJson() => {
+    "CL_TT": clTt.toIso8601String(),
     "CC_ID": ccId,
-    "CC_TT": ccTt.toIso8601String(),
-    "CC_NAME": ccName,
-    "CC_STATUS": ccStatus,
-    "CC_COMMISION": ccCommision,
-    "COURSE_IMAGE": courseImage,
+    "CL_NAME": clName,
+    "CL_STATUS": clStatus,
+    "CL_ID": clId,
+    "COURSE_CODE": courseCode,
+    "COURSE_DURATION": courseDuration,
+    "COURSE_ELIGIBILITY": courseEligibility,
+    "COURSE_PDF": coursePdf,
+    "CL_VIDEO_URL": clVideoUrl,
   };
 }

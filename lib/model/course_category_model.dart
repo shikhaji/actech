@@ -40,6 +40,7 @@ class Course {
     required this.ccStatus,
     required this.ccCommision,
     required this.courseImage,
+    required this.ccTotalLessons,
   });
 
   String ccId;
@@ -48,6 +49,7 @@ class Course {
   String ccStatus;
   String ccCommision;
   String courseImage;
+  String ccTotalLessons;
 
   factory Course.fromJson(Map<String, dynamic> json) => Course(
     ccId: json["CC_ID"],
@@ -56,6 +58,7 @@ class Course {
     ccStatus: json["CC_STATUS"],
     ccCommision: json["CC_COMMISION"],
     courseImage: json["COURSE_IMAGE"],
+    ccTotalLessons: json["CC_TOTAL_LESSONS"],
   );
 
   Map<String, dynamic> toJson() => {
@@ -65,5 +68,6 @@ class Course {
     "CC_STATUS": ccStatus,
     "CC_COMMISION": ccCommision,
     "COURSE_IMAGE": courseImage,
+    "CC_TOTAL_LESSONS": ccTotalLessons,
   };
 }

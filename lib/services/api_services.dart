@@ -1,5 +1,6 @@
 import 'package:ac_tech/model/course_category_model.dart';
 import 'package:ac_tech/model/fquestion_model.dart';
+import 'package:ac_tech/model/my_profile_model.dart';
 import 'package:ac_tech/services/shared_preferences.dart';
 import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
@@ -10,6 +11,7 @@ import '../API/url.dart';
 import '../model/course_categoryid_model.dart';
 import '../model/login_model.dart';
 import '../model/mobile_verify_model.dart';
+import '../model/my_order_list_model.dart';
 import '../model/slider_model.dart';
 import '../routes/app_routes.dart';
 import '../utils/function.dart';
@@ -253,6 +255,60 @@ class ApiService {
         GetAllCourseCategoryId responseData = GetAllCourseCategoryId.fromJson(response.data);
         Loader.hideLoader();
         debugPrint('responseData ----- > $responseData');
+        return responseData;
+      } else {
+        Loader.hideLoader();
+        throw Exception(response.data);
+      }
+    } on DioError catch (e) {
+      Loader.hideLoader();
+      debugPrint('Dio E  $e');
+      throw e.error;
+    }
+  }
+
+  //----------------------------MY ORDER LIST BY ID API-----------------------//
+  Future<MyOderListModel> myOrderList(
+      BuildContext context, {
+        FormData? data,
+      }) async {
+    try {
+      Loader.showLoader();
+      Response response;
+      response = await dio.post(EndPoints.getMyOrderList,
+          data: data);
+
+      if (response.statusCode == 200) {
+        MyOderListModel responseData = MyOderListModel.fromJson(response.data);
+        Loader.hideLoader();
+        debugPrint('responseData ----- > ${response.data}');
+        return responseData;
+      } else {
+        Loader.hideLoader();
+        throw Exception(response.data);
+      }
+    } on DioError catch (e) {
+      Loader.hideLoader();
+      debugPrint('Dio E  $e');
+      throw e.error;
+    }
+  }
+
+  //----------------------------MY PROFILE BY ID API-----------------------//
+  Future<MyProfileModel> myProfile(
+      BuildContext context, {
+        FormData? data,
+      }) async {
+    try {
+      Loader.showLoader();
+      Response response;
+      response = await dio.post(EndPoints.myProfile,
+          data: data);
+
+      if (response.statusCode == 200) {
+        MyProfileModel responseData = MyProfileModel.fromJson(response.data);
+        Loader.hideLoader();
+        debugPrint('responseData ----- > ${response.data}');
         return responseData;
       } else {
         Loader.hideLoader();
