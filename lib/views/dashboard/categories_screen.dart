@@ -112,7 +112,7 @@ class _CategoriesScreenState extends State<CategoriesScreen> {
                         image:getAllCourses[inx].courseImage ?? "",
                         name:getAllCourses[inx].ccName ?? "",
                         lessons: "${getAllCourses[inx].ccTotalLessons ?? ""} Lessons",
-                        amount: getAllCourses[inx].ccCommision ?? "",
+                        amount: "₹${getAllCourses[inx].ccCommision ?? ""}",
                         ccid: getAllCourses[inx].ccId ?? "",
                         ccstatus: getAllCourses[inx].ccStatus ?? "",
                     );
@@ -147,7 +147,7 @@ class _CategoriesScreenState extends State<CategoriesScreen> {
       children: [
         GestureDetector(
           onTap: (){
-            if(ccstatus=="1"){
+            if(ccstatus=="0"){
               Navigator.pushNamed(context, Routs.courseDetail,
                   arguments: OtpArguments(
                       ccId:ccid,
@@ -267,11 +267,6 @@ class _CategoriesScreenState extends State<CategoriesScreen> {
 
                       Column(
                         children: [
-                          SizedBox(
-                            height: 30,
-                            width: 20,
-                            child: Image.asset(AppAsset.bookmark),
-                          ),
                           SizedBoxH8(),
                           appText(amount,
                               style: AppTextStyle.headingTextTile

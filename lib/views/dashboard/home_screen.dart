@@ -252,11 +252,6 @@ class _HomeScreenState extends State<HomeScreen> {
 
                     Column(
                       children: [
-                        SizedBox(
-                            height: 30,
-                            width: 20,
-                          child: Image.asset(AppAsset.bookmark),
-                        ),
                         SizedBoxH8(),
                         appText(amount,
                             style: AppTextStyle.headingTextTile

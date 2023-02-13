@@ -73,117 +73,100 @@ class _VideoPlayerScreenState extends State<VideoPlayerScreen> {
         body: CustomScroll(
           children: [
             SizedBoxH10(),
-            Container(
-              // decoration: BoxDecoration(
-              //   borderRadius: BorderRadius.circular(15),
-              //   image: DecorationImage(
-              //     image: AssetImage(AppAsset.android),
-              //     fit: BoxFit.cover,
-              //   ),
-              // ),
-              height: Sizes.s300.h,
-              child:_controller.value.isInitialized
-                ?Column(
-                children: <Widget>[
-                  Stack(
-                    children:[ SizedBox(
-                      height: Sizes.s200,
-                      child: VideoPlayer(_controller),
-                    ),
-                      Positioned(
+            GestureDetector(
+              onTap: (){
+                      _controller.value.isPlaying
+                      ?_controller.pause()
+                      :_controller.play();
+                  // icon: Icon(
+                  //   _controller.value.isPlaying
+                  //       ?Icons.pause
+                  //       :Icons.play_arrow,
+                  //   color: Colors.black,
+                  //   size: 40,
+                  // ),
+
+              },
+              child: Container(
+                height: Sizes.s300.h,
+                child:_controller.value.isInitialized
+                  ?Column(
+                  children: <Widget>[
+                    Stack(
+                      children:[
+                        SizedBox(
+                        height: Sizes.s200,
+                        child: VideoPlayer(_controller),
+                      ),
+                        Positioned(
+                        top: 150,
                         bottom: 0,
                         right: 0,
-                        child: IconButton(
-                          onPressed: (){
-                            Navigator.of(context).push(
-                              MaterialPageRoute(builder: (context)=>LandscapePlayerPage(controller:_controller),
+                        left: 0,
+                          child: Row(
+                            crossAxisAlignment: CrossAxisAlignment.center,
+                            children: [
+                              ValueListenableBuilder(
+                                  valueListenable: _controller,
+                                  builder:
+                                      (context,VideoPlayerValue value,child){
+                                    return Text(
+                                      _videoDuration(value.position),
+                                      style: TextStyle(
+                                        color: Colors.black,
+                                        fontSize: 15,
+                                      ),
+                                    );
+                                  }
                               ),
-                            );
-                          },
-                          icon: Icon(
-                            Icons.fullscreen,
-                            color: Colors.black,
-                            size: 40,
+                              Expanded(
+                                child: SizedBox(
+                                  height: Sizes.s20,
+                                  child: VideoProgressIndicator(
+                                    _controller,
+                                    allowScrubbing: true,
+                                    padding: EdgeInsets.symmetric(
+                                      vertical: 5,
+                                      horizontal: 0,
+                                    ),
+                                  ),
+                                ),
+                              ),
+                              Text(
+                                _videoDuration(_controller.value.duration),
+                                style: TextStyle(
+                                  color: Colors.black,
+                                  fontSize: 15,
+                                ),
+                              ),
+                              IconButton(
+                                onPressed: (){
+                                  Navigator.of(context).push(
+                                    MaterialPageRoute(builder: (context)=>LandscapePlayerPage(controller:_controller),
+                                    ),
+                                  );
+                                },
+                                icon: Icon(
+                                  Icons.fullscreen,
+                                  color: Colors.black,
+                                  size: 40,
+                                ),
+                              ),
+                            ],
                           ),
                         ),
-                      ),
-                  ],
-                  ),
-                  SizedBoxH14(),
-                  Row(
-                    crossAxisAlignment: CrossAxisAlignment.center,
-                    children: [
-                      ValueListenableBuilder(
-                          valueListenable: _controller,
-                          builder:
-                              (context,VideoPlayerValue value,child){
-                            return Text(
-                              _videoDuration(value.position),
-                              style: TextStyle(
-                                color: Colors.black,
-                                fontSize: 20,
-                              ),
-                            );
-                          }
-                      ),
-                      Expanded(
-                          child: SizedBox(
-                            height: Sizes.s20,
-                            child: VideoProgressIndicator(
-                              _controller,
-                              allowScrubbing: true,
-                              padding: EdgeInsets.symmetric(
-                                vertical: 0,
-                                horizontal: 12,
-                              ),
-                            ),
-                          ),
-                      ),
-                      Text(
-                        _videoDuration(_controller.value.duration),
-                        style: TextStyle(
-                          color: Colors.black,
-                          fontSize: 20,
-                        ),
-                      ),
-                    ],
-                  ),
-                  IconButton(
-                    onPressed: () => _controller.value.isPlaying
-                    ?_controller.pause()
-                    :_controller.play(),
-                    icon: Icon(
-                      _controller.value.isPlaying
-                      ?Icons.pause
-                      :Icons.play_arrow,
-                      color: Colors.black,
-                      size: 40,
+                      ],
                     ),
-                  ),
-                ],
-              )
-              : const Center(
-                child: CircularProgressIndicator(color: Colors.black),
+                    SizedBoxH14(),
+
+                  ],
+                )
+                : const Center(
+                  child: CircularProgressIndicator(color: Colors.black),
+                ),
               ),
             ),
             SizedBoxH34(),
-            // Row(
-            //   children: [
-            //     SizedBox(
-            //       height: 20,
-            //       width: 50,
-            //       child: Image.asset(AppAsset.view),
-            //     ),
-            //     appText("2651"),
-            //     SizedBox(
-            //       height: 20,
-            //       width: 50,
-            //       child: Image.asset(AppAsset.star),
-            //     ),
-            //     appText("4.5"),
-            //   ],
-            // ),
-            // SizedBoxH20(),
             Align(
                 alignment: Alignment.topLeft,
                 child: appText("Flutter Beginners",style: AppTextStyle.title)
