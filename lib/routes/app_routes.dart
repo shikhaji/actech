@@ -74,7 +74,7 @@ class RoutGenerator {
 
       case Routs.videoPlayer:
         return MaterialPageRoute(
-            builder: (_) => VideoPlayerScreen());
+            builder: (_) => VideoPlayerScreen(arguments: arguments as OtpArguments,));
 
       case Routs.courseDetail:
         return MaterialPageRoute(

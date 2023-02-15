@@ -54,10 +54,18 @@ class _CategoriesScreenState extends State<CategoriesScreen> {
     _razorpay.on(Razorpay.EVENT_PAYMENT_ERROR, _handlePaymentError);
     _razorpay.on(Razorpay.EVENT_EXTERNAL_WALLET, _handleExternalWallet);
    callApi();
-   callApi1();
   }
+
   Future<void> callApi()async {
-    GetAllCourseCategory? _getAllCourseCategory= await ApiService().getAllCourses(context);
+    String? id = await Preferances.getString("userId");
+    FormData data() {
+      return FormData.fromMap({
+        "loginid":id?.replaceAll('"', '').replaceAll('"', '').toString(),
+        "status" :"0",
+      });
+    }
+    GetAllCourseCategory? _getAllCourseCategory= await ApiService().getAllCourses(context,data: data());
+
     if(_getAllCourseCategory != null){
 
       getAllCourses = _getAllCourseCategory.course!
@@ -68,22 +76,6 @@ class _CategoriesScreenState extends State<CategoriesScreen> {
           .toList();
       setState(() {});
     }
-  }
-  Future<void> callApi1() async {
-    String? id = await Preferances.getString("userId");
-
-    FormData data() {
-      return FormData.fromMap({
-        "loginid":id?.replaceAll('"', '').replaceAll('"', '').toString(),
-      });
-    }
-    print("login id $id");
-    ApiService().getAllCourses(context,data: data()).then((value){
-      setState(() {
-        getAllCourses=value.course!;
-      });
-    });
-
   }
 
   Future<void> _onSearchHandler(String qurey) async {
@@ -108,7 +100,7 @@ class _CategoriesScreenState extends State<CategoriesScreen> {
 
   void _handlePaymentSuccess(PaymentSuccessResponse response) {
     paymentId = response.paymentId;
-    //Payment success api call;
+    //Paymnet sucess api call;
   }
 
 
@@ -142,7 +134,7 @@ class _CategoriesScreenState extends State<CategoriesScreen> {
             PrimaryTextField(
               controller: _searchController,
               onChanged: _onSearchHandler,
-              hintText: 'Search Course',
+              hintText: 'Search Doctor',
               color: AppColor.textFieldColor,
               suffix: _isSearching
                   ? InkWell(
@@ -217,73 +209,73 @@ class _CategoriesScreenState extends State<CategoriesScreen> {
       children: [
         GestureDetector(
           onTap: (){
-            // if(ccstatus=="1"){
-            //   Navigator.pushNamed(context, Routs.courseDetail,
-            //       arguments: OtpArguments(
-            //           ccId:ccid,
-            //           ccName:name,
-            //           ccImg:image,
-            //
-            //       ));
-            // }else{
-            //   showDialog(
-            //     context: context,
-            //     builder: (ctx) => AlertDialog(
-            //       title: Text(
-            //         "Payment for $name course",
-            //         style: AppTextStyle.alertSubtitle,
-            //       ),
-            //       content: Text(
-            //         "Amount: ${amount}",
-            //         style: AppTextStyle.subTitle,
-            //       ),
-            //       actions: <Widget>[
-            //         Row(
-            //           mainAxisAlignment:
-            //           MainAxisAlignment.spaceBetween,
-            //           children: [
-            //             TextButton(
-            //               onPressed: () {
-            //                 Navigator.of(ctx).pop();
-            //               },
-            //               child: Container(
-            //                 color: Colors.white,
-            //                 padding: const EdgeInsets.all(14),
-            //                 child: const Text("Cancel"),
-            //               ),
-            //             ),
-            //             TextButton(
-            //               onPressed: () async {
-            //                 Razorpay razorpay = Razorpay();
-            //                 Navigator.pop(context);
-            //                 var options = {
-            //                   'key': 'rzp_test_YoriHE0YT6XVEs',
-            //                   'amount': int.parse(amount) * 100,
-            //                   'name': 'Ac-Tech',
-            //                   'description': 'Course Purchased',
-            //                   'send_sms_hash': true,
-            //                   'prefill': {
-            //                     'contact': 'Yashil Patel',
-            //                     'email': 'yashil@gmail.com',
-            //                     'phone': '9979966965',
-            //                   },
-            //                 };
-            //                 razorpay.open(options);
-            //                 razorpay.on(Razorpay.EVENT_PAYMENT_SUCCESS,
-            //                     _handlePaymentSuccess);
-            //               },
-            //               child: Container(
-            //                 color: Colors.white,
-            //                 padding: const EdgeInsets.all(14),
-            //                 child: const Text("Pay Now"),
-            //               ),
-            //             ),
-            //           ],
-            //         ),
-            //       ],
-            //     ),
-            //   );
-            // }
+            if(ccstatus=="1"){
+              Navigator.pushNamed(context, Routs.courseDetail,
+                  arguments: OtpArguments(
+                      ccId:ccid,
+                      ccCourseName:name,
+                      ccImg:image,
+
+                  ));
+            }else{
+              showDialog(
+                context: context,
+                builder: (ctx) => AlertDialog(
+                  title: Text(
+                    "Payment for $name course",
+                    style: AppTextStyle.alertSubtitle,
+                  ),
+                  content: Text(
+                    "Amount: ${amount}",
+                    style: AppTextStyle.subTitle,
+                  ),
+                  actions: <Widget>[
+                    Row(
+                      mainAxisAlignment:
+                      MainAxisAlignment.spaceBetween,
+                      children: [
+                        TextButton(
+                          onPressed: () {
+                            Navigator.of(ctx).pop();
+                          },
+                          child: Container(
+                            color: Colors.white,
+                            padding: const EdgeInsets.all(14),
+                            child: const Text("Cancel"),
+                          ),
+                        ),
+                        TextButton(
+                          onPressed: () async {
+                            Razorpay razorpay = Razorpay();
+                            Navigator.pop(context);
+                            var options = {
+                              'key': 'rzp_test_YoriHE0YT6XVEs',
+                              'amount': int.parse(amount) * 100,
+                              'name': 'Ac-Tech',
+                              'description': 'Course Purchased',
+                              'send_sms_hash': true,
+                              'prefill': {
+                                'contact': 'Yashil Patel',
+                                'email': 'yashil@gmail.com',
+                                'phone': '9979966965',
+                              },
+                            };
+                            razorpay.open(options);
+                            razorpay.on(Razorpay.EVENT_PAYMENT_SUCCESS,
+                                _handlePaymentSuccess);
+                          },
+                          child: Container(
+                            color: Colors.white,
+                            padding: const EdgeInsets.all(14),
+                            child: const Text("Pay Now"),
+                          ),
+                        ),
+                      ],
+                    ),
+                  ],
+                ),
+              );
+            }
 
           },
           child: Container(

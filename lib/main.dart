@@ -64,7 +64,7 @@ class MyApp extends StatelessWidget {
         debugShowCheckedModeBanner: false,
         themeMode: ThemeMode.system,
         theme: ThemeUtils.lightTheme,
-        initialRoute: Routs.mainHome,
+        initialRoute: Routs.splash,
         onGenerateRoute: RoutGenerator.generateRoute,
         builder: (context, child) {
           return ScrollConfiguration(
