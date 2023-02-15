@@ -23,7 +23,6 @@ import '../../widgets/primary_textfield.dart';
 import '../../widgets/scrollview.dart';
 
 class CategoriesScreen extends StatefulWidget {
-
   const CategoriesScreen({Key? key}) : super(key: key);
 
   @override
@@ -134,7 +133,7 @@ class _CategoriesScreenState extends State<CategoriesScreen> {
             PrimaryTextField(
               controller: _searchController,
               onChanged: _onSearchHandler,
-              hintText: 'Search Doctor',
+              hintText: 'Search Course',
               color: AppColor.textFieldColor,
               suffix: _isSearching
                   ? InkWell(
@@ -174,11 +173,11 @@ class _CategoriesScreenState extends State<CategoriesScreen> {
                         image:getAllCourses[inx].ccfvCourseImage ?? "",
                         name:getAllCourses[inx].ccfvName ?? "",
                         lessons: "${getAllCourses[inx].ccfvTotalLessons ?? ""} Lessons",
-                        amount: "₹${getAllCourses[inx].ccfvCommision ?? ""}",
+                        displayAmount: "₹${getAllCourses[inx].ccfvCommision ?? ""}",
                         ccid: getAllCourses[inx].ccfvId ?? "",
                         ccstatus: getAllCourses[inx].ccfvStatus ?? "",
+                        amount: "${getAllCourses[inx].ccfvCommision ?? ""}"
                     );
-
                   },
                 ),
               ),
@@ -201,6 +200,7 @@ class _CategoriesScreenState extends State<CategoriesScreen> {
   required String name,
   required String lessons,
   required String amount,
+  required String displayAmount,
   required String ccid,
   required String ccstatus,
   }
@@ -226,7 +226,7 @@ class _CategoriesScreenState extends State<CategoriesScreen> {
                     style: AppTextStyle.alertSubtitle,
                   ),
                   content: Text(
-                    "Amount: ${amount}",
+                    "Amount: ${displayAmount}",
                     style: AppTextStyle.subTitle,
                   ),
                   actions: <Widget>[
@@ -251,7 +251,7 @@ class _CategoriesScreenState extends State<CategoriesScreen> {
                             var options = {
                               'key': 'rzp_test_YoriHE0YT6XVEs',
                               'amount': int.parse(amount) * 100,
-                              'name': 'Ac-Tech',
+                              'name': 'AC-Tech',
                               'description': 'Course Purchased',
                               'send_sms_hash': true,
                               'prefill': {
@@ -330,7 +330,7 @@ class _CategoriesScreenState extends State<CategoriesScreen> {
                       Column(
                         children: [
                           SizedBoxH8(),
-                          appText(amount,
+                          appText(displayAmount,
                               style: AppTextStyle.headingTextTile
                                   .copyWith(fontSize: Sizes.s18.h,color: AppColor.primaryColor)),
                         ],

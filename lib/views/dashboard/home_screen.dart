@@ -1,16 +1,22 @@
 import 'dart:convert';
 
+import 'package:ac_tech/model/course_category_model.dart';
+import 'package:ac_tech/routes/arguments.dart';
 import 'package:ac_tech/utils/app_text_style.dart';
 import 'package:ac_tech/views/dashboard/course_details_screen.dart';
 import 'package:carousel_slider/carousel_controller.dart';
 import 'package:carousel_slider/carousel_slider.dart';
+import 'package:dio/dio.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get_connect/http/src/response/response.dart';
+import 'package:razorpay_flutter/razorpay_flutter.dart';
 import 'package:sizer/sizer.dart';
 
 import '../../model/slider_model.dart';
+import '../../routes/app_routes.dart';
 import '../../services/api_services.dart';
+import '../../services/shared_preferences.dart';
 import '../../utils/app_assets.dart';
 import 'package:http/http.dart';
 import '../../utils/app_color.dart';
@@ -40,6 +46,9 @@ class _HomeScreenState extends State<HomeScreen> {
   int _selectedSliderIndex = 0;
   List sliderImageList = [];
   List latestNewsList = [];
+  List<Course> getAllCourses=[];
+  List<Course> allCourseListRes = [];
+  bool _isSearching = false;
   void openDrawer() {
     _scaffoldKey.currentState?.openDrawer();
   }
@@ -47,6 +56,7 @@ class _HomeScreenState extends State<HomeScreen> {
     super.initState();
 
     callApi();
+    callCourseApi();
   }
 
   Future<void> callApi() async {
@@ -58,6 +68,61 @@ class _HomeScreenState extends State<HomeScreen> {
       print("slider images ;=${sliderImageList[0].bannerImage}");
     });
 
+  }
+  Future<void> callCourseApi()async {
+    String? id = await Preferances.getString("userId");
+    FormData data() {
+      return FormData.fromMap({
+        "loginid":id?.replaceAll('"', '').replaceAll('"', '').toString(),
+        "status" :"0",
+      });
+    }
+    GetAllCourseCategory? _getAllCourseCategory= await ApiService().getAllCourses(context,data: data());
+
+    if(_getAllCourseCategory != null){
+
+      getAllCourses = _getAllCourseCategory.course!
+          .map((e) => Course.fromJson(e.toJson()))
+          .toList();
+      allCourseListRes = _getAllCourseCategory.course!
+          .map((e) => Course.fromJson(e.toJson()))
+          .toList();
+      setState(() {});
+    }
+  }
+
+  Future<void> _onSearchHandler(String qurey) async {
+    if (qurey.isNotEmpty) {
+      _isSearching = true;
+      getAllCourses = _isSearching ? searchCourse(qurey) : getAllCourses;
+    } else {
+      getAllCourses.clear();
+      getAllCourses = allCourseListRes;
+      _isSearching = false;
+    }
+    setState(() {});
+  }
+
+  List<Course> searchCourse(String qurey) {
+    return allCourseListRes
+        .where((e) => e.ccfvName!.toLowerCase().contains(qurey.toLowerCase()))
+        .toList();
+  }
+
+  String? paymentId;
+
+  void _handlePaymentSuccess(PaymentSuccessResponse response) {
+    paymentId = response.paymentId;
+    //Paymnet sucess api call;
+  }
+
+
+  void _handlePaymentError(PaymentFailureResponse response) {
+    print("Payment Fail");
+  }
+
+  void _handleExternalWallet(ExternalWalletResponse response) {
+    // Do something when an external wallet is selected
   }
 
 
@@ -143,35 +208,28 @@ class _HomeScreenState extends State<HomeScreen> {
               ],
             ),
             SizedBoxH10(),
-            GestureDetector(
-              onTap: (){
-                Navigator.push(
-                  context,
-                  MaterialPageRoute(builder: (context) => CourseDetailsScreen()),
-                );
-              },
-              child: Container(
-                height: Sizes.s320,
-                child: SingleChildScrollView(
-                  child: ListView.builder(
-                    padding: EdgeInsets.symmetric(vertical: Sizes.s20.h),
-                    shrinkWrap: true,
-                    physics: const NeverScrollableScrollPhysics(),
-                    itemCount: 5,
-                    itemBuilder: (context, inx) {
-                      return CoursesListContainer(
-                          "UI Design",
-                          // "https://mobignosis.com/wp-content/uploads/2019/10/Flutter.png",
-                          "10 Lessons",
-                          "4.5",
-                          "₹999");
-                    },
-                  ),
+            Container(
+              height: Sizes.s600,
+              child:SingleChildScrollView(
+                child: ListView.builder(
+                  padding: EdgeInsets.symmetric(vertical: Sizes.s20.h),
+                  shrinkWrap: true,
+                  physics: const NeverScrollableScrollPhysics(),
+                  itemCount: getAllCourses.length,
+                  itemBuilder: (context, inx) {
+                    return CoursesListContainer(
+                      image:getAllCourses[inx].ccfvCourseImage ?? "",
+                      name:getAllCourses[inx].ccfvName ?? "",
+                      lessons: "${getAllCourses[inx].ccfvTotalLessons ?? ""} Lessons",
+                      amount: "₹${getAllCourses[inx].ccfvCommision ?? ""}",
+                      ccid: getAllCourses[inx].ccfvId ?? "",
+                      ccstatus: getAllCourses[inx].ccfvStatus ?? "",
+                    );
+                  },
                 ),
               ),
             ),
             //Container
-
           ],
         ),
         appBar: SecondaryAppBar(
@@ -185,7 +243,7 @@ class _HomeScreenState extends State<HomeScreen> {
     );
 
   }
-  Widget CoursesListContainer(String name,String lessons,String ratings,String amount){
+  /*Widget CoursesListContainer(String name,String lessons,String ratings,String amount){
     return Column(
       children: [
         Container(
@@ -261,6 +319,159 @@ class _HomeScreenState extends State<HomeScreen> {
                   ],
                 ),
               ],
+            ),
+          ),
+        ),
+        SizedBoxH10(),
+      ],
+    );
+
+
+  }*/
+
+  Widget CoursesListContainer(
+      {required String image,
+        required String name,
+        required String lessons,
+        required String amount,
+        required String ccid,
+        required String ccstatus,
+      }
+      ){
+    return Column(
+      children: [
+        GestureDetector(
+          onTap: (){
+            if(ccstatus=="0"){
+              Navigator.pushNamed(context, Routs.courseDetail,
+                  arguments: OtpArguments(
+                    ccId:ccid,
+                    ccCourseName:name,
+                    ccImg:image,
+
+                  ));
+            }else{
+              showDialog(
+                context: context,
+                builder: (ctx) => AlertDialog(
+                  title: Text(
+                    "Payment for $name course",
+                    style: AppTextStyle.alertSubtitle,
+                  ),
+                  content: Text(
+                    "Amount: ${amount}",
+                    style: AppTextStyle.subTitle,
+                  ),
+                  actions: <Widget>[
+                    Row(
+                      mainAxisAlignment:
+                      MainAxisAlignment.spaceBetween,
+                      children: [
+                        TextButton(
+                          onPressed: () {
+                            Navigator.of(ctx).pop();
+                          },
+                          child: Container(
+                            color: Colors.white,
+                            padding: const EdgeInsets.all(14),
+                            child: const Text("Cancel"),
+                          ),
+                        ),
+                        TextButton(
+                          onPressed: () async {
+                            Razorpay razorpay = Razorpay();
+                            Navigator.pop(context);
+                            var options = {
+                              'key': 'rzp_test_YoriHE0YT6XVEs',
+                              'amount': int.parse(amount) * 100,
+                              'name': 'Ac-Tech',
+                              'description': 'Course Purchased',
+                              'send_sms_hash': true,
+                              'prefill': {
+                                'contact': 'Yashil Patel',
+                                'email': 'yashil@gmail.com',
+                                'phone': '9979966965',
+                              },
+                            };
+                            razorpay.open(options);
+                            razorpay.on(Razorpay.EVENT_PAYMENT_SUCCESS,
+                                _handlePaymentSuccess);
+                          },
+                          child: Container(
+                            color: Colors.white,
+                            padding: const EdgeInsets.all(14),
+                            child: const Text("Pay Now"),
+                          ),
+                        ),
+                      ],
+                    ),
+                  ],
+                ),
+              );
+            }
+
+          },
+          child: Container(
+            alignment: Alignment.center,
+            decoration: BoxDecoration(
+              color: AppColor.textFieldColor,
+              borderRadius: BorderRadius.circular(textFieldBorderRadius),
+            ),
+            child: Padding(
+              padding: const EdgeInsets.all(8.0),
+              child: Column(
+                children: [
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+
+                      Expanded(
+                        child: Row(
+                          children: [
+                            Container(
+                              height: Sizes.s80.h,
+                              width: Sizes.s120.h,
+                              decoration: BoxDecoration(
+                                borderRadius: BorderRadius.circular(15),
+                                shape: BoxShape.rectangle,
+                                image: DecorationImage(
+                                  image:  NetworkImage("https://www.actechindia.org/uploads/${image}"),
+                                  fit: BoxFit.fitHeight,
+                                ),
+                              ),
+                            ),
+                            SizedBoxW8(),
+                            Column(
+                              mainAxisAlignment: MainAxisAlignment.start,
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: [
+                                appText(name,
+                                  style: AppTextStyle.alertSubtitle
+                                      .copyWith(fontSize: Sizes.s14.h),
+                                ),
+                                SizedBoxH8(),
+                                appText(lessons,
+                                    style: AppTextStyle.alertSubtitle)
+
+
+                              ],
+                            ),
+                          ],
+                        ),
+                      ),
+
+                      Column(
+                        children: [
+                          SizedBoxH8(),
+                          appText(amount,
+                              style: AppTextStyle.headingTextTile
+                                  .copyWith(fontSize: Sizes.s18.h,color: AppColor.primaryColor)),
+                        ],
+                      ),
+                    ],
+                  ),
+                ],
+              ),
             ),
           ),
         ),
