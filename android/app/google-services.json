@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "625279686589",
+    "project_id": "actech-mobile-verification",
+    "storage_bucket": "actech-mobile-verification.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:625279686589:android:a8020097df1394724864d4",
+        "android_client_info": {
+          "package_name": "com.example.ac_tech"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "625279686589-s45lc8aqho4gnuntfhdj0qfu1chcfaon.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDLNhuM6rdQuJ78QUpFIgGZm-TUo8uyH4c"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "625279686589-s45lc8aqho4gnuntfhdj0qfu1chcfaon.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

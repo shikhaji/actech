@@ -34,36 +34,41 @@ class GetAllCourseCategory {
 
 class Course {
   Course({
-     this.ccId,
-     this.ccName,
-     this.ccStatus,
-     this.ccCommision,
-     this.courseImage,
-     this.ccTotalLessons,
+     this.ccfvId,
+     this.ccfvName,
+     this.ccfvStatus,
+     this.ccfvCommision,
+     this.ccfvCourseImage,
+     this.ccfvTotalLessons,
+     this.ccfvUrl,
   });
 
-  String? ccId;
-  String? ccName;
-  String? ccStatus;
-  String? ccCommision;
-  String? courseImage;
-  String? ccTotalLessons;
+
+  String? ccfvId;
+  String? ccfvName;
+  String? ccfvStatus;
+  String? ccfvCommision;
+  String? ccfvCourseImage;
+  String? ccfvTotalLessons;
+  String? ccfvUrl;
 
   factory Course.fromJson(Map<String, dynamic> json) => Course(
-    ccId: json["CC_ID"],
-    ccName: json["CC_NAME"],
-    ccStatus: json["CC_STATUS"],
-    ccCommision: json["CC_COMMISION"],
-    courseImage: json["COURSE_IMAGE"],
-    ccTotalLessons: json["CC_TOTAL_LESSONS"],
+    ccfvId: json["CCFV_ID"],
+    ccfvName: json["CCFV_NAME"],
+    ccfvStatus: json["CCFV_STATUS"],
+    ccfvCommision: json["CCFV_COMMISION"],
+    ccfvCourseImage: json["CCFV_COURSE_IMAGE"],
+    ccfvTotalLessons: json["CCFV_TOTAL_LESSONS"],
+    ccfvUrl: json["CCFV_URL"],
   );
 
   Map<String, dynamic> toJson() => {
-    "CC_ID": ccId,
-    "CC_NAME": ccName,
-    "CC_STATUS": ccStatus,
-    "CC_COMMISION": ccCommision,
-    "COURSE_IMAGE": courseImage,
-    "CC_TOTAL_LESSONS": ccTotalLessons,
+    "CCFV_ID": ccfvId,
+    "CCFV_NAME": ccfvName,
+    "CCFV_STATUS": ccfvStatus,
+    "CCFV_COMMISION": ccfvCommision,
+    "CCFV_COURSE_IMAGE": ccfvCourseImage,
+    "CCFV_TOTAL_LESSONS": ccfvTotalLessons,
+    "CCFV_URL": ccfvUrl,
   };
 }
