@@ -221,9 +221,10 @@ class _HomeScreenState extends State<HomeScreen> {
                       image:getAllCourses[inx].ccfvCourseImage ?? "",
                       name:getAllCourses[inx].ccfvName ?? "",
                       lessons: "${getAllCourses[inx].ccfvTotalLessons ?? ""} Lessons",
-                      amount: "₹${getAllCourses[inx].ccfvCommision ?? ""}",
+                      displayAmount: "₹${getAllCourses[inx].ccfvCommision ?? ""}",
                       ccid: getAllCourses[inx].ccfvId ?? "",
                       ccstatus: getAllCourses[inx].ccfvStatus ?? "",
+                      amount: "${getAllCourses[inx].ccfvCommision ?? ""}",
                     );
                   },
                 ),
@@ -336,6 +337,7 @@ class _HomeScreenState extends State<HomeScreen> {
         required String amount,
         required String ccid,
         required String ccstatus,
+        required String displayAmount,
       }
       ){
     return Column(
