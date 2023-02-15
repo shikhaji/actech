@@ -46,6 +46,7 @@ class _MyOrderScreenState extends State<MyOrderScreen> {
     FormData data() {
       return FormData.fromMap({
         "login_id":id?.replaceAll('"', '').replaceAll('"', '').toString(),
+        "status":"1",
       });
     }
     print("login id $id");
