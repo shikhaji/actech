@@ -214,7 +214,9 @@ class ApiService {
 
   //-----------------------COURSE CATEGORY API-----------------------//
 
-  Future<GetAllCourseCategory> getAllCourses(BuildContext context,) async {
+  Future<GetAllCourseCategory> getAllCourses(BuildContext context,{
+  FormData? data,
+  }) async {
     try {
       Loader.showLoader();
       Response response;
