@@ -209,7 +209,7 @@ class _CategoriesScreenState extends State<CategoriesScreen> {
       children: [
         GestureDetector(
           onTap: (){
-            if(ccstatus=="1"){
+            if(ccstatus=="0"){
               Navigator.pushNamed(context, Routs.courseDetail,
                   arguments: OtpArguments(
                       ccId:ccid,
