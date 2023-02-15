@@ -1,7 +1,7 @@
 import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
 
-import '../../model/my_order_list_model.dart';
+import '../../model/course_category_model.dart';
 import '../../services/api_services.dart';
 import '../../services/shared_preferences.dart';
 import '../../utils/app_assets.dart';
@@ -25,6 +25,8 @@ class MyOrderScreen extends StatefulWidget {
 
 class _MyOrderScreenState extends State<MyOrderScreen> {
   List<Course> myOrderList=[];
+  List<Course> getAllCourses=[];
+  List<Course> allCourseListRes = [];
   final GlobalKey<ScaffoldState> _scaffoldKey = GlobalKey<ScaffoldState>();
 
 
@@ -40,22 +42,26 @@ class _MyOrderScreenState extends State<MyOrderScreen> {
     callApi();
   }
 
-  Future<void> callApi() async {
+  Future<void> callApi()async {
     String? id = await Preferances.getString("userId");
-
     FormData data() {
       return FormData.fromMap({
-        "login_id":id?.replaceAll('"', '').replaceAll('"', '').toString(),
-        "status":"1",
+        "loginid":id?.replaceAll('"', '').replaceAll('"', '').toString(),
+        "status" :"1",
       });
     }
-    print("login id $id");
-    ApiService().myOrderList(context,data: data()).then((value){
-      setState(() {
-        myOrderList=value.course!;
-      });
-    });
+    GetAllCourseCategory? _getAllCourseCategory= await ApiService().getAllCourses(context,data: data());
 
+    if(_getAllCourseCategory != null){
+
+      getAllCourses = _getAllCourseCategory.course
+          .map((e) => Course.fromJson(e.toJson()))
+          .toList();
+      allCourseListRes = _getAllCourseCategory.course
+          .map((e) => Course.fromJson(e.toJson()))
+          .toList();
+      setState(() {});
+    }
   }
 
   @override
@@ -82,13 +88,13 @@ class _MyOrderScreenState extends State<MyOrderScreen> {
               padding: EdgeInsets.symmetric(vertical: Sizes.s20.h),
               shrinkWrap: true,
               physics: const NeverScrollableScrollPhysics(),
-              itemCount: myOrderList.length,
+              itemCount: getAllCourses.length,
               itemBuilder: (context, inx) {
                 return CoursesListContainer(
-                    image: myOrderList[inx].courseImage ?? "",
-                    name:myOrderList[inx].ccName ?? "",
-                    lessons: myOrderList[inx].ccTotalLessons ?? "",
-                    amount:"₹${myOrderList[inx].ccCommision ?? ""}",);
+                    image: getAllCourses[inx].ccfvCourseImage ?? "",
+                    name:getAllCourses[inx].ccfvName ?? "",
+                    lessons: "${getAllCourses[inx].ccfvTotalLessons ?? ""} Lessons",
+                    amount:"₹${getAllCourses[inx].ccfvCommision ?? ""}",);
               },
             ),
           ],

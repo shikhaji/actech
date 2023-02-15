@@ -84,7 +84,8 @@ class _CategoriesScreenState extends State<CategoriesScreen> {
   Future<void>getLoginId()async{
     String? id = await Preferances.getString("userId");
     setState(() {
-      loginId = "$id";
+      loginId="$id";
+      print("LoginId:$loginId");
     });
   }
 
@@ -112,9 +113,11 @@ class _CategoriesScreenState extends State<CategoriesScreen> {
     paymentId = response.paymentId;
     print("paymentStatus");
     print(paymentId);
+    print("LoginId:${loginId?.replaceAll('"','').replaceAll('"', '').toString()}");
+    print("CourseId:$courseId");
     try{
       FormData data(){
-        return FormData.fromMap({"course_id":courseId,"transaction_id":paymentId,"payment_status":1,"loginid":loginId});
+        return FormData.fromMap({"course_id":courseId,"transaction_id":paymentId,"payment_status":1,"loginid":loginId?.replaceAll('"','').replaceAll('"', '').toString()});
       }
       ApiService().addPurchase(context,data: data());
     }catch(e){
