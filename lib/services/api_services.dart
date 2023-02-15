@@ -215,12 +215,12 @@ class ApiService {
   //-----------------------COURSE CATEGORY API-----------------------//
 
   Future<GetAllCourseCategory> getAllCourses(BuildContext context,{
-  FormData? data,
+    FormData? data,
   }) async {
     try {
       Loader.showLoader();
       Response response;
-      response = await dio.post(EndPoints.getAllCourseCategory);
+      response = await dio.post(EndPoints.getAllCourseCategory,data: data);
 
       if (response.statusCode == 200) {
         GetAllCourseCategory responseData = GetAllCourseCategory.fromJson(response.data);
@@ -255,6 +255,7 @@ class ApiService {
 
       if (response.statusCode == 200) {
         GetAllCourseCategoryId responseData = GetAllCourseCategoryId.fromJson(response.data);
+
         Loader.hideLoader();
         debugPrint('responseData ----- > $responseData');
         return responseData;

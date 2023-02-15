@@ -1,12 +1,14 @@
 import 'package:ac_tech/model/course_category_model.dart';
 import 'package:ac_tech/services/api_services.dart';
 import 'package:ac_tech/utils/function.dart';
+import 'package:dio/dio.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:razorpay_flutter/razorpay_flutter.dart';
 
 import '../../routes/app_routes.dart';
 import '../../routes/arguments.dart';
+import '../../services/shared_preferences.dart';
 import '../../utils/app_assets.dart';
 import '../../utils/app_color.dart';
 import '../../utils/app_sizes.dart';
@@ -53,8 +55,17 @@ class _CategoriesScreenState extends State<CategoriesScreen> {
     _razorpay.on(Razorpay.EVENT_EXTERNAL_WALLET, _handleExternalWallet);
    callApi();
   }
+
   Future<void> callApi()async {
-    GetAllCourseCategory? _getAllCourseCategory= await ApiService().getAllCourses(context);
+    String? id = await Preferances.getString("userId");
+    FormData data() {
+      return FormData.fromMap({
+        "loginid":id?.replaceAll('"', '').replaceAll('"', '').toString(),
+        "status" :"0",
+      });
+    }
+    GetAllCourseCategory? _getAllCourseCategory= await ApiService().getAllCourses(context,data: data());
+
     if(_getAllCourseCategory != null){
 
       getAllCourses = _getAllCourseCategory.course!
@@ -81,7 +92,7 @@ class _CategoriesScreenState extends State<CategoriesScreen> {
 
   List<Course> searchCourse(String qurey) {
     return allCourseListRes
-        .where((e) => e.ccName!.toLowerCase().contains(qurey.toLowerCase()))
+        .where((e) => e.ccfvName!.toLowerCase().contains(qurey.toLowerCase()))
         .toList();
   }
 
@@ -160,12 +171,12 @@ class _CategoriesScreenState extends State<CategoriesScreen> {
                   itemCount: getAllCourses.length,
                   itemBuilder: (context, inx) {
                     return CoursesListContainer(
-                        image:getAllCourses[inx].courseImage ?? "",
-                        name:getAllCourses[inx].ccName ?? "",
-                        lessons: "${getAllCourses[inx].ccTotalLessons ?? ""} Lessons",
-                        amount: "₹${getAllCourses[inx].ccCommision ?? ""}",
-                        ccid: getAllCourses[inx].ccId ?? "",
-                        ccstatus: getAllCourses[inx].ccStatus ?? "",
+                        image:getAllCourses[inx].ccfvCourseImage ?? "",
+                        name:getAllCourses[inx].ccfvName ?? "",
+                        lessons: "${getAllCourses[inx].ccfvTotalLessons ?? ""} Lessons",
+                        amount: "₹${getAllCourses[inx].ccfvCommision ?? ""}",
+                        ccid: getAllCourses[inx].ccfvId ?? "",
+                        ccstatus: getAllCourses[inx].ccfvStatus ?? "",
                     );
 
                   },
@@ -198,11 +209,11 @@ class _CategoriesScreenState extends State<CategoriesScreen> {
       children: [
         GestureDetector(
           onTap: (){
-            if(ccstatus=="0"){
+            if(ccstatus=="1"){
               Navigator.pushNamed(context, Routs.courseDetail,
                   arguments: OtpArguments(
                       ccId:ccid,
-                      ccName:name,
+                      ccCourseName:name,
                       ccImg:image,
 
                   ));

@@ -34,52 +34,72 @@ class GetAllCourseCategoryId {
 
 class Course {
   Course({
-    required this.clTt,
-    required this.ccId,
-    required this.clName,
-    required this.clStatus,
-    required this.clId,
-    required this.courseCode,
-    required this.courseDuration,
-    required this.courseEligibility,
-    required this.coursePdf,
-    required this.clVideoUrl,
+    required this.cvlTt,
+    required this.cvlCcfvId,
+    required this.cvlName,
+    required this.cvlStatus,
+    required this.cvlId,
+    required this.cvlCoursePdf,
+    required this.cvlVideoUrl,
+    required this.ccfvId,
+    required this.ccfvTt,
+    required this.ccfvName,
+    required this.ccfvStatus,
+    required this.ccfvCommision,
+    required this.ccfvCourseImage,
+    required this.ccfvTotalLessons,
+    required this.ccfvUrl,
   });
 
-  DateTime clTt;
-  String ccId;
-  String clName;
-  String clStatus;
-  String clId;
-  String courseCode;
-  String courseDuration;
-  String courseEligibility;
-  String coursePdf;
-  String clVideoUrl;
+  DateTime cvlTt;
+  String cvlCcfvId;
+  String cvlName;
+  String cvlStatus;
+  String cvlId;
+  String cvlCoursePdf;
+  String cvlVideoUrl;
+  String ccfvId;
+  DateTime ccfvTt;
+  String ccfvName;
+  String ccfvStatus;
+  String ccfvCommision;
+  String ccfvCourseImage;
+  String ccfvTotalLessons;
+  String ccfvUrl;
 
   factory Course.fromJson(Map<String, dynamic> json) => Course(
-    clTt: DateTime.parse(json["CL_TT"]),
-    ccId: json["CC_ID"],
-    clName: json["CL_NAME"],
-    clStatus: json["CL_STATUS"],
-    clId: json["CL_ID"],
-    courseCode: json["COURSE_CODE"],
-    courseDuration: json["COURSE_DURATION"],
-    courseEligibility: json["COURSE_ELIGIBILITY"],
-    coursePdf: json["COURSE_PDF"],
-    clVideoUrl: json["CL_VIDEO_URL"],
+    cvlTt: DateTime.parse(json["CVL_TT"]),
+    cvlCcfvId: json["CVL_CCFV_ID"],
+    cvlName: json["CVL_NAME"],
+    cvlStatus: json["CVL_STATUS"],
+    cvlId: json["CVL_ID"],
+    cvlCoursePdf: json["CVL_COURSE_PDF"],
+    cvlVideoUrl: json["CVL_VIDEO_URL"],
+    ccfvId: json["CCFV_ID"],
+    ccfvTt: DateTime.parse(json["CCFV_TT"]),
+    ccfvName: json["CCFV_NAME"],
+    ccfvStatus: json["CCFV_STATUS"],
+    ccfvCommision: json["CCFV_COMMISION"],
+    ccfvCourseImage: json["CCFV_COURSE_IMAGE"],
+    ccfvTotalLessons: json["CCFV_TOTAL_LESSONS"],
+    ccfvUrl: json["CCFV_URL"],
   );
 
   Map<String, dynamic> toJson() => {
-    "CL_TT": clTt.toIso8601String(),
-    "CC_ID": ccId,
-    "CL_NAME": clName,
-    "CL_STATUS": clStatus,
-    "CL_ID": clId,
-    "COURSE_CODE": courseCode,
-    "COURSE_DURATION": courseDuration,
-    "COURSE_ELIGIBILITY": courseEligibility,
-    "COURSE_PDF": coursePdf,
-    "CL_VIDEO_URL": clVideoUrl,
+    "CVL_TT": cvlTt.toIso8601String(),
+    "CVL_CCFV_ID": cvlCcfvId,
+    "CVL_NAME": cvlName,
+    "CVL_STATUS": cvlStatus,
+    "CVL_ID": cvlId,
+    "CVL_COURSE_PDF": cvlCoursePdf,
+    "CVL_VIDEO_URL": cvlVideoUrl,
+    "CCFV_ID": ccfvId,
+    "CCFV_TT": ccfvTt.toIso8601String(),
+    "CCFV_NAME": ccfvName,
+    "CCFV_STATUS": ccfvStatus,
+    "CCFV_COMMISION": ccfvCommision,
+    "CCFV_COURSE_IMAGE": ccfvCourseImage,
+    "CCFV_TOTAL_LESSONS": ccfvTotalLessons,
+    "CCFV_URL": ccfvUrl,
   };
 }
