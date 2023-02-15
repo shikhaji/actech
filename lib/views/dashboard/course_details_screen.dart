@@ -103,7 +103,7 @@ class _CourseDetailsScreenState extends State<CourseDetailsScreen> {
                        minutes: "20 Minutes",
                       url: getAllCourseDetails[inx].cvlVideoUrl ?? "",
                       chapterName: getAllCourseDetails[inx].ccfvName ?? "",
-                      chapterPdf: getAllCourseDetails[inx].cvlCoursePdf ?? "",
+                      chapterPdf: getAllCourseDetails[inx].cvlCoursePdf  ?? "",
                     );
                   },
                 ),

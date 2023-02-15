@@ -367,4 +367,45 @@ class ApiService {
   }
 
 
+//----------------------------ADD PURCHASE API-----------------------//
+
+  Future addPurchase(
+      BuildContext context, {
+        FormData? data,
+      }) async {
+    try {
+      Loader.showLoader();
+
+      String? id = await Preferances.getString("userId");
+      String? token = await Preferances.getString("Token");
+      Response response;
+      response = await dio.post(EndPoints.addPurchase,
+          options: Options(headers: {
+            "Client-Service": "frontend-client",
+            "Auth-Key": 'simplerestapi',
+          }),
+          data: data);
+      if (response.statusCode == 200) {
+        debugPrint('Update profile data  ----- > ${response.data}');
+        Loader.hideLoader();
+        // Navigator.pushNamed(context, Routs.editProfile);
+        Fluttertoast.showToast(
+          msg: 'Your course purchased Successfully...',
+          backgroundColor: Colors.grey,
+        );
+      } else {
+        Fluttertoast.showToast(
+          msg: "invalid",
+          backgroundColor: Colors.grey,
+        );
+        Loader.hideLoader();
+        throw Exception(response.data);
+      }
+    } on DioError catch (e) {
+      print("dio");
+      debugPrint('Dio E  $e');
+      Loader.hideLoader();
+    }
+  }
+
  }

@@ -1,33 +1,33 @@
 {
   "project_info": {
-    "project_number": "625279686589",
-    "project_id": "actech-mobile-verification",
-    "storage_bucket": "actech-mobile-verification.appspot.com"
+    "project_number": "559147353286",
+    "project_id": "actech-f8f36",
+    "storage_bucket": "actech-f8f36.appspot.com"
   },
   "client": [
     {
       "client_info": {
-        "mobilesdk_app_id": "1:625279686589:android:a8020097df1394724864d4",
+        "mobilesdk_app_id": "1:559147353286:android:e38d803fe913e01ef383c7",
         "android_client_info": {
           "package_name": "com.example.ac_tech"
         }
       },
       "oauth_client": [
         {
-          "client_id": "625279686589-s45lc8aqho4gnuntfhdj0qfu1chcfaon.apps.googleusercontent.com",
+          "client_id": "559147353286-taq0irsr9mhef2i8o87be7f4rtv7rag3.apps.googleusercontent.com",
           "client_type": 3
         }
       ],
       "api_key": [
         {
-          "current_key": "AIzaSyDLNhuM6rdQuJ78QUpFIgGZm-TUo8uyH4c"
+          "current_key": "AIzaSyAOoW3-zcUVDrhIpwrAmAMudnqJA9PzMjc"
         }
       ],
       "services": {
         "appinvite_service": {
           "other_platform_oauth_client": [
             {
-              "client_id": "625279686589-s45lc8aqho4gnuntfhdj0qfu1chcfaon.apps.googleusercontent.com",
+              "client_id": "559147353286-taq0irsr9mhef2i8o87be7f4rtv7rag3.apps.googleusercontent.com",
               "client_type": 3
             }
           ]

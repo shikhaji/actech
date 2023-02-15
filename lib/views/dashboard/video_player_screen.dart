@@ -72,7 +72,6 @@ class _VideoPlayerScreenState extends State<VideoPlayerScreen> {
                     ),
                   ),
                   RemainingDuration(),
-                  FullScreenButton(),
                   PlaybackSpeedButton(),
                 ],
             ),
