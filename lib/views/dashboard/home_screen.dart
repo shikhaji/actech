@@ -145,12 +145,6 @@ class _HomeScreenState extends State<HomeScreen> {
         body: CustomScroll(
           children: [
             SizedBoxH18(),
-            PrimaryTextField(
-              controller: _search,
-              hintText: "Search Here",
-              suffix: Icon(CupertinoIcons.search),
-            ),
-            SizedBoxH18(),
             SizedBox(
               width: double.infinity,
               child: CarouselSlider.builder(
@@ -209,7 +203,7 @@ class _HomeScreenState extends State<HomeScreen> {
             ),
             SizedBoxH10(),
             Container(
-              height: Sizes.s600,
+              height: Sizes.s350,
               child:SingleChildScrollView(
                 child: ListView.builder(
                   padding: EdgeInsets.symmetric(vertical: Sizes.s20.h),

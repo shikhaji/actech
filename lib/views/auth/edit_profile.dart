@@ -4,6 +4,8 @@ import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:sizer/sizer.dart';
+import '../../model/my_profile_model.dart';
+import '../../routes/app_routes.dart';
 import '../../routes/arguments.dart';
 import '../../services/shared_preferences.dart';
 import '../../utils/app_assets.dart';
@@ -28,30 +30,48 @@ class EditProfile extends StatefulWidget {
 }
 
 class _EditProfileState extends State<EditProfile> with ValidationMixin {
-  final TextEditingController _name = TextEditingController();
-  final TextEditingController _phone = TextEditingController();
-  final TextEditingController _email = TextEditingController();
+  TextEditingController _name = TextEditingController();
+  TextEditingController _phone = TextEditingController();
+  TextEditingController _email = TextEditingController();
   final TextEditingController _password = TextEditingController();
   final TextEditingController _referCode = TextEditingController();
   final TextEditingController _categories = TextEditingController();
   bool obscurePassword = true;
   final _formKey = GlobalKey<FormState>();
-
+  Course? myProfileData;
   @override
   void initState() {
     // TODO: implement initState
     super.initState();
     debugPrint("${widget.arguments?.phoneNumber}");
-    getData();
+    callApi();
   }
-  Future getData() async {
-    Future.delayed(Duration(seconds: 3)).then((value) async {
-      String? id = await Preferances.getString("userId");
-      String? token = await Preferances.getString("Token");
-      print("userId:=${id}");
-      print("token:=${token}");
-    });
-  }
+ Future<void> callApi() async {
+   String? id = await Preferances.getString("userId");
+
+   FormData data() {
+     return FormData.fromMap({
+       "loginid":id?.replaceAll('"', '').replaceAll('"', '').toString(),
+     });
+   }
+   print("login id $id");
+   ApiService().myProfile(context,data: data()).then((value){
+     setState(() {
+       myProfileData=value.course!;
+       _name.text=value.course.branchName;
+       _email.text=value.course.branchEmail;
+       _phone.text=value.course.branchPhone;
+     });
+     print("name:${myProfileData?.branchName}");
+     print("name:${myProfileData?.branchEmail}");
+     print("name:${myProfileData?.branchPhone}");
+
+   });
+
+ }
+
+
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -91,9 +111,8 @@ class _EditProfileState extends State<EditProfile> with ValidationMixin {
                 PrimaryTextField(
                   controller: _phone,
                   readOnly: true,
-                  validator: mobileNumberValidator,
                   prefix: const Icon(Icons.phone),
-                  hintText: "Enter Phone number",
+                  hintText: widget.arguments?.phoneNumber,
                 ),
                 SizedBoxH10(),
                 appText("Email id", style: AppTextStyle.lable),
@@ -110,18 +129,20 @@ class _EditProfileState extends State<EditProfile> with ValidationMixin {
 
                 PrimaryButton(
                     lable: "Update",
-                    onPressed: () {
+                    onPressed: () async{
+
+                      String? id = await Preferances.getString("userId");
+                      print("Login Id here:${id?.replaceAll('"','').replaceAll('"', '').toString()}");
                       if (_formKey.currentState!.validate()) {
                         FormData data() {
                           return FormData.fromMap({
+                            "login_id":id?.replaceAll('"','').replaceAll('"', '').toString(),
                             "name": _name.text.trim(),
+                            "phone": _phone.text.trim(),
                             "email": _email.text.trim(),
-                            "mobile": _phone.text.trim(),
-                            "password": _password.text.trim(),
-                            "referal_code": _referCode.text.trim(),
                           });
                         }
-                        ApiService().signUp(context,data:data());
+                        ApiService().editProfile(context,data:data());
                       }
                     }),
               ],
@@ -130,3 +151,4 @@ class _EditProfileState extends State<EditProfile> with ValidationMixin {
     );
   }
 }
+

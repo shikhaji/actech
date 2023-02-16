@@ -104,6 +104,7 @@ class _CourseDetailsScreenState extends State<CourseDetailsScreen> {
                       url: getAllCourseDetails[inx].cvlVideoUrl ?? "",
                       chapterName: getAllCourseDetails[inx].ccfvName ?? "",
                       chapterPdf: getAllCourseDetails[inx].cvlCoursePdf  ?? "",
+                      desc: getAllCourseDetails[inx].cvlDesc  ?? "",
                     );
                   },
                 ),
@@ -128,6 +129,7 @@ class _CourseDetailsScreenState extends State<CourseDetailsScreen> {
     required String url,
     required String chapterName,
     required String chapterPdf,
+    required String desc,
   }){
     return Column(
       children: [
@@ -192,6 +194,7 @@ class _CourseDetailsScreenState extends State<CourseDetailsScreen> {
                                       ccChapterName: name,
                                       ccCourseName: chapterName,
                                       ccChapterPdf: chapterPdf,
+                                      ccDesc: desc,
                                     ));
                                 //  clearField();
                               },

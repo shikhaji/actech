@@ -1,11 +1,11 @@
 import 'package:ac_tech/widgets/custom_size_box.dart';
-import 'package:carousel_slider/carousel_controller.dart';
 import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
 import 'package:url_launcher/url_launcher.dart';
 
 import '../../model/my_profile_model.dart';
 import '../../routes/app_routes.dart';
+import '../../routes/arguments.dart';
 import '../../services/api_services.dart';
 import '../../services/shared_preferences.dart';
 import '../../utils/app_assets.dart';
@@ -114,7 +114,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
               child: _ProfileListTile.asset(
                 title: 'Edit Profile',
                 onTap: () {
-                  Navigator.pushNamed(context, Routs.editProfile);
+                  Navigator.pushNamed(context, Routs.editProfile,);
                 },
                 child: Icon(Icons.perm_identity),
               ),
