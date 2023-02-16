@@ -43,7 +43,7 @@ Future<void> main() async {
   //   sound: true,
   // );
   runApp(const MyApp());
-  disableCapture();
+  //disableCapture();
 }
 
 class MyApp extends StatelessWidget {
