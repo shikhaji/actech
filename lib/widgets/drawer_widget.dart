@@ -187,7 +187,7 @@ class _DrawerState extends State<DrawerWidget> {
                     decoration: BoxDecoration(
                         shape: BoxShape.circle,
                         image: DecorationImage(
-                          image: AssetImage(AppAsset.userImage),
+                          image: AssetImage(AppAsset.splashImage),
                           fit: BoxFit.cover,
                         ))),
                 ScreenUtil().setVerticalSpacing(10),
@@ -207,9 +207,6 @@ class _DrawerState extends State<DrawerWidget> {
       ),
     );
   }
-
-
-
 
 }
 

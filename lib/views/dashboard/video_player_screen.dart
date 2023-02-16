@@ -1,17 +1,12 @@
-
 import 'package:carousel_slider/carousel_controller.dart';
 import 'package:flutter/material.dart';
 import 'package:youtube_player_flutter/youtube_player_flutter.dart';
-import '../../utils/app_assets.dart';
 import '../../utils/app_color.dart';
-import '../../utils/app_sizes.dart';
 import '../../utils/app_text_style.dart';
-import '../../utils/constant.dart';
 import '../../widgets/app_text.dart';
 import '../../widgets/custom_size_box.dart';
 import '../../widgets/primary_appbar.dart';
 import '../../widgets/scrollview.dart';
-import 'landscape_player_page.dart';
 
 class VideoPlayerScreen extends StatefulWidget {
   const VideoPlayerScreen({Key? key}) : super(key: key);
@@ -27,7 +22,7 @@ class _VideoPlayerScreenState extends State<VideoPlayerScreen> {
   final TextEditingController _search = TextEditingController();
 
   //VIDEO PLAYER
- final videoURL ="https://www.youtube.com/watch?v=xcJtL7QggTI";
+ final videoURL ="https://www.youtube.com/watch?v=zu6E3I-YXzc";
  late YoutubePlayerController _controller;
 
   @override
@@ -63,7 +58,8 @@ class _VideoPlayerScreenState extends State<VideoPlayerScreen> {
                     ),
                   ),
                   RemainingDuration(),
-                  FullScreenButton(),
+                  GestureDetector(
+                      child: FullScreenButton()),
                 ],
             ),
             SizedBoxH34(),
