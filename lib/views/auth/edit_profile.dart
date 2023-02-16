@@ -1,9 +1,11 @@
 import 'package:ac_tech/services/api_services.dart';
+import 'package:ac_tech/widgets/primary_appbar.dart';
 import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:sizer/sizer.dart';
 import '../../routes/arguments.dart';
+import '../../services/shared_preferences.dart';
 import '../../utils/app_assets.dart';
 import '../../utils/app_color.dart';
 import '../../utils/app_sizes.dart';
@@ -16,16 +18,16 @@ import '../../widgets/primary_button.dart';
 import '../../widgets/primary_textfield.dart';
 import '../../widgets/scrollview.dart';
 
-class SignUpScreen extends StatefulWidget {
+class EditProfile extends StatefulWidget {
   final OtpArguments? arguments;
-  const SignUpScreen({Key? key, this.arguments}) : super(key: key);
+  const EditProfile({Key? key, this.arguments}) : super(key: key);
 
 
   @override
-  State<SignUpScreen> createState() => _SignUpScreenState();
+  State<EditProfile> createState() => _EditProfileState();
 }
 
-class _SignUpScreenState extends State<SignUpScreen> with ValidationMixin {
+class _EditProfileState extends State<EditProfile> with ValidationMixin {
   final TextEditingController _name = TextEditingController();
   final TextEditingController _phone = TextEditingController();
   final TextEditingController _email = TextEditingController();
@@ -40,10 +42,24 @@ class _SignUpScreenState extends State<SignUpScreen> with ValidationMixin {
     // TODO: implement initState
     super.initState();
     debugPrint("${widget.arguments?.phoneNumber}");
+    getData();
+  }
+  Future getData() async {
+    Future.delayed(Duration(seconds: 3)).then((value) async {
+      String? id = await Preferances.getString("userId");
+      String? token = await Preferances.getString("Token");
+      print("userId:=${id}");
+      print("token:=${token}");
+    });
   }
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      appBar: SecondaryAppBar(
+        title: "Edit Profile",
+        isLeading: true,
+        leadingIcon: Icons.arrow_back_sharp,
+      ),
       backgroundColor: AppColor.white,
       body: SafeArea(
           child: Form(
@@ -59,15 +75,13 @@ class _SignUpScreenState extends State<SignUpScreen> with ValidationMixin {
                   ),
                 ),
                 SizedBoxH28(),
-                appText("Sign Up", style: AppTextStyle.title),
-                SizedBoxH6(),
-                appText("Fill your details to continue",
-                    style: AppTextStyle.subTitle),
+                appText("Edit Profile", style: AppTextStyle.title),
                 SizedBoxH28(),
                 appText("Name", style: AppTextStyle.lable),
                 SizedBoxH8(),
                 PrimaryTextField(
                   controller: _name,
+                  validator: nameValidator,
                   prefix: const Icon(Icons.perm_identity),
                   hintText: "Enter your name",
                 ),
@@ -77,10 +91,9 @@ class _SignUpScreenState extends State<SignUpScreen> with ValidationMixin {
                 PrimaryTextField(
                   controller: _phone,
                   readOnly: true,
-                  keyboardInputType: TextInputType.phone,
                   validator: mobileNumberValidator,
                   prefix: const Icon(Icons.phone),
-                  hintText: "${widget.arguments?.phoneNumber}",
+                  hintText: "Enter Phone number",
                 ),
                 SizedBoxH10(),
                 appText("Email id", style: AppTextStyle.lable),
@@ -93,34 +106,10 @@ class _SignUpScreenState extends State<SignUpScreen> with ValidationMixin {
                   hintText: "Enter your email",
                 ),
                 SizedBoxH10(),
-                appText("Password", style: AppTextStyle.lable),
-                SizedBoxH8(),
-                PrimaryTextField(
-                  hintText: "Enter password",
-                  controller: _password,
-                  validator: passwordValidator,
-                  prefix: const Icon(Icons.password),
-                  suffix: GestureDetector(
-                      onTap: () {
-                        setState(() {
-                          obscurePassword = !obscurePassword;
-                        });
-                      },
-                      child: obscurePassword
-                          ? const Icon(Icons.visibility_off)
-                          : const Icon(Icons.visibility)),
-                  obscureText: obscurePassword,
-                ),
-                SizedBoxH10(),
-                appText("Center Code", style: AppTextStyle.lable),
-                SizedBoxH8(),
-                PrimaryTextField(
-                  controller: _referCode,
-                  hintText: "Enter center code",
-                ),
-                SizedBoxH8(),
+                SizedBoxH14(),
+
                 PrimaryButton(
-                    lable: "Sign Up",
+                    lable: "Update",
                     onPressed: () {
                       if (_formKey.currentState!.validate()) {
                         FormData data() {

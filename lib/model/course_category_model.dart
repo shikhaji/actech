@@ -10,14 +10,14 @@ String getAllCourseCategoryToJson(GetAllCourseCategory data) => json.encode(data
 
 class GetAllCourseCategory {
   GetAllCourseCategory({
-     this.status,
-     this.message,
-     this.course,
+    required this.status,
+    required this.message,
+    required this.course,
   });
 
-  int? status;
-  String? message;
-  List<Course> ?course;
+  int status;
+  String message;
+  List<Course> course;
 
   factory GetAllCourseCategory.fromJson(Map<String, dynamic> json) => GetAllCourseCategory(
     status: json["status"],
@@ -28,32 +28,34 @@ class GetAllCourseCategory {
   Map<String, dynamic> toJson() => {
     "status": status,
     "message": message,
-    "course": List<dynamic>.from(course!.map((x) => x.toJson())),
+    "course": List<dynamic>.from(course.map((x) => x.toJson())),
   };
 }
 
 class Course {
   Course({
-     this.ccfvId,
-     this.ccfvName,
-     this.ccfvStatus,
-     this.ccfvCommision,
-     this.ccfvCourseImage,
-     this.ccfvTotalLessons,
-     this.ccfvUrl,
+    required this.ccfvId,
+    required this.ccfvTt,
+    required this.ccfvName,
+    required this.ccfvStatus,
+    required this.ccfvCommision,
+    required this.ccfvCourseImage,
+    required this.ccfvTotalLessons,
+    required this.ccfvUrl,
   });
 
-
-  String? ccfvId;
-  String? ccfvName;
-  String? ccfvStatus;
-  String? ccfvCommision;
-  String? ccfvCourseImage;
-  String? ccfvTotalLessons;
-  String? ccfvUrl;
+  String ccfvId;
+  DateTime ccfvTt;
+  String ccfvName;
+  String ccfvStatus;
+  String ccfvCommision;
+  String ccfvCourseImage;
+  String ccfvTotalLessons;
+  String ccfvUrl;
 
   factory Course.fromJson(Map<String, dynamic> json) => Course(
     ccfvId: json["CCFV_ID"],
+    ccfvTt: DateTime.parse(json["CCFV_TT"]),
     ccfvName: json["CCFV_NAME"],
     ccfvStatus: json["CCFV_STATUS"],
     ccfvCommision: json["CCFV_COMMISION"],
@@ -64,6 +66,7 @@ class Course {
 
   Map<String, dynamic> toJson() => {
     "CCFV_ID": ccfvId,
+    "CCFV_TT": ccfvTt.toIso8601String(),
     "CCFV_NAME": ccfvName,
     "CCFV_STATUS": ccfvStatus,
     "CCFV_COMMISION": ccfvCommision,

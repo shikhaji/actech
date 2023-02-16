@@ -5,6 +5,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:shared_preferences/shared_preferences.dart';
+import 'package:url_launcher/url_launcher.dart';
 
 import '../model/my_profile_model.dart';
 import '../services/api_services.dart';
@@ -76,20 +77,55 @@ class _DrawerState extends State<DrawerWidget> {
                     ),
                     _DrawerMenuListTile.asset(
                       title: 'Terms & Conditions',
-                      onTap: () {},
+                      onTap: () async {
+                        var url = Uri.parse(
+                            "https://actechindia.org/terms-conditions.html");
+                        if (await canLaunchUrl(url)) {
+                          await launchUrl(url);
+                        } else {
+                          throw 'Could not launch $url';
+                        }
+                      },
                       child: Icon(Icons.local_police_outlined),
                     ),
                     _DrawerMenuListTile.asset(
                       title: 'Privacy Policy',
-                      onTap: () {
-                        // Navigator.pushNamed(context, Routs.privacyPolicy);
+                      onTap: () async {
+                        var url = Uri.parse(
+                            "https://actechindia.org/privacy-policy.html");
+                        if (await canLaunchUrl(url)) {
+                          await launchUrl(url);
+                        } else {
+                          throw 'Could not launch $url';
+                        }
                       },
                       child: Icon(Icons.policy),
                     ),
                     _DrawerMenuListTile.asset(
                       title: 'About Us',
-                      onTap: () {},
+                      onTap: () async {
+                        var url = Uri.parse(
+                            "https://actechindia.org/about-us.html");
+                        if (await canLaunchUrl(url)) {
+                          await launchUrl(url);
+                        } else {
+                          throw 'Could not launch $url';
+                        }
+                      },
                       child: const Icon(Icons.account_box),
+                    ),
+                    _DrawerMenuListTile.asset(
+                      title: 'Payment Refund',
+                      onTap: () async {
+                        var url = Uri.parse(
+                            "https://actechindia.org/payment-refund.html");
+                        if (await canLaunchUrl(url)) {
+                          await launchUrl(url);
+                        } else {
+                          throw 'Could not launch $url';
+                        }
+                      },
+                      child: const Icon(Icons.payment),
                     ),
                     ScreenUtil().setVerticalSpacing(30),
                     SizedBox(

@@ -23,7 +23,6 @@ import '../../widgets/primary_textfield.dart';
 import '../../widgets/scrollview.dart';
 
 class CategoriesScreen extends StatefulWidget {
-
   const CategoriesScreen({Key? key}) : super(key: key);
 
   @override
@@ -35,6 +34,8 @@ class _CategoriesScreenState extends State<CategoriesScreen> {
   final GlobalKey<ScaffoldState> _scaffoldKey = GlobalKey<ScaffoldState>();
   final TextEditingController _searchController = TextEditingController();
   late var _razorpay;
+  String courseId ="";
+  String loginId ="";
 
   List<Course> allCourseListRes = [];
   bool _isSearching = false;
@@ -49,41 +50,43 @@ class _CategoriesScreenState extends State<CategoriesScreen> {
   void initState() {
     // TODO: implement initState
     super.initState();
+    getLoginId();
     _razorpay = Razorpay();
     _razorpay.on(Razorpay.EVENT_PAYMENT_SUCCESS, _handlePaymentSuccess);
     _razorpay.on(Razorpay.EVENT_PAYMENT_ERROR, _handlePaymentError);
     _razorpay.on(Razorpay.EVENT_EXTERNAL_WALLET, _handleExternalWallet);
-   callApi();
-   callApi1();
+    callApi();
+
   }
+
   Future<void> callApi()async {
-    GetAllCourseCategory? _getAllCourseCategory= await ApiService().getAllCourses(context);
+    String? id = await Preferances.getString("userId");
+    FormData data() {
+      return FormData.fromMap({
+        "loginid":id?.replaceAll('"', '').replaceAll('"', '').toString(),
+        "status" :"0",
+      });
+    }
+    GetAllCourseCategory? _getAllCourseCategory= await ApiService().getAllCourses(context,data: data());
+
     if(_getAllCourseCategory != null){
 
-      getAllCourses = _getAllCourseCategory.course!
+      getAllCourses = _getAllCourseCategory.course
           .map((e) => Course.fromJson(e.toJson()))
           .toList();
-      allCourseListRes = _getAllCourseCategory.course!
+      allCourseListRes = _getAllCourseCategory.course
           .map((e) => Course.fromJson(e.toJson()))
           .toList();
       setState(() {});
     }
   }
-  Future<void> callApi1() async {
+
+  Future<void>getLoginId()async{
     String? id = await Preferances.getString("userId");
-
-    FormData data() {
-      return FormData.fromMap({
-        "loginid":id?.replaceAll('"', '').replaceAll('"', '').toString(),
-      });
-    }
-    print("login id $id");
-    ApiService().getAllCourses(context,data: data()).then((value){
-      setState(() {
-        getAllCourses=value.course!;
-      });
+    setState(() {
+      loginId="$id";
+      print("LoginId:$loginId");
     });
-
   }
 
   Future<void> _onSearchHandler(String qurey) async {
@@ -100,7 +103,7 @@ class _CategoriesScreenState extends State<CategoriesScreen> {
 
   List<Course> searchCourse(String qurey) {
     return allCourseListRes
-        .where((e) => e.ccfvName!.toLowerCase().contains(qurey.toLowerCase()))
+        .where((e) => e.ccfvName.toLowerCase().contains(qurey.toLowerCase()))
         .toList();
   }
 
@@ -108,7 +111,19 @@ class _CategoriesScreenState extends State<CategoriesScreen> {
 
   void _handlePaymentSuccess(PaymentSuccessResponse response) {
     paymentId = response.paymentId;
-    //Payment success api call;
+    print("paymentStatus");
+    print(paymentId);
+    print("LoginId:${loginId?.replaceAll('"','').replaceAll('"', '').toString()}");
+    print("CourseId:$courseId");
+    try{
+      FormData data(){
+        return FormData.fromMap({"course_id":courseId,"transaction_id":paymentId,"payment_status":1,"loginid":loginId?.replaceAll('"','').replaceAll('"', '').toString()});
+      }
+      ApiService().addPurchase(context,data: data());
+    }catch(e){
+      print(e.toString());
+    }
+    //Paymnet sucess api call;
   }
 
 
@@ -182,11 +197,11 @@ class _CategoriesScreenState extends State<CategoriesScreen> {
                         image:getAllCourses[inx].ccfvCourseImage ?? "",
                         name:getAllCourses[inx].ccfvName ?? "",
                         lessons: "${getAllCourses[inx].ccfvTotalLessons ?? ""} Lessons",
-                        amount: "₹${getAllCourses[inx].ccfvCommision ?? ""}",
+                        displayAmount: "₹${getAllCourses[inx].ccfvCommision ?? ""}",
                         ccid: getAllCourses[inx].ccfvId ?? "",
                         ccstatus: getAllCourses[inx].ccfvStatus ?? "",
+                        amount: "${getAllCourses[inx].ccfvCommision ?? ""}"
                     );
-
                   },
                 ),
               ),
@@ -209,6 +224,7 @@ class _CategoriesScreenState extends State<CategoriesScreen> {
   required String name,
   required String lessons,
   required String amount,
+  required String displayAmount,
   required String ccid,
   required String ccstatus,
   }
@@ -217,73 +233,62 @@ class _CategoriesScreenState extends State<CategoriesScreen> {
       children: [
         GestureDetector(
           onTap: (){
-            // if(ccstatus=="1"){
-            //   Navigator.pushNamed(context, Routs.courseDetail,
-            //       arguments: OtpArguments(
-            //           ccId:ccid,
-            //           ccName:name,
-            //           ccImg:image,
-            //
-            //       ));
-            // }else{
-            //   showDialog(
-            //     context: context,
-            //     builder: (ctx) => AlertDialog(
-            //       title: Text(
-            //         "Payment for $name course",
-            //         style: AppTextStyle.alertSubtitle,
-            //       ),
-            //       content: Text(
-            //         "Amount: ${amount}",
-            //         style: AppTextStyle.subTitle,
-            //       ),
-            //       actions: <Widget>[
-            //         Row(
-            //           mainAxisAlignment:
-            //           MainAxisAlignment.spaceBetween,
-            //           children: [
-            //             TextButton(
-            //               onPressed: () {
-            //                 Navigator.of(ctx).pop();
-            //               },
-            //               child: Container(
-            //                 color: Colors.white,
-            //                 padding: const EdgeInsets.all(14),
-            //                 child: const Text("Cancel"),
-            //               ),
-            //             ),
-            //             TextButton(
-            //               onPressed: () async {
-            //                 Razorpay razorpay = Razorpay();
-            //                 Navigator.pop(context);
-            //                 var options = {
-            //                   'key': 'rzp_test_YoriHE0YT6XVEs',
-            //                   'amount': int.parse(amount) * 100,
-            //                   'name': 'Ac-Tech',
-            //                   'description': 'Course Purchased',
-            //                   'send_sms_hash': true,
-            //                   'prefill': {
-            //                     'contact': 'Yashil Patel',
-            //                     'email': 'yashil@gmail.com',
-            //                     'phone': '9979966965',
-            //                   },
-            //                 };
-            //                 razorpay.open(options);
-            //                 razorpay.on(Razorpay.EVENT_PAYMENT_SUCCESS,
-            //                     _handlePaymentSuccess);
-            //               },
-            //               child: Container(
-            //                 color: Colors.white,
-            //                 padding: const EdgeInsets.all(14),
-            //                 child: const Text("Pay Now"),
-            //               ),
-            //             ),
-            //           ],
-            //         ),
-            //       ],
-            //     ),
-            //   );
-            // }
+            showDialog(
+              context: context,
+              builder: (ctx) => AlertDialog(
+                title: Text(
+                  "Payment for $name course",
+                  style: AppTextStyle.alertSubtitle,
+                ),
+                content: Text(
+                  "Amount: ${displayAmount}",
+                  style: AppTextStyle.subTitle,
+                ),
+                actions: <Widget>[
+                  Row(
+                    mainAxisAlignment:
+                    MainAxisAlignment.spaceBetween,
+                    children: [
+                      TextButton(
+                        onPressed: () {
+                          Navigator.of(ctx).pop();
+                        },
+                        child: Container(
+                          color: Colors.white,
+                          padding: const EdgeInsets.all(14),
+                          child: const Text("Cancel"),
+                        ),
+                      ),
+                      TextButton(
+                        onPressed: () async {
+                          courseId =ccid;
+                          Navigator.pop(context);
+                          var options = {
+                            'key': 'rzp_test_YoriHE0YT6XVEs',
+                            'amount': int.parse(amount) * 100,
+                            'name': 'AC-Tech',
+                            'description': 'Course Purchased',
+                            'send_sms_hash': true,
+                            'prefill': {
+                              'contact': 'Yashil Patel',
+                              'email': 'yashil@gmail.com',
+                              'phone': '9979966965',
+                            },
+                          };
+                          _razorpay.open(options);
+
+                        },
+                        child: Container(
+                          color: Colors.white,
+                          padding: const EdgeInsets.all(14),
+                          child: const Text("Pay Now"),
+                        ),
+                      ),
+                    ],
+                  ),
+                ],
+              ),
+            );
 
           },
           child: Container(
@@ -338,7 +343,7 @@ class _CategoriesScreenState extends State<CategoriesScreen> {
                       Column(
                         children: [
                           SizedBoxH8(),
-                          appText(amount,
+                          appText(displayAmount,
                               style: AppTextStyle.headingTextTile
                                   .copyWith(fontSize: Sizes.s18.h,color: AppColor.primaryColor)),
                         ],

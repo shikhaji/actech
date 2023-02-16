@@ -11,7 +11,7 @@ mixin ValidationMixin {
     if (name!.isNotEmpty) {
       return null;
     } else {
-      return "Please Enter Name Number";
+      return "Please Enter Name";
     }
   }
 

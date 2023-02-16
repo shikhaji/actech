@@ -2,6 +2,7 @@ import 'package:ac_tech/widgets/custom_size_box.dart';
 import 'package:carousel_slider/carousel_controller.dart';
 import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
+import 'package:url_launcher/url_launcher.dart';
 
 import '../../model/my_profile_model.dart';
 import '../../routes/app_routes.dart';
@@ -112,7 +113,9 @@ class _ProfileScreenState extends State<ProfileScreen> {
               ),
               child: _ProfileListTile.asset(
                 title: 'Edit Profile',
-                onTap: () {},
+                onTap: () {
+                  Navigator.pushNamed(context, Routs.editProfile);
+                },
                 child: Icon(Icons.perm_identity),
               ),
             ),
@@ -140,7 +143,9 @@ class _ProfileScreenState extends State<ProfileScreen> {
               ),
               child: _ProfileListTile.asset(
                 title: 'My Order',
-                onTap: () {},
+                onTap: () {
+                  Navigator.pushNamed(context, Routs.myOrder);
+                },
                 child: Icon(Icons.format_list_bulleted_sharp),
               ),
             ),
@@ -153,7 +158,15 @@ class _ProfileScreenState extends State<ProfileScreen> {
           ),
           child: _ProfileListTile.asset(
             title: 'Terms & Conditions',
-            onTap: () {},
+            onTap: () async {
+              var url = Uri.parse(
+                  "https://actechindia.org/terms-conditions.html");
+              if (await canLaunchUrl(url)) {
+                await launchUrl(url);
+              } else {
+                throw 'Could not launch $url';
+              }
+            },
             child: Icon(Icons.local_police_outlined),
           ),
         ),
@@ -166,8 +179,14 @@ class _ProfileScreenState extends State<ProfileScreen> {
               ),
               child: _ProfileListTile.asset(
                 title: 'Privacy Policy',
-                onTap: () {
-                  // Navigator.pushNamed(context, Routs.privacyPolicy);
+                onTap: () async {
+                  var url = Uri.parse(
+                      "https://actechindia.org/privacy-policy.html");
+                  if (await canLaunchUrl(url)) {
+                    await launchUrl(url);
+                  } else {
+                    throw 'Could not launch $url';
+                  }
                 },
                 child: Icon(Icons.policy),
             ),
@@ -181,7 +200,15 @@ class _ProfileScreenState extends State<ProfileScreen> {
               ),
               child: _ProfileListTile.asset(
                 title: 'About Us',
-                onTap: () {},
+                onTap: () async {
+                  var url = Uri.parse(
+                      "https://actechindia.org/about-us.html");
+                  if (await canLaunchUrl(url)) {
+                    await launchUrl(url);
+                  } else {
+                    throw 'Could not launch $url';
+                  }
+                },
                 child: const Icon(Icons.account_box),
               ),
             ),

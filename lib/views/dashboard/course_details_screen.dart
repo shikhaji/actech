@@ -9,6 +9,7 @@ import 'package:flutter/material.dart';
 import 'package:video_player/video_player.dart';
 
 import '../../model/course_categoryid_model.dart';
+import '../../routes/app_routes.dart';
 import '../../routes/arguments.dart';
 import '../../services/api_services.dart';
 import '../../services/shared_preferences.dart';
@@ -78,32 +79,14 @@ class _CourseDetailsScreenState extends State<CourseDetailsScreen> {
 
               ),
             SizedBoxH34(),
-            Row(
-              children: [
-                SizedBox(
-                  height: 20,
-                  width: 50,
-                  child: Image.asset(AppAsset.view),
-                ),
-                appText("2651"),
-                SizedBox(
-                  height: 20,
-                  width: 50,
-                  child: Image.asset(AppAsset.star),
-                ),
-                appText("4.5"),
-              ],
-            ),
-            SizedBoxH20(),
             Align(
                 alignment: Alignment.topLeft,
-                child: appText("${widget.arguments?.ccName}",style: AppTextStyle.title)
+                child: appText("${widget.arguments?.ccCourseName}",style: AppTextStyle.title)
             ),
             SizedBoxH10(),
-            Text("${widget.arguments?.ccId}"),
             SizedBoxH30(),
             Row(
-              children:[Text("5 Lessons (8 hours)",style: AppTextStyle.alertSubtitle)],
+              children:[Text("${getAllCourseDetails.length.toString()} Lessons",style: AppTextStyle.alertSubtitle)],
             ),
             SizedBoxH10(),
             Container(
@@ -116,9 +99,12 @@ class _CourseDetailsScreenState extends State<CourseDetailsScreen> {
                   itemCount: getAllCourseDetails.length,
                   itemBuilder: (context, inx) {
                     return CoursesListContainer(
-
-                       name: getAllCourseDetails[inx].clName ?? "",
-                       minutes: "20 Minutes");
+                       name: getAllCourseDetails[inx].cvlName ?? "",
+                       minutes: "20 Minutes",
+                      url: getAllCourseDetails[inx].cvlVideoUrl ?? "",
+                      chapterName: getAllCourseDetails[inx].ccfvName ?? "",
+                      chapterPdf: getAllCourseDetails[inx].cvlCoursePdf  ?? "",
+                    );
                   },
                 ),
               ),
@@ -128,7 +114,7 @@ class _CourseDetailsScreenState extends State<CourseDetailsScreen> {
           ],
         ),
         appBar: SecondaryAppBar(
-          title: "${widget.arguments?.ccName}",
+          title: "${widget.arguments?.ccCourseName}",
           isLeading: true,
           leadingIcon: Icons.arrow_back,
         )
@@ -139,7 +125,9 @@ class _CourseDetailsScreenState extends State<CourseDetailsScreen> {
   Widget CoursesListContainer({
     required String name,
     required String minutes,
-
+    required String url,
+    required String chapterName,
+    required String chapterPdf,
   }){
     return Column(
       children: [
@@ -184,23 +172,27 @@ class _CourseDetailsScreenState extends State<CourseDetailsScreen> {
                               appText(minutes,
                                   style: AppTextStyle.alertSubtitle
                                       .copyWith(fontSize: Sizes.s16.h)),
+
                             ],
                           ),
+
                         ],
                       ),
                     ),
-
-                    Column(
+                     Column(
                       children: [
                         SizedBox(
                           height: 90,
                           width: 35,
                           child: GestureDetector(
                               onTap:(){
-                                Navigator.push(
-                                    context,
-                                    MaterialPageRoute(
-                                        builder: (context) =>VideoPlayerScreen()));
+                                Navigator.pushNamed(context, Routs.videoPlayer,
+                                    arguments: OtpArguments(
+                                      ccUrl: url,
+                                      ccChapterName: name,
+                                      ccCourseName: chapterName,
+                                      ccChapterPdf: chapterPdf,
+                                    ));
                                 //  clearField();
                               },
                               child: Image.asset(AppAsset.playButton)),

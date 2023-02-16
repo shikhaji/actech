@@ -7,6 +7,7 @@ import 'package:flutter/material.dart';
 import 'package:pin_code_text_field/pin_code_text_field.dart';
 import 'package:sizer/sizer.dart';
 
+import '../../model/auth_result.dart';
 import '../../routes/app_routes.dart';
 import '../../routes/arguments.dart';
 import '../../utils/app_assets.dart';
@@ -14,6 +15,7 @@ import '../../utils/app_color.dart';
 import '../../utils/app_text_style.dart';
 import '../../utils/function.dart';
 import '../../utils/image_utils.dart';
+import '../../utils/loader.dart';
 import '../../utils/validation_mixin.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import '../../widgets/app_text.dart';
@@ -56,7 +58,7 @@ class _OtpVerificationScreenState extends State<OtpVerificationScreen>
     super.initState();
     debugPrint("${widget.arguments?.phoneNumber}");
     WidgetsBinding.instance.addPostFrameCallback((_) async {
-
+      await sendCode();
     });
   }
 
@@ -120,10 +122,17 @@ class _OtpVerificationScreenState extends State<OtpVerificationScreen>
             PrimaryButton(
                 lable: "Verify OTP",
                 onPressed: () async {
-                  Navigator.pushNamed(context, Routs.signUp,
-                      arguments:
-                      OtpArguments(phoneNumber: widget.arguments?.phoneNumber)
-                  );
+                  // Navigator.pushNamed(context, Routs.signUp,
+                  //     arguments:
+                  //     OtpArguments(phoneNumber: widget.arguments?.phoneNumber)
+                  // );
+                  if (_controller.text == "") {
+                    CommonFunctions.toast("please enter otp code !!");
+                  } else {
+                    print("co_controller.text:=${_controller.text}");
+                    AuthResult result = await _verify(_controller.text);
+                    if (result.status) {}
+                  }
 
                  //  clearField();
                 }
@@ -134,75 +143,75 @@ class _OtpVerificationScreenState extends State<OtpVerificationScreen>
     );
   }
 
-//   Future<void> sendCode() async {
-//     await FirebaseAuth.instance.verifyPhoneNumber(
-//       phoneNumber: "${"+91"}${widget.arguments?.phoneNumber}",
-//       verificationCompleted: (PhoneAuthCredential credential) {},
-//       verificationFailed: (FirebaseAuthException e) {
-//         if (e.code == 'web-context-cancelled') {
-//           throw e.message ?? 'Error';
-//         } else {
-//           throw e.message ?? 'Error';
-//         }
-//       },
-//       codeSent: (String verificationId, int? resendToken) {
-//         _verificationId = verificationId;
-//         setState(() {});
-//         _startTimer();
-//       },
-//       codeAutoRetrievalTimeout: (String verificationId) {
-//         _verificationId = verificationId;
-//         print("verificationId:=$verificationId");
-//         print("_verificationId_verificationId:=$_verificationId");
-//
-//         setState(() {});
-//       },
-//     );
-//   }
-//
-//   Future _verify(String smsCode) async {
-//     Loader.showLoader();
-//     try {
-//       final PhoneAuthCredential authCredential = PhoneAuthProvider.credential(
-//         verificationId: _verificationId,
-//         smsCode: smsCode,
-//       );
-//
-//       UserCredential credential =
-//       await FirebaseAuth.instance.signInWithCredential(authCredential);
-//       if (widget.arguments?.otpStatus == 1) {
-//         CommonFunctions.toast("otp verify successfully !!");
-//         Navigator.pushNamed(context, Routs.resetPassword,arguments:
-//         OtpArguments(phoneNumber: widget.arguments?.phoneNumber));
-//
-//       } else {
-//         CommonFunctions.toast("otp verify successfully !!");
-//         Navigator.pushNamed(context, Routs.signUp,
-//             arguments:
-//             OtpArguments(phoneNumber: widget.arguments?.phoneNumber));
-//       }
-//
-//       Loader.hideLoader();
-//       return AuthResult(status: true, user: credential.user);
-//     } on FirebaseAuthException catch (e) {
-//       Loader.hideLoader();
-//       debugPrint('inside catch : ${e.message}');
-//       AuthResult result = AuthResult(status: false, message: e.message);
-//
-//       switch (e.code) {
-//         case 'invalid-verification-code':
-//           result.message = 'Your SMS code is invalid.';
-//           break;
-//         case 'provider-already-linked':
-//           result.message = 'This phone number is already registered.';
-//           break;
-//         default:
-//       }
-//       if (result.message != null) {
-//         _controller.clear();
-//         CommonFunctions.toast(result.message!);
-//       }
-//       return AuthResult(status: false);
-//     }
-//     }
+  Future<void> sendCode() async {
+    await FirebaseAuth.instance.verifyPhoneNumber(
+      phoneNumber: "${"+91"}${widget.arguments?.phoneNumber}",
+      verificationCompleted: (PhoneAuthCredential credential) {},
+      verificationFailed: (FirebaseAuthException e) {
+        if (e.code == 'web-context-cancelled') {
+          throw e.message ?? 'Error';
+        } else {
+          throw e.message ?? 'Error';
+        }
+      },
+      codeSent: (String verificationId, int? resendToken) {
+        _verificationId = verificationId;
+        setState(() {});
+        _startTimer();
+      },
+      codeAutoRetrievalTimeout: (String verificationId) {
+        _verificationId = verificationId;
+        print("verificationId:=$verificationId");
+        print("_verificationId_verificationId:=$_verificationId");
+
+        setState(() {});
+      },
+    );
+  }
+
+  Future _verify(String smsCode) async {
+    Loader.showLoader();
+    try {
+      final PhoneAuthCredential authCredential = PhoneAuthProvider.credential(
+        verificationId: _verificationId,
+        smsCode: smsCode,
+      );
+
+      UserCredential credential =
+      await FirebaseAuth.instance.signInWithCredential(authCredential);
+      if (widget.arguments?.otpStatus == 1) {
+        CommonFunctions.toast("otp verify successfully !!");
+        Navigator.pushNamed(context, Routs.resetPassword,arguments:
+        OtpArguments(phoneNumber: widget.arguments?.phoneNumber));
+
+      } else {
+        CommonFunctions.toast("otp verify successfully !!");
+        Navigator.pushNamed(context, Routs.signUp,
+            arguments:
+            OtpArguments(phoneNumber: widget.arguments?.phoneNumber));
+      }
+
+      Loader.hideLoader();
+      return AuthResult(status: true, user: credential.user);
+    } on FirebaseAuthException catch (e) {
+      Loader.hideLoader();
+      debugPrint('inside catch : ${e.message}');
+      AuthResult result = AuthResult(status: false, message: e.message);
+
+      switch (e.code) {
+        case 'invalid-verification-code':
+          result.message = 'Your SMS code is invalid.';
+          break;
+        case 'provider-already-linked':
+          result.message = 'This phone number is already registered.';
+          break;
+        default:
+      }
+      if (result.message != null) {
+        _controller.clear();
+        CommonFunctions.toast(result.message!);
+      }
+      return AuthResult(status: false);
+    }
+    }
  }

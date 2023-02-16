@@ -1,4 +1,5 @@
 
+import 'package:ac_tech/views/auth/edit_profile.dart';
 import 'package:ac_tech/views/auth/reset_password_screen.dart';
 import 'package:ac_tech/views/dashboard/main_home_screen.dart';
 import 'package:flutter/material.dart';
@@ -10,6 +11,7 @@ import '../views/auth/otp_verification_screen.dart';
 import '../views/auth/signUp.dart';
 import '../views/dashboard/course_details_screen.dart';
 import '../views/dashboard/fquestionScreen.dart';
+import '../views/dashboard/my_order_screen.dart';
 import '../views/dashboard/video_player_screen.dart';
 import '../views/splash/splash_screen.dart';
 import 'arguments.dart';
@@ -26,7 +28,8 @@ class Routs {
   static const String fquestion = "/fquestionScreen";
   static const String courseDetail = "/course_details_screen";
   static const String videoPlayer = "/video_player_screen";
-
+  static const String editProfile = "/edit_profile";
+  static const String myOrder = "/my_order";
 }
 
 class RoutGenerator {
@@ -74,13 +77,21 @@ class RoutGenerator {
 
       case Routs.videoPlayer:
         return MaterialPageRoute(
-            builder: (_) => VideoPlayerScreen());
+            builder: (_) => VideoPlayerScreen(arguments: arguments as OtpArguments,));
 
       case Routs.courseDetail:
         return MaterialPageRoute(
             builder: (_) => CourseDetailsScreen(
               arguments: arguments as OtpArguments,
             ));
+
+      case Routs.editProfile:
+        return MaterialPageRoute(
+            builder: (_) => EditProfile());
+
+      case Routs.myOrder:
+        return MaterialPageRoute(
+            builder: (_) => MyOrderScreen());
 
       default:
         return null;

@@ -27,9 +27,9 @@ Future<void> _firebaseMessagingBackgroundHandler(RemoteMessage message) async {
   print('A bg message just showed up :  ${message.messageId}');
 }
 
-void main() {
-  // WidgetsFlutterBinding.ensureInitialized();
-  // await Firebase.initializeApp();
+Future<void> main() async {
+  WidgetsFlutterBinding.ensureInitialized();
+  await Firebase.initializeApp();
   // FirebaseMessaging.onBackgroundMessage(_firebaseMessagingBackgroundHandler);
   //
   // await flutterLocalNotificationsPlugin
@@ -64,7 +64,7 @@ class MyApp extends StatelessWidget {
         debugShowCheckedModeBanner: false,
         themeMode: ThemeMode.system,
         theme: ThemeUtils.lightTheme,
-        initialRoute: Routs.mainHome,
+        initialRoute: Routs.splash,
         onGenerateRoute: RoutGenerator.generateRoute,
         builder: (context, child) {
           return ScrollConfiguration(

@@ -3,8 +3,11 @@ class OtpArguments {
   int? otpStatus;
   String? userId;
   String? ccId;
-  String? ccName;
+  String? ccCourseName;
   String? ccImg;
+  String? ccUrl;
+  String? ccChapterName;
+  String? ccChapterPdf;
 
-  OtpArguments({this.phoneNumber, this.otpStatus, this.userId,this.ccId, this.ccName,this.ccImg,});
+  OtpArguments({this.phoneNumber, this.ccChapterName,this.otpStatus, this.userId,this.ccId, this.ccCourseName,this.ccImg, this.ccUrl,this.ccChapterPdf});
 }
