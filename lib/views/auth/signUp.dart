@@ -78,7 +78,6 @@ class _SignUpScreenState extends State<SignUpScreen> with ValidationMixin {
                   controller: _phone,
                   readOnly: true,
                   keyboardInputType: TextInputType.phone,
-                  validator: mobileNumberValidator,
                   prefix: const Icon(Icons.phone),
                   hintText: "${widget.arguments?.phoneNumber}",
                 ),
@@ -123,7 +122,7 @@ class _SignUpScreenState extends State<SignUpScreen> with ValidationMixin {
                     lable: "Sign Up",
                     onPressed: () {
                       if (_formKey.currentState!.validate()) {
-                        FormData data() {
+                        /*FormData data() {
                           return FormData.fromMap({
                             "name": _name.text.trim(),
                             "email": _email.text.trim(),
@@ -131,7 +130,7 @@ class _SignUpScreenState extends State<SignUpScreen> with ValidationMixin {
                             "password": _password.text.trim(),
                             "referal_code": _referCode.text.trim(),
                           });
-                        }
+                        }*/
                         ApiService().signUp(context,data:data());
                       }
                     }),
@@ -139,5 +138,14 @@ class _SignUpScreenState extends State<SignUpScreen> with ValidationMixin {
             ),
           )),
     );
+  }
+  FormData data() {
+    return FormData.fromMap({
+      "name": _name.text.trim(),
+      "email": _email.text.trim(),
+      "mobile": widget.arguments?.phoneNumber,
+      "password": _password.text.trim(),
+      "referal_code": _referCode.text.trim(),
+    });
   }
 }
