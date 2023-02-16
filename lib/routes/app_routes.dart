@@ -73,7 +73,7 @@ class RoutGenerator {
 
       case Routs.fquestion:
         return MaterialPageRoute(
-            builder: (_) => FquestionScreen());
+            builder: (_) => const FquestionScreen());
 
       case Routs.videoPlayer:
         return MaterialPageRoute(

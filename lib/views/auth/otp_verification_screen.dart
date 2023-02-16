@@ -12,6 +12,7 @@ import '../../routes/app_routes.dart';
 import '../../routes/arguments.dart';
 import '../../utils/app_assets.dart';
 import '../../utils/app_color.dart';
+import '../../utils/app_sizes.dart';
 import '../../utils/app_text_style.dart';
 import '../../utils/function.dart';
 import '../../utils/image_utils.dart';
@@ -137,6 +138,26 @@ class _OtpVerificationScreenState extends State<OtpVerificationScreen>
                  //  clearField();
                 }
                 ),
+            SizedBox(height: Sizes.s30.h),
+            if (_timer?.isActive ?? false)
+              Center(
+                child: Text(
+                  _seconds.toString(),
+                  style: TextStyle(
+                    fontSize: Sizes.s18.sp,
+                  ),
+                ),
+              )
+            else if (_seconds != -1)
+              GestureDetector(
+                onTap: () async => sendCode(),
+                child: Center(
+                  child: appText(
+                    'Resend Code',
+                    style: AppTextStyle.redTextStyle,
+                  ),
+                ),
+              ),
           ],
         ),
       ),

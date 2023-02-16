@@ -73,7 +73,9 @@ class ApiService {
           msg: 'Sign Up Successfully...',
           backgroundColor: Colors.grey,
         );
-        Navigator.push(context, MaterialPageRoute(builder: (context)=> LoginScreen()));
+        // Navigator.push(context, MaterialPageRoute(builder: (context)=> LoginScreen()));
+        Navigator.pushNamedAndRemoveUntil(
+            context, Routs.login, (route) => false);
 
         debugPrint('responseData ----- > ${response.data}');
         return response.data;
@@ -109,8 +111,10 @@ class ApiService {
         Preferances.setString("userId", responseData.id);
         Preferances.setString("Token", responseData.token);
         Loader.hideLoader();
-        CommonFunctions.toast("Login Successful");
-      Navigator.pushNamed(context, Routs.mainHome);
+        CommonFunctions.toast("Login Success");
+
+        Navigator.pushNamedAndRemoveUntil(
+            context, Routs.mainHome, (route) => false);
 
         return responseData;
       } else {

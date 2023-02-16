@@ -85,7 +85,7 @@ class _MobileVerificationScreenState extends State<MobileVerificationScreen>
                               if (value.count == 0) {
                                 Navigator.pushNamed(context, Routs.otp,
                                     arguments: OtpArguments(
-                                        phoneNumber: _phone.text.trim()));
+                                        phoneNumber: _phone.text.trim(),otpStatus: 0));
                               } else if (value.count == 1) {
                                CommonFunctions.toast("Your number is already registered Please login");
 
