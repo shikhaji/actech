@@ -209,7 +209,7 @@ class _HomeScreenState extends State<HomeScreen> {
             ),
             SizedBoxH10(),
             Container(
-              height: Sizes.s600,
+              height: Sizes.s300,
               child:SingleChildScrollView(
                 child: ListView.builder(
                   padding: EdgeInsets.symmetric(vertical: Sizes.s20.h),

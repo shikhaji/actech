@@ -334,8 +334,7 @@ class ApiService {
     try {
       Loader.showLoader();
 
-      String? id = await Preferances.getString("userId");
-      String? token = await Preferances.getString("Token");
+
       Response response;
       response = await dio.post(EndPoints.editProfile,
           options: Options(headers: {
@@ -346,7 +345,8 @@ class ApiService {
       if (response.statusCode == 200) {
         debugPrint('Update profile data  ----- > ${response.data}');
         Loader.hideLoader();
-        Navigator.pushNamed(context, Routs.editProfile);
+
+        Navigator.pushNamed(context, Routs.mainHome);
         Fluttertoast.showToast(
           msg: 'Updated Sucessfully...',
           backgroundColor: Colors.grey,

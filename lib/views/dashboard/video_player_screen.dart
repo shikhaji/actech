@@ -83,7 +83,9 @@ class _VideoPlayerScreenState extends State<VideoPlayerScreen> {
             SizedBoxH20(),
 
 
-            Text("Lorem ipsum dolor sit amet. Ad culpa quia aut facilis accusantium autdolores quisquam aut sunt voluptatibus et Quis similique. Ex magni eiuseum harum ipsa hic rerum accusamus aut sint molestias. Aut consecteturtotam sit nihil vitae ex voluptatibus accusantium ut suscipit quae aut iureeaque et ",style: AppTextStyle.subTitle),
+            Align(
+                alignment: Alignment.topLeft,
+                child: Text("${widget.arguments?.ccDesc}",style: AppTextStyle.subTitle)),
             // SizedBoxH30(),
             // // Row(
             // //   children:[Text("5 Lessons (8 hours)",style: AppTextStyle.alertSubtitle)],

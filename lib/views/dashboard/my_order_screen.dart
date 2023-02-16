@@ -1,10 +1,10 @@
 import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
-
 import '../../model/course_category_model.dart';
+import '../../routes/app_routes.dart';
+import '../../routes/arguments.dart';
 import '../../services/api_services.dart';
 import '../../services/shared_preferences.dart';
-import '../../utils/app_assets.dart';
 import '../../utils/app_color.dart';
 import '../../utils/app_sizes.dart';
 import '../../utils/app_text_style.dart';
@@ -92,9 +92,9 @@ class _MyOrderScreenState extends State<MyOrderScreen> {
               itemBuilder: (context, inx) {
                 return CoursesListContainer(
                     image: getAllCourses[inx].ccfvCourseImage ?? "",
+                    ccid: getAllCourses[inx].ccfvId ?? "",
                     name:getAllCourses[inx].ccfvName ?? "",
-                    lessons: "${getAllCourses[inx].ccfvTotalLessons ?? ""} Lessons",
-                    amount:"₹${getAllCourses[inx].ccfvCommision ?? ""}",);
+                    lessons: "${getAllCourses[inx].ccfvTotalLessons ?? ""} Lessons",);
               },
             ),
           ],
@@ -112,69 +112,80 @@ class _MyOrderScreenState extends State<MyOrderScreen> {
     required String image,
     required String name,
     required String lessons,
-    required String amount,
+    required String ccid,
   }){
     return Column(
       children: [
-        Container(
-          alignment: Alignment.center,
-          decoration: BoxDecoration(
-            color: AppColor.textFieldColor,
-            borderRadius: BorderRadius.circular(textFieldBorderRadius),
-          ),
-          child: Padding(
-            padding: const EdgeInsets.all(8.0),
-            child: Column(
-              children: [
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: [
+        GestureDetector(
+          onTap: (){
+            Navigator.pushNamed(context, Routs.courseDetail,
+                arguments: OtpArguments(
+                  ccId:ccid,
+                  ccCourseName:name,
+                  ccImg:image,
 
-                    Container(
-                      child: Row(
-                        children: [
-                          Container(
-                            height: Sizes.s80.h,
-                            width: Sizes.s120.h,
-                            decoration: BoxDecoration(
-                              borderRadius: BorderRadius.circular(15),
-                              shape: BoxShape.rectangle,
-                              image: DecorationImage(
-                                image:  NetworkImage("https://www.actechindia.org/uploads/${image}"),
-                                fit: BoxFit.fitHeight,
+                ));
+          },
+          child: Container(
+            alignment: Alignment.center,
+            decoration: BoxDecoration(
+              color: AppColor.textFieldColor,
+              borderRadius: BorderRadius.circular(textFieldBorderRadius),
+            ),
+            child: Padding(
+              padding: const EdgeInsets.all(8.0),
+              child: Column(
+                children: [
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+
+                      Container(
+                        child: Row(
+                          children: [
+                            Container(
+                              height: Sizes.s80.h,
+                              width: Sizes.s120.h,
+                              decoration: BoxDecoration(
+                                borderRadius: BorderRadius.circular(15),
+                                shape: BoxShape.rectangle,
+                                image: DecorationImage(
+                                  image:  NetworkImage("https://www.actechindia.org/uploads/${image}"),
+                                  fit: BoxFit.fitHeight,
+                                ),
                               ),
                             ),
-                          ),
 
-                          SizedBoxW8(),
-                          Column(
-                            mainAxisAlignment: MainAxisAlignment.start,
-                            crossAxisAlignment: CrossAxisAlignment.start,
-                            children: [
-                              appText(name,
-                                  style: AppTextStyle.alertSubtitle
-                                      .copyWith(fontSize: Sizes.s16.h)),
-                              SizedBoxH6(),
-                              appText(lessons,
-                                  style: AppTextStyle.alertSubtitle
-                                      .copyWith(fontSize: Sizes.s16.h)),
-                            ],
-                          ),
+                            SizedBoxW8(),
+                            Column(
+                              mainAxisAlignment: MainAxisAlignment.start,
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: [
+                                appText(name,
+                                    style: AppTextStyle.alertSubtitle
+                                        .copyWith(fontSize: Sizes.s16.h)),
+                                SizedBoxH6(),
+                                appText(lessons,
+                                    style: AppTextStyle.alertSubtitle
+                                        .copyWith(fontSize: Sizes.s16.h)),
+                              ],
+                            ),
+                          ],
+                        ),
+                      ),
+
+                      Column(
+                        children: [
+                          SizedBoxH8(),
+                          // appText(amount,
+                          //     style: AppTextStyle.headingTextTile
+                          //         .copyWith(fontSize: Sizes.s18.h,color: AppColor.primaryColor)),
                         ],
                       ),
-                    ),
-
-                    Column(
-                      children: [
-                        SizedBoxH8(),
-                        appText(amount,
-                            style: AppTextStyle.headingTextTile
-                                .copyWith(fontSize: Sizes.s18.h,color: AppColor.primaryColor)),
-                      ],
-                    ),
-                  ],
-                ),
-              ],
+                    ],
+                  ),
+                ],
+              ),
             ),
           ),
         ),

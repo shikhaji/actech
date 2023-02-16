@@ -41,6 +41,7 @@ class Course {
     required this.cvlId,
     required this.cvlCoursePdf,
     required this.cvlVideoUrl,
+    required this.cvlDesc,
     required this.ccfvId,
     required this.ccfvTt,
     required this.ccfvName,
@@ -58,6 +59,7 @@ class Course {
   String cvlId;
   String cvlCoursePdf;
   String cvlVideoUrl;
+  String cvlDesc;
   String ccfvId;
   DateTime ccfvTt;
   String ccfvName;
@@ -75,6 +77,7 @@ class Course {
     cvlId: json["CVL_ID"],
     cvlCoursePdf: json["CVL_COURSE_PDF"],
     cvlVideoUrl: json["CVL_VIDEO_URL"],
+    cvlDesc: json["CVL_DESC"],
     ccfvId: json["CCFV_ID"],
     ccfvTt: DateTime.parse(json["CCFV_TT"]),
     ccfvName: json["CCFV_NAME"],
@@ -93,6 +96,7 @@ class Course {
     "CVL_ID": cvlId,
     "CVL_COURSE_PDF": cvlCoursePdf,
     "CVL_VIDEO_URL": cvlVideoUrl,
+    "CVL_DESC": cvlDesc,
     "CCFV_ID": ccfvId,
     "CCFV_TT": ccfvTt.toIso8601String(),
     "CCFV_NAME": ccfvName,
