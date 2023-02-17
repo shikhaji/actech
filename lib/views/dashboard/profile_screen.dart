@@ -84,7 +84,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                   decoration: BoxDecoration(
                       shape: BoxShape.circle,
                       image: DecorationImage(
-                        image: AssetImage(AppAsset.splashImage),
+                        image: AssetImage(AppAsset.mainLogoImage),
                         fit: BoxFit.cover,
                         ))),
             ),
@@ -130,21 +130,6 @@ class _ProfileScreenState extends State<ProfileScreen> {
                 title: 'FAQ',
                 onTap: () {
                   Navigator.pushNamed(context, Routs.fquestion);
-                },
-                child: Icon(Icons.format_list_bulleted_sharp),
-              ),
-            ),
-            SizedBoxH18(),
-            Container(
-              width: double.infinity,
-              decoration: BoxDecoration(
-                  color: AppColor.textFieldColor,
-                  borderRadius: BorderRadius.circular(15)
-              ),
-              child: _ProfileListTile.asset(
-                title: 'My Order',
-                onTap: () {
-                  Navigator.pushNamed(context, Routs.myOrder);
                 },
                 child: Icon(Icons.format_list_bulleted_sharp),
               ),

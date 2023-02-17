@@ -66,11 +66,6 @@ class _DrawerState extends State<DrawerWidget> {
                   children: [
                     ScreenUtil().setVerticalSpacing(20),
                     _DrawerMenuListTile.asset(
-                      title: 'Profile',
-                      onTap: () {},
-                      child: Icon(FontAwesomeIcons.user),
-                    ),
-                    _DrawerMenuListTile.asset(
                       title: 'My Order',
                       onTap: () {},
                       child: Icon(Icons.format_list_bulleted_sharp),
@@ -223,7 +218,7 @@ class _DrawerState extends State<DrawerWidget> {
                     decoration: BoxDecoration(
                         shape: BoxShape.circle,
                         image: DecorationImage(
-                          image: AssetImage(AppAsset.splashImage),
+                          image: AssetImage(AppAsset.mainLogoImage),
                           fit: BoxFit.cover,
                         ))),
                 ScreenUtil().setVerticalSpacing(10),

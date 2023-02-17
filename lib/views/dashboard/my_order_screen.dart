@@ -1,3 +1,4 @@
+import 'package:ac_tech/utils/function.dart';
 import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
 import '../../model/course_category_model.dart';
@@ -94,9 +95,18 @@ class _MyOrderScreenState extends State<MyOrderScreen> {
                     image: getAllCourses[inx].ccfvCourseImage ?? "",
                     ccid: getAllCourses[inx].ccfvId ?? "",
                     name:getAllCourses[inx].ccfvName ?? "",
-                    lessons: "${getAllCourses[inx].ccfvTotalLessons ?? ""} Lessons",);
+                    lessons: "${getAllCourses[inx].ccfvTotalLessons ?? ""} Lessons",
+
+
+                );
+
+
               },
+
             ),
+
+
+
           ],
         ),
         appBar: SecondaryAppBar(
@@ -123,7 +133,6 @@ class _MyOrderScreenState extends State<MyOrderScreen> {
                   ccId:ccid,
                   ccCourseName:name,
                   ccImg:image,
-
                 ));
           },
           child: Container(
@@ -177,9 +186,10 @@ class _MyOrderScreenState extends State<MyOrderScreen> {
                       Column(
                         children: [
                           SizedBoxH8(),
-                          // appText(amount,
-                          //     style: AppTextStyle.headingTextTile
-                          //         .copyWith(fontSize: Sizes.s18.h,color: AppColor.primaryColor)),
+                          IconButton(onPressed: (){
+
+                            Navigator.pushNamed(context, Routs.paymentDes,arguments: OtpArguments(ccId:ccid));
+                          }, icon: Icon(Icons.receipt_long_outlined,),iconSize: 30, color: AppColor.primaryLightColor,),
                         ],
                       ),
                     ],

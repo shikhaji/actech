@@ -1,4 +1,5 @@
 import 'package:ac_tech/services/api_services.dart';
+import 'package:ac_tech/utils/function.dart';
 import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
@@ -122,16 +123,28 @@ class _SignUpScreenState extends State<SignUpScreen> with ValidationMixin {
                     lable: "Sign Up",
                     onPressed: () {
                       if (_formKey.currentState!.validate()) {
-                        /*FormData data() {
-                          return FormData.fromMap({
-                            "name": _name.text.trim(),
-                            "email": _email.text.trim(),
-                            "mobile": _phone.text.trim(),
-                            "password": _password.text.trim(),
-                            "referal_code": _referCode.text.trim(),
-                          });
-                        }*/
-                        ApiService().signUp(context,data:data());
+
+                        ApiService().verifyCenterCode(context,data: cc()).then((value) {
+                          if(value.status== 200){
+                            print(" yes i am in");
+                            ApiService().signUp(context,data:data());
+                          }else{
+                            print(" yes iam out");
+                          }
+                        });
+
+                        // ApiService().verifyCenterCode(context,data:cc()).then((value){
+                        //   if(value.center!= null){
+                        //     if(value.status==200){
+
+                        //     }
+                        //   }else{
+                        //     CommonFunctions.toast("invalid center code");
+                        //   }
+                        //
+                        // });
+
+
                       }
                     }),
               ],
@@ -139,6 +152,7 @@ class _SignUpScreenState extends State<SignUpScreen> with ValidationMixin {
           )),
     );
   }
+  //widget.arguments?.phoneNumber,
   FormData data() {
     return FormData.fromMap({
       "name": _name.text.trim(),
@@ -146,6 +160,12 @@ class _SignUpScreenState extends State<SignUpScreen> with ValidationMixin {
       "mobile": widget.arguments?.phoneNumber,
       "password": _password.text.trim(),
       "referal_code": _referCode.text.trim(),
+    });
+  }
+
+  FormData cc() {
+    return FormData.fromMap({
+      "center_code": _referCode.text.trim(),
     });
   }
 }

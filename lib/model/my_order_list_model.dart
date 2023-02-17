@@ -1,141 +1,101 @@
-// To parse this JSON data, do
-//
-//     final myOderListModel = myOderListModelFromJson(jsonString);
+class GetOrderListModel {
+  int? status;
+  String? message;
+  List<GetOrderList>? course;
 
-import 'dart:convert';
+  GetOrderListModel({this.status, this.message, this.course});
 
-MyOderListModel myOderListModelFromJson(String str) => MyOderListModel.fromJson(json.decode(str));
+  GetOrderListModel.fromJson(Map<String, dynamic> json) {
+    status = json['status'];
+    message = json['message'];
+    if (json['course'] != null) {
+      course = <GetOrderList>[];
+      json['course'].forEach((v) {
+        course!.add(new GetOrderList.fromJson(v));
+      });
+    }
+  }
 
-String myOderListModelToJson(MyOderListModel data) => json.encode(data.toJson());
-
-class MyOderListModel {
-  MyOderListModel({
-    required this.status,
-    required this.message,
-    required this.course,
-  });
-
-  int status;
-  String message;
-  List<Course> course;
-
-  factory MyOderListModel.fromJson(Map<String, dynamic> json) => MyOderListModel(
-    status: json["status"],
-    message: json["message"],
-    course: List<Course>.from(json["course"].map((x) => Course.fromJson(x))),
-  );
-
-  Map<String, dynamic> toJson() => {
-    "status": status,
-    "message": message,
-    "course": List<dynamic>.from(course.map((x) => x.toJson())),
-  };
+  Map<String, dynamic> toJson() {
+    final Map<String, dynamic> data = new Map<String, dynamic>();
+    data['status'] = this.status;
+    data['message'] = this.message;
+    if (this.course != null) {
+      data['course'] = this.course!.map((v) => v.toJson()).toList();
+    }
+    return data;
+  }
 }
 
-class Course {
-  Course({
-    required this.pclId,
-    required this.pclTt,
-    required this.pclClId,
-    required this.plcTransactionId,
-    required this.plcPaymentDate,
-    required this.plcPaymentStatus,
-    required this.plcLoginId,
-    required this.clTt,
-    required this.ccId,
-    required this.clName,
-    required this.clStatus,
-    required this.clId,
-    required this.courseCode,
-    required this.courseDuration,
-    required this.courseEligibility,
-    required this.coursePdf,
-    required this.clVideoUrl,
-    required this.ccTt,
-    required this.ccName,
-    required this.ccStatus,
-    required this.ccCommision,
-    required this.courseImage,
-    required this.ccTotalLessons,
-    required this.courseCategoryId,
-  });
+class GetOrderList {
+  String? pCLID;
+  String? pCLTT;
+  String? pCLCLID;
+  String? pLCTRANSACTIONID;
+  String? pLCPAYMENTDATE;
+  String? pLCPAYMENTSTATUS;
+  String? pLCLOGINID;
+  String? cCFVID;
+  String? cCFVTT;
+  String? cCFVNAME;
+  String? cCFVSTATUS;
+  String? cCFVCOMMISION;
+  String? cCFVCOURSEIMAGE;
+  String? cCFVTOTALLESSONS;
+  String? cCFVURL;
 
-  String pclId;
-  DateTime pclTt;
-  String pclClId;
-  String plcTransactionId;
-  DateTime plcPaymentDate;
-  String plcPaymentStatus;
-  String plcLoginId;
-  DateTime clTt;
-  String ccId;
-  String clName;
-  String clStatus;
-  String clId;
-  String courseCode;
-  String courseDuration;
-  String courseEligibility;
-  String coursePdf;
-  String clVideoUrl;
-  DateTime ccTt;
-  String ccName;
-  String ccStatus;
-  String ccCommision;
-  String courseImage;
-  String ccTotalLessons;
-  String courseCategoryId;
+  GetOrderList(
+      {this.pCLID,
+        this.pCLTT,
+        this.pCLCLID,
+        this.pLCTRANSACTIONID,
+        this.pLCPAYMENTDATE,
+        this.pLCPAYMENTSTATUS,
+        this.pLCLOGINID,
+        this.cCFVID,
+        this.cCFVTT,
+        this.cCFVNAME,
+        this.cCFVSTATUS,
+        this.cCFVCOMMISION,
+        this.cCFVCOURSEIMAGE,
+        this.cCFVTOTALLESSONS,
+        this.cCFVURL});
 
-  factory Course.fromJson(Map<String, dynamic> json) => Course(
-    pclId: json["PCL_ID"],
-    pclTt: DateTime.parse(json["PCL_TT"]),
-    pclClId: json["PCL_CL_ID"],
-    plcTransactionId: json["PLC_TRANSACTION_ID"],
-    plcPaymentDate: DateTime.parse(json["PLC_PAYMENT_DATE"]),
-    plcPaymentStatus: json["PLC_PAYMENT_STATUS"],
-    plcLoginId: json["PLC_LOGIN_ID"],
-    clTt: DateTime.parse(json["CL_TT"]),
-    ccId: json["CC_ID"],
-    clName: json["CL_NAME"],
-    clStatus: json["CL_STATUS"],
-    clId: json["CL_ID"],
-    courseCode: json["COURSE_CODE"],
-    courseDuration: json["COURSE_DURATION"],
-    courseEligibility: json["COURSE_ELIGIBILITY"],
-    coursePdf: json["COURSE_PDF"],
-    clVideoUrl: json["CL_VIDEO_URL"],
-    ccTt: DateTime.parse(json["CC_TT"]),
-    ccName: json["CC_NAME"],
-    ccStatus: json["CC_STATUS"],
-    ccCommision: json["CC_COMMISION"],
-    courseImage: json["COURSE_IMAGE"],
-    ccTotalLessons: json["CC_TOTAL_LESSONS"],
-    courseCategoryId: json["COURSE_CATEGORY_ID"],
-  );
+  GetOrderList.fromJson(Map<String, dynamic> json) {
+    pCLID = json['PCL_ID'];
+    pCLTT = json['PCL_TT'];
+    pCLCLID = json['PCL_CL_ID'];
+    pLCTRANSACTIONID = json['PLC_TRANSACTION_ID'];
+    pLCPAYMENTDATE = json['PLC_PAYMENT_DATE'];
+    pLCPAYMENTSTATUS = json['PLC_PAYMENT_STATUS'];
+    pLCLOGINID = json['PLC_LOGIN_ID'];
+    cCFVID = json['CCFV_ID'];
+    cCFVTT = json['CCFV_TT'];
+    cCFVNAME = json['CCFV_NAME'];
+    cCFVSTATUS = json['CCFV_STATUS'];
+    cCFVCOMMISION = json['CCFV_COMMISION'];
+    cCFVCOURSEIMAGE = json['CCFV_COURSE_IMAGE'];
+    cCFVTOTALLESSONS = json['CCFV_TOTAL_LESSONS'];
+    cCFVURL = json['CCFV_URL'];
+  }
 
-  Map<String, dynamic> toJson() => {
-    "PCL_ID": pclId,
-    "PCL_TT": pclTt.toIso8601String(),
-    "PCL_CL_ID": pclClId,
-    "PLC_TRANSACTION_ID": plcTransactionId,
-    "PLC_PAYMENT_DATE": "${plcPaymentDate.year.toString().padLeft(4, '0')}-${plcPaymentDate.month.toString().padLeft(2, '0')}-${plcPaymentDate.day.toString().padLeft(2, '0')}",
-    "PLC_PAYMENT_STATUS": plcPaymentStatus,
-    "PLC_LOGIN_ID": plcLoginId,
-    "CL_TT": clTt.toIso8601String(),
-    "CC_ID": ccId,
-    "CL_NAME": clName,
-    "CL_STATUS": clStatus,
-    "CL_ID": clId,
-    "COURSE_CODE": courseCode,
-    "COURSE_DURATION": courseDuration,
-    "COURSE_ELIGIBILITY": courseEligibility,
-    "COURSE_PDF": coursePdf,
-    "CL_VIDEO_URL": clVideoUrl,
-    "CC_TT": ccTt.toIso8601String(),
-    "CC_NAME": ccName,
-    "CC_STATUS": ccStatus,
-    "CC_COMMISION": ccCommision,
-    "COURSE_IMAGE": courseImage,
-    "CC_TOTAL_LESSONS": ccTotalLessons,
-    "COURSE_CATEGORY_ID": courseCategoryId,
-  };
+  Map<String, dynamic> toJson() {
+    final Map<String, dynamic> data = new Map<String, dynamic>();
+    data['PCL_ID'] = this.pCLID;
+    data['PCL_TT'] = this.pCLTT;
+    data['PCL_CL_ID'] = this.pCLCLID;
+    data['PLC_TRANSACTION_ID'] = this.pLCTRANSACTIONID;
+    data['PLC_PAYMENT_DATE'] = this.pLCPAYMENTDATE;
+    data['PLC_PAYMENT_STATUS'] = this.pLCPAYMENTSTATUS;
+    data['PLC_LOGIN_ID'] = this.pLCLOGINID;
+    data['CCFV_ID'] = this.cCFVID;
+    data['CCFV_TT'] = this.cCFVTT;
+    data['CCFV_NAME'] = this.cCFVNAME;
+    data['CCFV_STATUS'] = this.cCFVSTATUS;
+    data['CCFV_COMMISION'] = this.cCFVCOMMISION;
+    data['CCFV_COURSE_IMAGE'] = this.cCFVCOURSEIMAGE;
+    data['CCFV_TOTAL_LESSONS'] = this.cCFVTOTALLESSONS;
+    data['CCFV_URL'] = this.cCFVURL;
+    return data;
+  }
 }

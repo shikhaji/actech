@@ -216,25 +216,3 @@ class _CourseDetailsScreenState extends State<CourseDetailsScreen> {
   }
 }
 
-class Indicator extends StatelessWidget {
-  final bool isActive;
-  const Indicator({
-    Key? key,
-    required this.isActive,
-  }) : super(key: key);
-
-  @override
-  Widget build(BuildContext context) {
-    return AnimatedContainer(
-      duration: const Duration(milliseconds: 350),
-      height: 10.0,
-      margin: const EdgeInsets.symmetric(horizontal: 3.0),
-      width: isActive ? 10.0 : 10.0,
-      decoration: BoxDecoration(
-          color: isActive ? Colors.black : Colors.black,
-          borderRadius: BorderRadius.circular(8.0),
-          border: Border.all(color: Colors.black, width: 2.0)),
-    );
-  }
-
-}
