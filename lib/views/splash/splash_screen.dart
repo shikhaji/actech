@@ -1,7 +1,10 @@
 import 'dart:async';
 import 'package:ac_tech/utils/app_assets.dart';
+import 'package:ac_tech/utils/app_text_style.dart';
 import 'package:ac_tech/views/dashboard/main_home_screen.dart';
 import 'package:ac_tech/views/splash/welcome_screen.dart';
+import 'package:ac_tech/widgets/app_text.dart';
+import 'package:ac_tech/widgets/custom_size_box.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:sizer/sizer.dart';
@@ -46,11 +49,18 @@ class _SplashScreenState extends State<SplashScreen> {
     return Container(
         child: Scaffold(
       body: Center(
-          child:Image.asset(
-            AppAsset.splashImage,
-            height: 25.h,
-          ),
-      ),
+        child: Column(
+          children: [
+            SizedBoxH120(),
+            SizedBoxH120(),
+            Image.asset(
+              AppAsset.mainLogoImage,
+              height: 25.h,
+            ),
+            appText("AC-TECH INDIA",style: AppTextStyle.bigTextTile,)
+          ],
+        ),
+      )
     ));
   }
 }

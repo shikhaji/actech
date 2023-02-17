@@ -52,7 +52,7 @@ class _LoginScreenState extends State<LoginScreen> with ValidationMixin {
                 SizedBoxH34(),
                 Center(
                   child: Image.asset(
-                    AppAsset.splashImage,
+                    AppAsset.mainLogoImage,
                     height: 20.h,
                   ),
                 ),

@@ -96,7 +96,7 @@ class _MyOrderScreenState extends State<MyOrderScreen> {
                     ccid: getAllCourses[inx].ccfvId ?? "",
                     name:getAllCourses[inx].ccfvName ?? "",
                     lessons: "${getAllCourses[inx].ccfvTotalLessons ?? ""} Lessons",
-                    displayAmount: "₹${getAllCourses[inx].ccfvCommision ?? ""}",);
+                  displayAmount: "₹${getAllCourses[inx].ccfvCommision ?? ""}",);
               },
             ),
           ],
