@@ -355,7 +355,7 @@ class _HomeScreenState extends State<HomeScreen> {
                     style: AppTextStyle.alertSubtitle,
                   ),
                   content: Text(
-                    "Amount: ${amount}",
+                    "Amount: ${displayAmount}",
                     style: AppTextStyle.subTitle,
                   ),
                   actions: <Widget>[
@@ -459,7 +459,7 @@ class _HomeScreenState extends State<HomeScreen> {
                       Column(
                         children: [
                           SizedBoxH8(),
-                          appText(amount,
+                          appText(displayAmount,
                               style: AppTextStyle.headingTextTile
                                   .copyWith(fontSize: Sizes.s18.h,color: AppColor.primaryColor)),
                         ],

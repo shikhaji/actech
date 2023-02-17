@@ -1,6 +1,7 @@
 import 'package:ac_tech/model/course_category_model.dart';
 import 'package:ac_tech/model/fquestion_model.dart';
 import 'package:ac_tech/model/my_profile_model.dart';
+import 'package:ac_tech/model/verify_center_code_model.dart';
 import 'package:ac_tech/services/shared_preferences.dart';
 import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
@@ -407,4 +408,34 @@ class ApiService {
     }
   }
 
+
+  //----------------------------VERIFY CENTER CODE API-----------------------//
+
+  Future<VerifyCenteCode> verifyCenterCode(
+      BuildContext context, {
+        FormData? data,
+      }) async {
+    try {
+      Loader.showLoader();
+      Response response;
+      response = await dio.post(EndPoints.verifycentercode,
+          data: data);
+
+      if (response.statusCode == 200) {
+        VerifyCenteCode responseData = VerifyCenteCode.fromJson(response.data);
+        Loader.hideLoader();
+        debugPrint('responseData ----- > ${response.data}');
+        return responseData;
+      } else {
+        Loader.hideLoader();
+        throw Exception(response.data);
+      }
+    } on DioError catch (e) {
+      Loader.hideLoader();
+      debugPrint('Dio E  $e');
+      throw e.error;
+    }
+  }
  }
+
+

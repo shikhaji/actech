@@ -5,6 +5,7 @@ import '../../routes/app_routes.dart';
 import '../../routes/arguments.dart';
 import '../../services/api_services.dart';
 import '../../services/shared_preferences.dart';
+import '../../utils/app_assets.dart';
 import '../../utils/app_color.dart';
 import '../../utils/app_sizes.dart';
 import '../../utils/app_text_style.dart';
@@ -94,7 +95,8 @@ class _MyOrderScreenState extends State<MyOrderScreen> {
                     image: getAllCourses[inx].ccfvCourseImage ?? "",
                     ccid: getAllCourses[inx].ccfvId ?? "",
                     name:getAllCourses[inx].ccfvName ?? "",
-                    lessons: "${getAllCourses[inx].ccfvTotalLessons ?? ""} Lessons",);
+                    lessons: "${getAllCourses[inx].ccfvTotalLessons ?? ""} Lessons",
+                    displayAmount: "₹${getAllCourses[inx].ccfvCommision ?? ""}",);
               },
             ),
           ],
@@ -113,6 +115,7 @@ class _MyOrderScreenState extends State<MyOrderScreen> {
     required String name,
     required String lessons,
     required String ccid,
+    required String displayAmount,
   }){
     return Column(
       children: [
@@ -177,9 +180,9 @@ class _MyOrderScreenState extends State<MyOrderScreen> {
                       Column(
                         children: [
                           SizedBoxH8(),
-                          // appText(amount,
-                          //     style: AppTextStyle.headingTextTile
-                          //         .copyWith(fontSize: Sizes.s18.h,color: AppColor.primaryColor)),
+                          appText(displayAmount,
+                              style: AppTextStyle.headingTextTile
+                                  .copyWith(fontSize: Sizes.s18.h,color: AppColor.primaryColor)),
                         ],
                       ),
                     ],

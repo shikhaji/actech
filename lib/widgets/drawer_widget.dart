@@ -8,6 +8,7 @@ import 'package:shared_preferences/shared_preferences.dart';
 import 'package:url_launcher/url_launcher.dart';
 
 import '../model/my_profile_model.dart';
+import '../routes/app_routes.dart';
 import '../services/api_services.dart';
 import '../services/shared_preferences.dart';
 import '../utils/app_assets.dart';
@@ -67,7 +68,9 @@ class _DrawerState extends State<DrawerWidget> {
                     ScreenUtil().setVerticalSpacing(20),
                     _DrawerMenuListTile.asset(
                       title: 'Profile',
-                      onTap: () {},
+                      onTap: () {
+                        // Navigator.pushNamed(context, Routs.myOrder);
+                      },
                       child: Icon(FontAwesomeIcons.user),
                     ),
                     _DrawerMenuListTile.asset(

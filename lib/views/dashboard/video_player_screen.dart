@@ -1,6 +1,4 @@
 import 'dart:io';
-
-import 'package:ac_tech/views/dashboard/downloading_dialog.dart';
 import 'package:carousel_slider/carousel_controller.dart';
 import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';

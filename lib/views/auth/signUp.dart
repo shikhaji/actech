@@ -1,8 +1,10 @@
 import 'package:ac_tech/services/api_services.dart';
+import 'package:ac_tech/utils/function.dart';
 import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:sizer/sizer.dart';
+import '../../model/verify_center_code_model.dart';
 import '../../routes/arguments.dart';
 import '../../utils/app_assets.dart';
 import '../../utils/app_color.dart';
@@ -34,6 +36,8 @@ class _SignUpScreenState extends State<SignUpScreen> with ValidationMixin {
   final TextEditingController _categories = TextEditingController();
   bool obscurePassword = true;
   final _formKey = GlobalKey<FormState>();
+
+  CenterCode? centerdata;
 
   @override
   void initState() {
@@ -76,10 +80,10 @@ class _SignUpScreenState extends State<SignUpScreen> with ValidationMixin {
                 SizedBoxH8(),
                 PrimaryTextField(
                   controller: _phone,
-                  readOnly: true,
+                  readOnly: false,
                   keyboardInputType: TextInputType.phone,
                   prefix: const Icon(Icons.phone),
-                  hintText: "${widget.arguments?.phoneNumber}",
+                  // hintText: "${widget.arguments?.phoneNumber}",
                 ),
                 SizedBoxH10(),
                 appText("Email id", style: AppTextStyle.lable),
@@ -131,7 +135,19 @@ class _SignUpScreenState extends State<SignUpScreen> with ValidationMixin {
                             "referal_code": _referCode.text.trim(),
                           });
                         }*/
-                        ApiService().signUp(context,data:data());
+                        ApiService().verifyCenterCode(context,data:ccdata()).then((value){
+
+                          if(value.status==200){
+                            setState(() {
+                              centerdata=value.center!;
+                            });
+                            ApiService().signUp(context,data:data());
+                          }
+                          else{
+                            CommonFunctions.toast("Enter valid center code");
+                          }
+                        });
+
                       }
                     }),
               ],
@@ -146,6 +162,11 @@ class _SignUpScreenState extends State<SignUpScreen> with ValidationMixin {
       "mobile": widget.arguments?.phoneNumber,
       "password": _password.text.trim(),
       "referal_code": _referCode.text.trim(),
+    });
+  }
+  FormData ccdata() {
+    return FormData.fromMap({
+      "center_code": _referCode.text?.replaceAll('"', '').replaceAll('"', '').toString(),
     });
   }
 }

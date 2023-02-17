@@ -62,7 +62,7 @@ class _WelcomeScreenState extends State<WelcomeScreen> {
                         Navigator.push(
                             context,
                             MaterialPageRoute(
-                                builder: (context) =>MobileVerificationScreen()));
+                                builder: (context) =>SignUpScreen()));
                         //  clearField();
                       }),
                 ),
