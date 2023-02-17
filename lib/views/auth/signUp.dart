@@ -4,7 +4,6 @@ import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:sizer/sizer.dart';
-import '../../model/verify_center_code_model.dart';
 import '../../routes/arguments.dart';
 import '../../utils/app_assets.dart';
 import '../../utils/app_color.dart';
@@ -36,8 +35,6 @@ class _SignUpScreenState extends State<SignUpScreen> with ValidationMixin {
   final TextEditingController _categories = TextEditingController();
   bool obscurePassword = true;
   final _formKey = GlobalKey<FormState>();
-
-  CenterCode? centerdata;
 
   @override
   void initState() {
@@ -80,10 +77,10 @@ class _SignUpScreenState extends State<SignUpScreen> with ValidationMixin {
                 SizedBoxH8(),
                 PrimaryTextField(
                   controller: _phone,
-                  readOnly: false,
+                  readOnly: true,
                   keyboardInputType: TextInputType.phone,
                   prefix: const Icon(Icons.phone),
-                  // hintText: "${widget.arguments?.phoneNumber}",
+                  hintText: "${widget.arguments?.phoneNumber}",
                 ),
                 SizedBoxH10(),
                 appText("Email id", style: AppTextStyle.lable),
@@ -126,27 +123,27 @@ class _SignUpScreenState extends State<SignUpScreen> with ValidationMixin {
                     lable: "Sign Up",
                     onPressed: () {
                       if (_formKey.currentState!.validate()) {
-                        /*FormData data() {
-                          return FormData.fromMap({
-                            "name": _name.text.trim(),
-                            "email": _email.text.trim(),
-                            "mobile": _phone.text.trim(),
-                            "password": _password.text.trim(),
-                            "referal_code": _referCode.text.trim(),
-                          });
-                        }*/
-                        ApiService().verifyCenterCode(context,data:ccdata()).then((value){
 
-                          if(value.status==200){
-                            setState(() {
-                              centerdata=value.center!;
-                            });
+                        ApiService().verifyCenterCode(context,data: cc()).then((value) {
+                          if(value.status== 200){
+                            print(" yes i am in");
                             ApiService().signUp(context,data:data());
-                          }
-                          else{
-                            CommonFunctions.toast("Enter valid center code");
+                          }else{
+                            print(" yes iam out");
                           }
                         });
+
+                        // ApiService().verifyCenterCode(context,data:cc()).then((value){
+                        //   if(value.center!= null){
+                        //     if(value.status==200){
+
+                        //     }
+                        //   }else{
+                        //     CommonFunctions.toast("invalid center code");
+                        //   }
+                        //
+                        // });
+
 
                       }
                     }),
@@ -155,6 +152,7 @@ class _SignUpScreenState extends State<SignUpScreen> with ValidationMixin {
           )),
     );
   }
+  //widget.arguments?.phoneNumber,
   FormData data() {
     return FormData.fromMap({
       "name": _name.text.trim(),
@@ -164,9 +162,10 @@ class _SignUpScreenState extends State<SignUpScreen> with ValidationMixin {
       "referal_code": _referCode.text.trim(),
     });
   }
-  FormData ccdata() {
+
+  FormData cc() {
     return FormData.fromMap({
-      "center_code": _referCode.text?.replaceAll('"', '').replaceAll('"', '').toString(),
+      "center_code": _referCode.text.trim(),
     });
   }
 }

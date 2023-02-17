@@ -336,138 +336,66 @@ class _HomeScreenState extends State<HomeScreen> {
       ){
     return Column(
       children: [
-        GestureDetector(
-          onTap: (){
-            if(ccstatus=="0"){
-              Navigator.pushNamed(context, Routs.courseDetail,
-                  arguments: OtpArguments(
-                    ccId:ccid,
-                    ccCourseName:name,
-                    ccImg:image,
+        Container(
+          alignment: Alignment.center,
+          decoration: BoxDecoration(
+            color: AppColor.textFieldColor,
+            borderRadius: BorderRadius.circular(textFieldBorderRadius),
+          ),
+          child: Padding(
+            padding: const EdgeInsets.all(8.0),
+            child: Column(
+              children: [
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
 
-                  ));
-            }else{
-              showDialog(
-                context: context,
-                builder: (ctx) => AlertDialog(
-                  title: Text(
-                    "Payment for $name course",
-                    style: AppTextStyle.alertSubtitle,
-                  ),
-                  content: Text(
-                    "Amount: ${displayAmount}",
-                    style: AppTextStyle.subTitle,
-                  ),
-                  actions: <Widget>[
-                    Row(
-                      mainAxisAlignment:
-                      MainAxisAlignment.spaceBetween,
+                    Expanded(
+                      child: Row(
+                        children: [
+                          Container(
+                            height: Sizes.s80.h,
+                            width: Sizes.s120.h,
+                            decoration: BoxDecoration(
+                              borderRadius: BorderRadius.circular(15),
+                              shape: BoxShape.rectangle,
+                              image: DecorationImage(
+                                image:  NetworkImage("https://www.actechindia.org/uploads/${image}"),
+                                fit: BoxFit.fitHeight,
+                              ),
+                            ),
+                          ),
+                          SizedBoxW8(),
+                          Column(
+                            mainAxisAlignment: MainAxisAlignment.start,
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              appText(name,
+                                style: AppTextStyle.alertSubtitle
+                                    .copyWith(fontSize: Sizes.s14.h),
+                              ),
+                              SizedBoxH8(),
+                              appText(lessons,
+                                  style: AppTextStyle.alertSubtitle)
+
+
+                            ],
+                          ),
+                        ],
+                      ),
+                    ),
+
+                    Column(
                       children: [
-                        TextButton(
-                          onPressed: () {
-                            Navigator.of(ctx).pop();
-                          },
-                          child: Container(
-                            color: Colors.white,
-                            padding: const EdgeInsets.all(14),
-                            child: const Text("Cancel"),
-                          ),
-                        ),
-                        TextButton(
-                          onPressed: () async {
-                            Razorpay razorpay = Razorpay();
-                            Navigator.pop(context);
-                            var options = {
-                              'key': 'rzp_test_YoriHE0YT6XVEs',
-                              'amount': int.parse(amount) * 100,
-                              'name': 'Ac-Tech',
-                              'description': 'Course Purchased',
-                              'send_sms_hash': true,
-                              'prefill': {
-                                'contact': 'Yashil Patel',
-                                'email': 'yashil@gmail.com',
-                                'phone': '9979966965',
-                              },
-                            };
-                            razorpay.open(options);
-                            razorpay.on(Razorpay.EVENT_PAYMENT_SUCCESS,
-                                _handlePaymentSuccess);
-                          },
-                          child: Container(
-                            color: Colors.white,
-                            padding: const EdgeInsets.all(14),
-                            child: const Text("Pay Now"),
-                          ),
-                        ),
+                        SizedBoxH8(),
+                        appText(displayAmount,
+                            style: AppTextStyle.headingTextTile
+                                .copyWith(fontSize: Sizes.s18.h,color: AppColor.primaryColor)),
                       ],
                     ),
                   ],
                 ),
-              );
-            }
-
-          },
-          child: Container(
-            alignment: Alignment.center,
-            decoration: BoxDecoration(
-              color: AppColor.textFieldColor,
-              borderRadius: BorderRadius.circular(textFieldBorderRadius),
-            ),
-            child: Padding(
-              padding: const EdgeInsets.all(8.0),
-              child: Column(
-                children: [
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: [
-
-                      Expanded(
-                        child: Row(
-                          children: [
-                            Container(
-                              height: Sizes.s80.h,
-                              width: Sizes.s120.h,
-                              decoration: BoxDecoration(
-                                borderRadius: BorderRadius.circular(15),
-                                shape: BoxShape.rectangle,
-                                image: DecorationImage(
-                                  image:  NetworkImage("https://www.actechindia.org/uploads/${image}"),
-                                  fit: BoxFit.fitHeight,
-                                ),
-                              ),
-                            ),
-                            SizedBoxW8(),
-                            Column(
-                              mainAxisAlignment: MainAxisAlignment.start,
-                              crossAxisAlignment: CrossAxisAlignment.start,
-                              children: [
-                                appText(name,
-                                  style: AppTextStyle.alertSubtitle
-                                      .copyWith(fontSize: Sizes.s14.h),
-                                ),
-                                SizedBoxH8(),
-                                appText(lessons,
-                                    style: AppTextStyle.alertSubtitle)
-
-
-                              ],
-                            ),
-                          ],
-                        ),
-                      ),
-
-                      Column(
-                        children: [
-                          SizedBoxH8(),
-                          appText(displayAmount,
-                              style: AppTextStyle.headingTextTile
-                                  .copyWith(fontSize: Sizes.s18.h,color: AppColor.primaryColor)),
-                        ],
-                      ),
-                    ],
-                  ),
-                ],
-              ),
+              ],
             ),
           ),
         ),

@@ -17,14 +17,17 @@ class FquestionScreen extends StatefulWidget {
 }
 
 class _FquestionScreenState extends State<FquestionScreen> {
-  FquestionModel ?faq;
+  FquestionModel? faq;
 
+  @override
   void initState() {
     super.initState();
 
    ApiService().fquestion(context).then((value){
      setState(() {
-       faq=value!;
+      if(value != null){
+        faq=value;
+      }
      });
    });
   }
@@ -35,20 +38,21 @@ class _FquestionScreenState extends State<FquestionScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: AppColor.white,
-      body: CustomScroll(
+      body: faq != null ? CustomScroll(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
+
           for (var i = 0; i < faq!.fquestion!.length; i++) ...{
             GFAccordion(
               textStyle: AppTextStyle.headingTextTile,
-              title: faq?.fquestion![i].fquestion ?? "",
-              content: faq?.fquestion![i].fanswer ?? "",
+              title:   faq != null && faq!.fquestion != null ? faq?.fquestion![i].fquestion : "",
+              content:faq != null && faq!.fquestion != null ? faq?.fquestion![i].fanswer : "",
               //collapsedIcon: Icon(Icons.add),
               //expandedIcon: Icon(Icons.minimize)
             ),
           }
         ],
-      ),
+      ) : SizedBox.shrink(),
         appBar: SecondaryAppBar(
           title: "FAQ",
           isLeading: true,

@@ -1,9 +1,12 @@
+import 'dart:convert';
+
 import 'package:ac_tech/model/course_category_model.dart';
 import 'package:ac_tech/model/fquestion_model.dart';
 import 'package:ac_tech/model/my_profile_model.dart';
-import 'package:ac_tech/model/verify_center_code_model.dart';
 import 'package:ac_tech/services/shared_preferences.dart';
+import 'package:ac_tech/views/dashboard/my_order_screen.dart';
 import 'package:dio/dio.dart';
+import 'package:http/http.dart' as http;
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import '../API/dio_client.dart';
@@ -13,6 +16,7 @@ import '../model/login_model.dart';
 import '../model/mobile_verify_model.dart';
 import '../model/my_order_list_model.dart';
 import '../model/slider_model.dart';
+import '../model/verify_center_code_model.dart';
 import '../routes/app_routes.dart';
 import '../utils/function.dart';
 import '../utils/loader.dart';
@@ -74,7 +78,9 @@ class ApiService {
           msg: 'Sign Up Successfully...',
           backgroundColor: Colors.grey,
         );
-        Navigator.push(context, MaterialPageRoute(builder: (context)=> LoginScreen()));
+        // Navigator.push(context, MaterialPageRoute(builder: (context)=> LoginScreen()));
+        Navigator.pushNamedAndRemoveUntil(
+            context, Routs.login, (route) => false);
 
         debugPrint('responseData ----- > ${response.data}');
         return response.data;
@@ -110,8 +116,10 @@ class ApiService {
         Preferances.setString("userId", responseData.id);
         Preferances.setString("Token", responseData.token);
         Loader.hideLoader();
-        CommonFunctions.toast("Login Successful");
-      Navigator.pushNamed(context, Routs.mainHome);
+        CommonFunctions.toast("Login Success");
+
+        Navigator.pushNamedAndRemoveUntil(
+            context, Routs.mainHome, (route) => false);
 
         return responseData;
       } else {
@@ -271,29 +279,61 @@ class ApiService {
   }
 
   //----------------------------MY ORDER LIST BY ID API-----------------------//
-  Future<MyOderListModel> myOrderList(
-      BuildContext context, {
-        FormData? data,
-      }) async {
+  // Future<GetOrderListModel> getOrderListAPi(
+  //     BuildContext context, {
+  //       FormData? data,
+  //     }) async {
+  //   try {
+  //     Loader.showLoader();
+  //     Response response;
+  //     response = await dio.post(EndPoints.getMyOrderList,
+  //         data: data);
+  //
+  //     if (response.statusCode == 200) {
+  //       GetOrderListModel responseData = GetOrderListModel.fromJson(response.data);
+  //       Loader.hideLoader();
+  //       debugPrint('responseData GetOrderListModel ----- > ${response.data}');
+  //       return responseData;
+  //     } else {
+  //       Loader.hideLoader();
+  //       throw Exception(response.data);
+  //     }
+  //   } on DioError catch (e) {
+  //     Loader.hideLoader();
+  //     debugPrint('Dio E  $e');
+  //     throw e.error;
+  //   }
+  // }
+
+  Future getOrderListAPi(BuildContext context, {
+    Map? data,
+  }) async {
     try {
       Loader.showLoader();
-      Response response;
-      response = await dio.post(EndPoints.getMyOrderList,
-          data: data);
+   var url = "https://www.actechindia.org/get_ajax/get_my_order_list";
+      var response = await http.post(
+        Uri.parse(url),
+
+        body: data,);
+
 
       if (response.statusCode == 200) {
-        MyOderListModel responseData = MyOderListModel.fromJson(response.data);
+
+
+        debugPrint('payment history  ----- > ${response.body}');
+
         Loader.hideLoader();
-        debugPrint('responseData ----- > ${response.data}');
-        return responseData;
+
+        return response.body;
+
       } else {
         Loader.hideLoader();
-        throw Exception(response.data);
+        throw Exception(response.body);
+
       }
     } on DioError catch (e) {
       Loader.hideLoader();
       debugPrint('Dio E  $e');
-      throw e.error;
     }
   }
 
@@ -409,25 +449,32 @@ class ApiService {
   }
 
 
-  //----------------------------VERIFY CENTER CODE API-----------------------//
 
-  Future<VerifyCenteCode> verifyCenterCode(
-      BuildContext context, {
-        FormData? data,
-      }) async {
+  //----------------------------Center Code API-----------------------//
+
+  Future<CenterCodeModel> verifyCenterCode(BuildContext context,{
+    FormData? data,
+  }) async {
     try {
       Loader.showLoader();
       Response response;
-      response = await dio.post(EndPoints.verifycentercode,
-          data: data);
+      print("data:=${data}");
+      response = await dio.post(EndPoints.verifyCenterCode,
+          data: data
+      );
+      print("12345:=${data}");
 
-      if (response.statusCode == 200) {
-        VerifyCenteCode responseData = VerifyCenteCode.fromJson(response.data);
+      print("respose Data here:=${response}");
+      CenterCodeModel responseData = CenterCodeModel.fromJson(response.data);
+      if (responseData.status == 200) {
+
         Loader.hideLoader();
-        debugPrint('responseData ----- > ${response.data}');
+        debugPrint('responseData ----- > ${responseData.center}');
         return responseData;
       } else {
         Loader.hideLoader();
+        CommonFunctions.toast("Invalid Center Code");
+        debugPrint('responseData invaild data ----- > ${responseData.center}');
         throw Exception(response.data);
       }
     } on DioError catch (e) {
@@ -436,6 +483,31 @@ class ApiService {
       throw e.error;
     }
   }
+
+  //----------------------------Payment DES API-----------------------//
+
+  // Future<MyOderListModel> paymentDes (BuildContext context,{
+  //   FormData? data,
+  // }) async {
+  //   try {
+  //     Loader.showLoader();
+  //     Response response;
+  //     response = await dio.post(EndPoints.getMyOrderList,
+  //     );
+  //     if (response.statusCode == 200) {
+  //       MyOderListModel responseData = MyOderListModel.fromJson(response.data);
+  //       Loader.hideLoader();
+  //       debugPrint('responseData ----- > ${response.data}');
+  //       return responseData;
+  //     } else {
+  //       Loader.hideLoader();
+  //       throw Exception(response.data);
+  //     }
+  //   } on DioError catch (e) {
+  //     Loader.hideLoader();
+  //     debugPrint('Dio E  $e');
+  //     throw e.error;
+  //   }
+  // }
+
  }
-
-

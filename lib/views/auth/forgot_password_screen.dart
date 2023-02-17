@@ -80,9 +80,12 @@ class _ForgotPasswordScreenState extends State<ForgotPasswordScreen>
                             .then((value) {
                           if (value!.status == 200) {
                             if (value.count == 1) {
-                              Navigator.pushNamed(context, Routs.resetPassword,
+                              // Navigator.pushNamed(context, Routs.resetPassword,
+                              //     arguments: OtpArguments(
+                              //         phoneNumber: _phone.text.trim()));
+                              Navigator.pushNamed(context, Routs.otp,
                                   arguments: OtpArguments(
-                                      phoneNumber: _phone.text.trim()));
+                                      phoneNumber: _phone.text.trim(),otpStatus: 1));
                             } else if (value.count == 0) {
                               CommonFunctions.toast("Your number is not registered Please signUp");
 

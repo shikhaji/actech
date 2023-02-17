@@ -1,3 +1,4 @@
+import 'package:ac_tech/utils/function.dart';
 import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
 import '../../model/course_category_model.dart';
@@ -5,7 +6,6 @@ import '../../routes/app_routes.dart';
 import '../../routes/arguments.dart';
 import '../../services/api_services.dart';
 import '../../services/shared_preferences.dart';
-import '../../utils/app_assets.dart';
 import '../../utils/app_color.dart';
 import '../../utils/app_sizes.dart';
 import '../../utils/app_text_style.dart';
@@ -96,9 +96,17 @@ class _MyOrderScreenState extends State<MyOrderScreen> {
                     ccid: getAllCourses[inx].ccfvId ?? "",
                     name:getAllCourses[inx].ccfvName ?? "",
                     lessons: "${getAllCourses[inx].ccfvTotalLessons ?? ""} Lessons",
-                  displayAmount: "₹${getAllCourses[inx].ccfvCommision ?? ""}",);
+
+
+                );
+
+
               },
+
             ),
+
+
+
           ],
         ),
         appBar: SecondaryAppBar(
@@ -115,7 +123,6 @@ class _MyOrderScreenState extends State<MyOrderScreen> {
     required String name,
     required String lessons,
     required String ccid,
-    required String displayAmount,
   }){
     return Column(
       children: [
@@ -126,7 +133,6 @@ class _MyOrderScreenState extends State<MyOrderScreen> {
                   ccId:ccid,
                   ccCourseName:name,
                   ccImg:image,
-
                 ));
           },
           child: Container(
@@ -180,9 +186,10 @@ class _MyOrderScreenState extends State<MyOrderScreen> {
                       Column(
                         children: [
                           SizedBoxH8(),
-                          appText(displayAmount,
-                              style: AppTextStyle.headingTextTile
-                                  .copyWith(fontSize: Sizes.s18.h,color: AppColor.primaryColor)),
+                          IconButton(onPressed: (){
+
+                            Navigator.pushNamed(context, Routs.paymentDes,arguments: OtpArguments(ccId:ccid));
+                          }, icon: Icon(Icons.receipt_long_outlined,),iconSize: 30, color: AppColor.primaryLightColor,),
                         ],
                       ),
                     ],

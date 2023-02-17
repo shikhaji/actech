@@ -4,13 +4,12 @@ class AppAsset {
   static const String imagePath = "assets/images/";
   static const String iconPath = "assets/icons/";
   static const String temPath = "assets/temporary/";
-  static const String videoPath = "assets/videos/";
 
   //splash screen(png)
   static const String splash = "${imagePath}splash_img.jpg";
   static const String backGround = "${imagePath}background_img.png";
-  static const splashImage = "${imagePath}logo_white.png";
-  static const mainLogoImage = "${imagePath}logo.png";
+  static const splashImage = "${imagePath}Logo.png";
+  static const mainLogoImage = "${imagePath}Logo.png";
 
   //BOTTOM NAV BAR IMAGE
 
@@ -46,6 +45,4 @@ class AppAsset {
   //USER Page
   static const userImage = "${imagePath}user.jpg";
 
-  //Videos
-  static const sampleVideo = "${videoPath}sample.mp4";
 }
