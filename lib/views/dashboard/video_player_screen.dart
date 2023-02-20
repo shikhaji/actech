@@ -109,6 +109,7 @@ class _VideoPlayerScreenState extends State<VideoPlayerScreen> {
               ),
               RemainingDuration(),
               PlaybackSpeedButton(),
+              FullScreenButton(),
             ],
           ),
           SizedBoxH34(),

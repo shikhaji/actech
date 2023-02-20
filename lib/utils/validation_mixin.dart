@@ -62,6 +62,14 @@ mixin ValidationMixin {
     }
   }
 
+  String? centerCodeValidator(String? msg) {
+    if (msg!.isNotEmpty) {
+      return null;
+    } else {
+      return "Please Enter Center Code";
+    }
+  }
+
   String? passwordValidator(String? password, {bool isLogin = false}) {
     if (password!.isNotEmpty) {
       if (isLogin == false) {
