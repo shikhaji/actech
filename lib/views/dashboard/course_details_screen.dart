@@ -105,6 +105,7 @@ class _CourseDetailsScreenState extends State<CourseDetailsScreen> {
                       chapterName: getAllCourseDetails[inx].ccfvName ?? "",
                       chapterPdf: getAllCourseDetails[inx].cvlCoursePdf  ?? "",
                       desc: getAllCourseDetails[inx].cvlDesc  ?? "",
+
                     );
                   },
                 ),
@@ -188,7 +189,7 @@ class _CourseDetailsScreenState extends State<CourseDetailsScreen> {
                           width: 35,
                           child: GestureDetector(
                               onTap:(){
-                                Navigator.pushNamed(context, Routs.videoPlayer,
+                                Navigator.pushNamed(context, Routs.chapterDisplay,
                                     arguments: OtpArguments(
                                       ccUrl: url,
                                       ccChapterName: name,

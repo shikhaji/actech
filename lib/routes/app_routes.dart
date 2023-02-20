@@ -9,6 +9,7 @@ import '../views/auth/login_screen.dart';
 import '../views/auth/mobile_verification_screen.dart';
 import '../views/auth/otp_verification_screen.dart';
 import '../views/auth/signUp.dart';
+import '../views/dashboard/chapter_display_screen.dart';
 import '../views/dashboard/course_details_screen.dart';
 import '../views/dashboard/fquestionScreen.dart';
 import '../views/dashboard/my_order_screen.dart';
@@ -32,6 +33,7 @@ class Routs {
   static const String editProfile = "/edit_profile";
   static const String myOrder = "/my_order";
   static const String paymentDes = "/payment_Desecripiton";
+  static const String chapterDisplay = "/chapter_display_screen";
 }
 
 class RoutGenerator {
@@ -98,6 +100,12 @@ class RoutGenerator {
       case Routs.paymentDes:
         return MaterialPageRoute(
             builder: (_) => PaymentDes(arguments: arguments as OtpArguments,));
+
+      case Routs.chapterDisplay:
+        return MaterialPageRoute(
+            builder: (_) => ChapterDisplayScreen(arguments: arguments as OtpArguments,));
+
+
 
       default:
         return null;
