@@ -106,17 +106,15 @@ class _ChapterDisplayScreenState extends State<ChapterDisplayScreen> {
           SizedBoxH28(),
 
       Container(
-        height: Sizes.s220.h,
-        width: Sizes.s350.h,
         decoration: BoxDecoration(
           borderRadius: BorderRadius.circular(15),
           image: DecorationImage(
-              image: NetworkImage(
-                  'https://cdn.sanity.io/images/s7xbv9bz/production/1562d4dae8dc03456edca898e89c0f39ae086a8f-1600x1000.png'
-              ),
-              fit: BoxFit.cover
+            image:  NetworkImage("https://www.actechindia.org/uploads/${widget.arguments?.ccImg}"),
+            fit: BoxFit.cover,
           ),
         ),
+        height: Sizes.s200.h,
+
         child: Align(
           alignment: Alignment.center,
           child: Container(
@@ -170,7 +168,7 @@ class _ChapterDisplayScreenState extends State<ChapterDisplayScreen> {
         isLeading: true,
         leadingIcon: Icons.arrow_back,
       ),
-      bottomNavigationBar: _progress!=null?SizedBox(width: 5 , height: 5.h,child: CircularProgressIndicator()):Material(
+      bottomNavigationBar: _progress!=null?SizedBox(width: 5 , height: 5.h,child: Center(child: CircularProgressIndicator())):Material(
         color: AppColor.primaryColor,
         child: InkWell(
           onTap: () {
