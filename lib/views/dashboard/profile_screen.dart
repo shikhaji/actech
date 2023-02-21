@@ -152,6 +152,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                 throw 'Could not launch $url';
               }
             },
+
             child: Icon(Icons.local_police_outlined),
           ),
         ),

@@ -1,6 +1,7 @@
 
 import 'package:ac_tech/views/auth/edit_profile.dart';
 import 'package:ac_tech/views/auth/reset_password_screen.dart';
+import 'package:ac_tech/views/dashboard/chapter_display_screen.dart';
 import 'package:ac_tech/views/dashboard/main_home_screen.dart';
 import 'package:flutter/material.dart';
 
@@ -11,6 +12,7 @@ import '../views/auth/otp_verification_screen.dart';
 import '../views/auth/signUp.dart';
 import '../views/dashboard/course_details_screen.dart';
 import '../views/dashboard/fquestionScreen.dart';
+import '../views/dashboard/home_screen.dart';
 import '../views/dashboard/my_order_screen.dart';
 import '../views/dashboard/payment_Desecription.dart';
 import '../views/dashboard/video_player_screen.dart';
@@ -32,6 +34,7 @@ class Routs {
   static const String editProfile = "/edit_profile";
   static const String myOrder = "/my_order";
   static const String paymentDes = "/payment_Desecripiton";
+  static const String chapterDisplay = "/chapter_display_screen";
 }
 
 class RoutGenerator {
@@ -98,6 +101,10 @@ class RoutGenerator {
       case Routs.paymentDes:
         return MaterialPageRoute(
             builder: (_) => PaymentDes(arguments: arguments as OtpArguments,));
+
+        case Routs.chapterDisplay:
+        return MaterialPageRoute(
+            builder: (_) => ChapterDisplayScreen(arguments: arguments as OtpArguments,));
 
       default:
         return null;

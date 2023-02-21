@@ -19,17 +19,17 @@ import '../../widgets/primary_appbar.dart';
 import '../../widgets/scrollview.dart';
 import 'package:flutter_file_downloader/flutter_file_downloader.dart';
 
-class VideoPlayerScreen extends StatefulWidget {
+class ChapterDisplayScreen extends StatefulWidget {
   final OtpArguments? arguments;
-  const VideoPlayerScreen({Key? key, this.arguments}) : super(key: key);
+  const ChapterDisplayScreen({Key? key, this.arguments}) : super(key: key);
 
   @override
-  State<VideoPlayerScreen> createState() => _VideoPlayerScreenState();
+  State<ChapterDisplayScreen> createState() => _ChapterDisplayScreenState();
 }
 
 
 
-class _VideoPlayerScreenState extends State<VideoPlayerScreen> {
+class _ChapterDisplayScreenState extends State<ChapterDisplayScreen> {
   List<Course> getAllCourseDetails = [];
 
   final GlobalKey<ScaffoldState> _scaffoldKey = GlobalKey<ScaffoldState>();
@@ -67,7 +67,17 @@ class _VideoPlayerScreenState extends State<VideoPlayerScreen> {
 
   }
 
-
+  // void toggleFullScreenMode() {
+  //   updateValue(value.copyWith(isFullScreen: !value.isFullScreen));
+  //   if (value.isFullScreen) {
+  //     SystemChrome.setPreferredOrientations([
+  //       DeviceOrientation.landscapeLeft,
+  //       DeviceOrientation.landscapeRight,
+  //     ]);
+  //   } else {
+  //     SystemChrome.setPreferredOrientations([DeviceOrientation.portraitUp]);
+  //   }
+  // }
   @override
   void dispose() {
     _controller.dispose();
@@ -84,8 +94,9 @@ class _VideoPlayerScreenState extends State<VideoPlayerScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: Column(
+      body: CustomScroll(
         children: [
+          SizedBoxH10(),
           YoutubePlayer(
             controller: _controller,
             showVideoProgressIndicator: true,
@@ -102,12 +113,29 @@ class _VideoPlayerScreenState extends State<VideoPlayerScreen> {
               ),
               RemainingDuration(),
               PlaybackSpeedButton(),
-              FullScreenButton(),
+              // FullScreenButton(),
             ],
           ),
-        ],
-      ),
 
+          SizedBoxH34(),
+          SizedBoxH34(),
+          Align(
+              alignment: Alignment.topLeft,
+              child: appText("${widget.arguments?.ccChapterName}",
+                  style: AppTextStyle.title)
+          ),
+          SizedBoxH20(),
+          Align(
+            alignment: Alignment.topLeft,
+            child: Text(
+                "${widget.arguments?.ccDesc}",
+                style: AppTextStyle.subTitle),
+          ),
+
+
+        ],
+
+      ),
 
       appBar: SecondaryAppBar(
         title: "${widget.arguments?.ccCourseName}",
@@ -118,23 +146,23 @@ class _VideoPlayerScreenState extends State<VideoPlayerScreen> {
         color: AppColor.primaryColor,
         child: InkWell(
           onTap: () {
-              FileDownloader.downloadFile(url: pdfURL.trim(),
-              onProgress: (name, progress){
-                setState(() {
-                  _progress = progress;
+            FileDownloader.downloadFile(url: pdfURL.trim(),
+                onProgress: (name, progress){
+                  setState(() {
+                    _progress = progress;
 
-                });
-              },
-              onDownloadCompleted: (value){
-                print('path $value');
-                setState(() {
-                  _progress = null;
-                });
-                Fluttertoast.showToast(
-                  msg: 'Download Successfully',
-                  backgroundColor: Colors.grey,
-                );
-              }
+                  });
+                },
+                onDownloadCompleted: (value){
+                  print('path $value');
+                  setState(() {
+                    _progress = null;
+                  });
+                  Fluttertoast.showToast(
+                    msg: 'Download Successfully',
+                    backgroundColor: Colors.grey,
+                  );
+                }
             );
           },
           child: const SizedBox(

@@ -31,6 +31,7 @@ import '../../widgets/primary_appbar.dart';
 import '../../widgets/primary_button.dart';
 import '../../widgets/primary_textfield.dart';
 import '../../widgets/scrollview.dart';
+import '../splash/home_screen.dart';
 
 class HomeScreen extends StatefulWidget {
   const HomeScreen({Key? key}) : super(key: key);
@@ -202,25 +203,33 @@ class _HomeScreenState extends State<HomeScreen> {
               ],
             ),
             SizedBoxH10(),
-            Container(
-              height: Sizes.s350,
-              child:SingleChildScrollView(
-                child: ListView.builder(
-                  padding: EdgeInsets.symmetric(vertical: Sizes.s20.h),
-                  shrinkWrap: true,
-                  physics: const NeverScrollableScrollPhysics(),
-                  itemCount: getAllCourses.length,
-                  itemBuilder: (context, inx) {
-                    return CoursesListContainer(
-                      image:getAllCourses[inx].ccfvCourseImage ?? "",
-                      name:getAllCourses[inx].ccfvName ?? "",
-                      lessons: "${getAllCourses[inx].ccfvTotalLessons ?? ""} Lessons",
-                      displayAmount: "₹${getAllCourses[inx].ccfvCommision ?? ""}",
-                      ccid: getAllCourses[inx].ccfvId ?? "",
-                      ccstatus: getAllCourses[inx].ccfvStatus ?? "",
-                      amount: "${getAllCourses[inx].ccfvCommision ?? ""}",
-                    );
-                  },
+            GestureDetector(
+              onTap: (){
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(builder: (context) =>YoutubePlayerDemo(title: 'YT',)),
+                );
+              },
+              child: Container(
+                height: Sizes.s350,
+                child:SingleChildScrollView(
+                  child: ListView.builder(
+                    padding: EdgeInsets.symmetric(vertical: Sizes.s20.h),
+                    shrinkWrap: true,
+                    physics: const NeverScrollableScrollPhysics(),
+                    itemCount: getAllCourses.length,
+                    itemBuilder: (context, inx) {
+                      return CoursesListContainer(
+                        image:getAllCourses[inx].ccfvCourseImage ?? "",
+                        name:getAllCourses[inx].ccfvName ?? "",
+                        lessons: "${getAllCourses[inx].ccfvTotalLessons ?? ""} Lessons",
+                        displayAmount: "₹${getAllCourses[inx].ccfvCommision ?? ""}",
+                        ccid: getAllCourses[inx].ccfvId ?? "",
+                        ccstatus: getAllCourses[inx].ccfvStatus ?? "",
+                        amount: "${getAllCourses[inx].ccfvCommision ?? ""}",
+                      );
+                    },
+                  ),
                 ),
               ),
             ),

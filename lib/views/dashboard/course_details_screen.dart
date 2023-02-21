@@ -18,7 +18,6 @@ import '../../utils/app_color.dart';
 import '../../utils/app_sizes.dart';
 import '../../utils/app_text_style.dart';
 import '../../utils/constant.dart';
-import '../../utils/screen_utils.dart';
 import '../../widgets/app_text.dart';
 import '../../widgets/custom_size_box.dart';
 import '../../widgets/drawer_widget.dart';
