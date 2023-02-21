@@ -119,7 +119,9 @@ class _CategoriesScreenState extends State<CategoriesScreen> {
       FormData data(){
         return FormData.fromMap({"course_id":courseId,"transaction_id":paymentId,"payment_status":1,"loginid":loginId?.replaceAll('"','').replaceAll('"', '').toString()});
       }
-      ApiService().addPurchase(context,data: data());
+      ApiService().addPurchase(context,data: data()).then((value) {
+        callApi();
+      });
     }catch(e){
       print(e.toString());
     }
@@ -183,7 +185,6 @@ class _CategoriesScreenState extends State<CategoriesScreen> {
               alignment: Alignment.topLeft,
                 child: Text("All Courses ",style: AppTextStyle.alertSubtitle)),
 
-            SizedBoxH10(),
             Container(
               height: Sizes.s600,
               child:SingleChildScrollView(
@@ -263,6 +264,7 @@ class _CategoriesScreenState extends State<CategoriesScreen> {
                         onPressed: () async {
                           courseId =ccid;
                           Navigator.pop(context);
+
                           var options = {
                             'key': 'rzp_test_YoriHE0YT6XVEs',
                             'amount': int.parse(amount) * 100,
@@ -360,27 +362,5 @@ class _CategoriesScreenState extends State<CategoriesScreen> {
     );
 
 
-  }
-}
-
-class Indicator extends StatelessWidget {
-  final bool isActive;
-  const Indicator({
-    Key? key,
-    required this.isActive,
-  }) : super(key: key);
-
-  @override
-  Widget build(BuildContext context) {
-    return AnimatedContainer(
-      duration: const Duration(milliseconds: 350),
-      height: 10.0,
-      margin: const EdgeInsets.symmetric(horizontal: 3.0),
-      width: isActive ? 10.0 : 10.0,
-      decoration: BoxDecoration(
-          color: isActive ? Colors.black : Colors.black,
-          borderRadius: BorderRadius.circular(8.0),
-          border: Border.all(color: Colors.black, width: 2.0)),
-    );
   }
 }
