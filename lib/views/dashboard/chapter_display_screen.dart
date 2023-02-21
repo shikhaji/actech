@@ -9,7 +9,10 @@ import 'package:fluttertoast/fluttertoast.dart';
 import 'package:sizer/sizer.dart';
 import 'package:youtube_player_flutter/youtube_player_flutter.dart';
 import '../../model/course_categoryid_model.dart';
+import '../../routes/app_routes.dart';
 import '../../routes/arguments.dart';
+import '../../services/api_services.dart';
+import '../../utils/app_assets.dart';
 import '../../utils/app_color.dart';
 import '../../utils/app_sizes.dart';
 import '../../utils/app_text_style.dart';
@@ -63,21 +66,25 @@ class _ChapterDisplayScreenState extends State<ChapterDisplayScreen> {
       DeviceOrientation.portraitDown,
     ]);
 
-
+    callApi();
 
   }
 
-  // void toggleFullScreenMode() {
-  //   updateValue(value.copyWith(isFullScreen: !value.isFullScreen));
-  //   if (value.isFullScreen) {
-  //     SystemChrome.setPreferredOrientations([
-  //       DeviceOrientation.landscapeLeft,
-  //       DeviceOrientation.landscapeRight,
-  //     ]);
-  //   } else {
-  //     SystemChrome.setPreferredOrientations([DeviceOrientation.portraitUp]);
-  //   }
-  // }
+  Future<void> callApi() async {
+
+    FormData data() {
+      return FormData.fromMap({
+        "cc_id": widget.arguments?.ccId,
+      });
+    }
+    ApiService().categoryById(context,data: data()).then((value){
+
+      setState(() {
+        getAllCourseDetails=value.course!;
+      });
+    });
+
+  }
   @override
   void dispose() {
     _controller.dispose();
@@ -96,26 +103,47 @@ class _ChapterDisplayScreenState extends State<ChapterDisplayScreen> {
     return Scaffold(
       body: CustomScroll(
         children: [
-          SizedBoxH10(),
-          YoutubePlayer(
-            controller: _controller,
-            showVideoProgressIndicator: true,
-            onReady: () => debugPrint("Ready"),
-            bottomActions: [
-              CurrentPosition(),
-              ProgressBar(
-                isExpanded: true,
+          SizedBoxH28(),
 
-                colors: ProgressBarColors(
-                  playedColor: AppColor.primaryColor,
-                  handleColor: AppColor.primaryLightColor,
-                ),
+      Container(
+        height: Sizes.s220.h,
+        width: Sizes.s350.h,
+        decoration: BoxDecoration(
+          borderRadius: BorderRadius.circular(15),
+          image: DecorationImage(
+              image: NetworkImage(
+                  'https://cdn.sanity.io/images/s7xbv9bz/production/1562d4dae8dc03456edca898e89c0f39ae086a8f-1600x1000.png'
               ),
-              RemainingDuration(),
-              PlaybackSpeedButton(),
-              // FullScreenButton(),
-            ],
+              fit: BoxFit.cover
           ),
+        ),
+        child: Align(
+          alignment: Alignment.center,
+          child: Container(
+            padding: EdgeInsets.all(10),
+
+            child:GestureDetector(
+
+                onTap: (){
+                  Navigator.pushNamed(context, Routs.videoPlayer,arguments: OtpArguments(
+                    ccUrl: videoURL,
+                    // ccChapterName: name,
+                    // ccCourseName: chapterName,
+                    // ccChapterPdf: chapterPdf,
+                    // ccDesc: desc,
+                  ));
+                },
+
+                child: Image.asset(AppAsset.youtube,scale: 8)),
+          ),
+        ),
+      ),
+
+
+          SizedBoxH10(),
+
+
+
 
           SizedBoxH34(),
           SizedBoxH34(),

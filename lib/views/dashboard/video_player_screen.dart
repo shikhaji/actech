@@ -1,6 +1,6 @@
 import 'dart:io';
-import 'package:ac_tech/views/dashboard/landscape_player_page.dart';
-import 'package:ac_tech/widgets/primary_button.dart';
+
+import 'package:ac_tech/views/dashboard/downloading_dialog.dart';
 import 'package:carousel_slider/carousel_controller.dart';
 import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
@@ -27,7 +27,39 @@ class VideoPlayerScreen extends StatefulWidget {
   State<VideoPlayerScreen> createState() => _VideoPlayerScreenState();
 }
 
+/*abstract class DownloadService {
+  Future<void> download({required String url});
+}
 
+
+class MobileDownloadService implements DownloadService {
+  @override
+  Future<void> download({required String url}) async {
+    // requests permission for downloading the file
+    bool hasPermission = await _requestWritePermission();
+    if (!hasPermission) return;
+
+    // gets the directory where we will download the file.
+    var dir = await getApplicationDocumentsDirectory();
+
+    // You should put the name you want for the file here.
+    // Take in account the extension.
+    String fileName = 'loro';
+
+    // downloads the file
+    Dio dio = Dio();
+    await dio.download(url, "${dir.path}/$fileName");
+
+    // opens the file
+    OpenFile.open("${dir.path}/$fileName", type: 'application/pdf');
+  }
+
+  // requests storage permission
+  Future<bool> _requestWritePermission() async {
+    await Permission.storage.request();
+    return await Permission.storage.request().isGranted;
+  }
+}*/
 
 class _VideoPlayerScreenState extends State<VideoPlayerScreen> {
   List<Course> getAllCourseDetails = [];
@@ -51,7 +83,6 @@ class _VideoPlayerScreenState extends State<VideoPlayerScreen> {
       initialVideoId: videoID!,
       flags: YoutubePlayerFlags(
         autoPlay: false,
-
       ),
     );
     super.initState();
@@ -63,10 +94,7 @@ class _VideoPlayerScreenState extends State<VideoPlayerScreen> {
       DeviceOrientation.portraitDown,
     ]);
 
-
-
   }
-
 
   @override
   void dispose() {
@@ -81,76 +109,37 @@ class _VideoPlayerScreenState extends State<VideoPlayerScreen> {
     SystemChrome.setPreferredOrientations(orientations);
   }
 
+
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      body: Column(
-        children: [
-          YoutubePlayer(
-            controller: _controller,
-            showVideoProgressIndicator: true,
-            onReady: () => debugPrint("Ready"),
-            bottomActions: [
-              CurrentPosition(),
-              ProgressBar(
-                isExpanded: true,
+    return LayoutBuilder(
 
-                colors: ProgressBarColors(
-                  playedColor: AppColor.primaryColor,
-                  handleColor: AppColor.primaryLightColor,
-                ),
-              ),
-              RemainingDuration(),
-              PlaybackSpeedButton(),
-              FullScreenButton(),
-            ],
-          ),
-        ],
-      ),
+      builder: ( BuildContext context, BoxConstraints constraints ) {
 
+        return YoutubePlayer(
+          controller: _controller,
+          showVideoProgressIndicator: true,
+          onReady: () => debugPrint("Ready"),
+          bottomActions: [
+            CurrentPosition(),
+            ProgressBar(
+              isExpanded: true,
 
-      appBar: SecondaryAppBar(
-        title: "${widget.arguments?.ccCourseName}",
-        isLeading: true,
-        leadingIcon: Icons.arrow_back,
-      ),
-      bottomNavigationBar: _progress!=null?SizedBox(width: 5 , height: 5.h,child: CircularProgressIndicator()):Material(
-        color: AppColor.primaryColor,
-        child: InkWell(
-          onTap: () {
-              FileDownloader.downloadFile(url: pdfURL.trim(),
-              onProgress: (name, progress){
-                setState(() {
-                  _progress = progress;
-
-                });
-              },
-              onDownloadCompleted: (value){
-                print('path $value');
-                setState(() {
-                  _progress = null;
-                });
-                Fluttertoast.showToast(
-                  msg: 'Download Successfully',
-                  backgroundColor: Colors.grey,
-                );
-              }
-            );
-          },
-          child: const SizedBox(
-            height: Sizes.s50,
-            width: double.infinity,
-            child: Center(
-              child: Text(
-                'Download Course Materials',
-                style: AppTextStyle.lable,
+              colors: ProgressBarColors(
+                playedColor: AppColor.primaryColor,
+                handleColor: AppColor.primaryLightColor,
               ),
             ),
-          ),
-        ),
-      ),
+            RemainingDuration(),
+            PlaybackSpeedButton(),
+            FullScreenButton(),
+          ],
+        );
+      },
+
     );
   }
+
 }
 
 

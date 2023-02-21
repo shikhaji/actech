@@ -28,6 +28,7 @@ class AppAsset {
   static const String bookmark = "${iconPath}bookmark.png";
   static const String bookmarkFill = "${iconPath}bookmark_fill.png";
   static const String view = "${iconPath}views.png";
+  static const String youtube = "${iconPath}youtube.png";
 
   //HOME PAGE
   static const flutter = "${imagePath}flutter.jpg";
