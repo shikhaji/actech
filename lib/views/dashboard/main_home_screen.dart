@@ -1,11 +1,7 @@
 import 'dart:developer';
-
 import 'package:ac_tech/views/dashboard/profile_screen.dart';
 import 'package:flutter/material.dart';
-
-import '../../utils/app_color.dart';
 import '../../utils/app_sizes.dart';
-import '../../utils/app_text_style.dart';
 import '../../utils/screen_utils.dart';
 
 import '../../widgets/custom_bottom_navigation_bar.dart';

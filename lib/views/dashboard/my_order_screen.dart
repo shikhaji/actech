@@ -110,7 +110,7 @@ class _MyOrderScreenState extends State<MyOrderScreen> {
           ],
         ),
         appBar: SecondaryAppBar(
-          title: "My Order",
+          title: "My Class",
           isLeading: true,
           leadingIcon: Icons.menu,
           onBackPressed: () {

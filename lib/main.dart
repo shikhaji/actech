@@ -30,18 +30,7 @@ Future<void> _firebaseMessagingBackgroundHandler(RemoteMessage message) async {
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await Firebase.initializeApp();
-  // FirebaseMessaging.onBackgroundMessage(_firebaseMessagingBackgroundHandler);
-  //
-  // await flutterLocalNotificationsPlugin
-  //     .resolvePlatformSpecificImplementation<
-  //     AndroidFlutterLocalNotificationsPlugin>()
-  //     ?.createNotificationChannel(channel);
-  //
-  // await FirebaseMessaging.instance.setForegroundNotificationPresentationOptions(
-  //   alert: true,
-  //   badge: true,
-  //   sound: true,
-  // );
+
   runApp(const MyApp());
   disableCapture();
 }
@@ -54,13 +43,7 @@ class MyApp extends StatelessWidget {
     final botToastBuilder = BotToastInit();
     return Sizer(builder: (context, orientation, deviceType) {
       return MaterialApp(
-        // themeMode: ThemeMode.system,
-        // debugShowCheckedModeBanner: false,
-        // // initialRoute: "${SplashScreen()}",
-        // home: SplashScreen(),
-        // // LoginScreen(),
-        // //RegistrationScreen(),
-        // navigatorObservers: [BotToastNavigatorObserver()],
+
         debugShowCheckedModeBanner: false,
         themeMode: ThemeMode.system,
         theme: ThemeUtils.lightTheme,
