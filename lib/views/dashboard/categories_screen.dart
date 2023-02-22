@@ -6,6 +6,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:razorpay_flutter/razorpay_flutter.dart';
 
+import '../../model/check_course_model.dart';
 import '../../routes/app_routes.dart';
 import '../../routes/arguments.dart';
 import '../../services/shared_preferences.dart';
@@ -38,6 +39,7 @@ class _CategoriesScreenState extends State<CategoriesScreen> {
   String loginId ="";
 
   List<Course> allCourseListRes = [];
+  List<CheckCourse> checkCourseList = [];
   bool _isSearching = false;
 
 
@@ -79,6 +81,18 @@ class _CategoriesScreenState extends State<CategoriesScreen> {
           .toList();
       setState(() {});
     }
+  }
+
+  Future<void> checkCourseApi()async {
+    String? id = await Preferances.getString("userId");
+    FormData data() {
+      return FormData.fromMap({
+        "loginid":id?.replaceAll('"', '').replaceAll('"', '').toString(),
+        "categoryid" :"0",
+      });
+    }
+   ApiService().courseStatus(context,data: data());
+
   }
 
   Future<void>getLoginId()async{
