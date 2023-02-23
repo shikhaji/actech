@@ -26,16 +26,13 @@ apply plugin: 'kotlin-android'
 apply from: "$flutterRoot/packages/flutter_tools/gradle/flutter.gradle"
 apply plugin:  'com.google.gms.google-services'
 
-  def keystoreProperties = new Properties()
-  def keystorePropertiesFile = rootProject.file('key.properties')
-  if (keystorePropertiesFile.exists()) {
-      keystoreProperties.load(new FileInputStream(keystorePropertiesFile))
-  }
+def keystoreProperties = new Properties()
+def keystorePropertiesFile = rootProject.file('key.properties')
+if (keystorePropertiesFile.exists()) {
+    keystoreProperties.load(new FileInputStream(keystorePropertiesFile))
+}
 
-  android {
-
-
-              
+android {
     compileSdkVersion 33
     ndkVersion flutter.ndkVersion
 
@@ -54,7 +51,7 @@ apply plugin:  'com.google.gms.google-services'
 
     defaultConfig {
         // TODO: Specify your own unique Application ID (https://developer.android.com/studio/build/application-id.html).
-        applicationId "com.example.ac_tech"
+        applicationId "actech.offical.india"
         // You can update the following values to match your application needs.
         // For more information, see: https://docs.flutter.dev/deployment/android#reviewing-the-build-configuration.
         minSdkVersion 21
@@ -71,14 +68,13 @@ apply plugin:  'com.google.gms.google-services'
             storePassword keystoreProperties['storePassword']
         }
     }
+
     buildTypes {
-              
         release {
-            // TODO: Add your own signing config for the release build.
-            // Signing with the debug keys for now, so `flutter run --release` works.
             signingConfig signingConfigs.release
         }
     }
+
 }
 
 flutter {
@@ -87,16 +83,7 @@ flutter {
 
 dependencies {
     implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk7:$kotlin_version"
-    // Import the Firebase BoM
     implementation platform('com.google.firebase:firebase-bom:31.2.1')
-
-
-    // TODO: Add the dependencies for Firebase products you want to use
-    // When using the BoM, don't specify versions in Firebase dependencies
     implementation 'com.google.firebase:firebase-analytics-ktx'
     implementation 'com.google.firebase:firebase-auth-ktx'
-
-
-    // Add the dependencies for any other desired Firebase products
-    // https://firebase.google.com/docs/android/setup#available-libraries
 }

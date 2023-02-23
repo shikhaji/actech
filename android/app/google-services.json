@@ -7,12 +7,126 @@
   "client": [
     {
       "client_info": {
+        "mobilesdk_app_id": "1:559147353286:android:b82186572f6436aff383c7",
+        "android_client_info": {
+          "package_name": "actech.offical.india"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "559147353286-atjkft8voso5canipoudqh0q3j4l97la.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "actech.offical.india",
+            "certificate_hash": "73094a4d4d043475ebabea1cecbb48156a3f16d3"
+          }
+        },
+        {
+          "client_id": "559147353286-vfgttfo604a00unojuc6umkoku8vtao8.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "actech.offical.india",
+            "certificate_hash": "32317591a4618e69ab720ef2e2b1fd62624b69d1"
+          }
+        },
+        {
+          "client_id": "559147353286-taq0irsr9mhef2i8o87be7f4rtv7rag3.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAOoW3-zcUVDrhIpwrAmAMudnqJA9PzMjc"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "559147353286-taq0irsr9mhef2i8o87be7f4rtv7rag3.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    },
+    {
+      "client_info": {
         "mobilesdk_app_id": "1:559147353286:android:e38d803fe913e01ef383c7",
         "android_client_info": {
           "package_name": "com.example.ac_tech"
         }
       },
       "oauth_client": [
+        {
+          "client_id": "559147353286-meee6gvec7v5re0s12fk483g1r9152uc.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.example.ac_tech",
+            "certificate_hash": "311aa7356546861b4fcce9113a60716630bc2c66"
+          }
+        },
+        {
+          "client_id": "559147353286-qcf2tm442n4bvpb42ibltb8p7cr9p9f0.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.example.ac_tech",
+            "certificate_hash": "b163786f029455cb595b60e022dbefa922908687"
+          }
+        },
+        {
+          "client_id": "559147353286-v7bm2essle2pddhn39r4tkb3h41o0ru5.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.example.ac_tech",
+            "certificate_hash": "73094a4d4d043475ebabea1cecbb48156a3f16d3"
+          }
+        },
+        {
+          "client_id": "559147353286-taq0irsr9mhef2i8o87be7f4rtv7rag3.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAOoW3-zcUVDrhIpwrAmAMudnqJA9PzMjc"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "559147353286-taq0irsr9mhef2i8o87be7f4rtv7rag3.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:559147353286:android:645b02b2cc682838f383c7",
+        "android_client_info": {
+          "package_name": "online.india.actech"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "559147353286-6lceld6c704av0avg5hk4lltcf18mccf.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "online.india.actech",
+            "certificate_hash": "32317591a4618e69ab720ef2e2b1fd62624b69d1"
+          }
+        },
+        {
+          "client_id": "559147353286-o0khu17f8vdln7l8680lk90c2ot7t02l.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "online.india.actech",
+            "certificate_hash": "73094a4d4d043475ebabea1cecbb48156a3f16d3"
+          }
+        },
         {
           "client_id": "559147353286-taq0irsr9mhef2i8o87be7f4rtv7rag3.apps.googleusercontent.com",
           "client_type": 3
