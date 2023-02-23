@@ -31,7 +31,6 @@ import '../../widgets/primary_appbar.dart';
 import '../../widgets/primary_button.dart';
 import '../../widgets/primary_textfield.dart';
 import '../../widgets/scrollview.dart';
-import '../splash/home_screen.dart';
 
 class HomeScreen extends StatefulWidget {
   const HomeScreen({Key? key}) : super(key: key);
@@ -205,10 +204,6 @@ class _HomeScreenState extends State<HomeScreen> {
             SizedBoxH10(),
             GestureDetector(
               onTap: (){
-                Navigator.push(
-                  context,
-                  MaterialPageRoute(builder: (context) =>YoutubePlayerDemo(title: 'YT',)),
-                );
               },
               child: Container(
                 height: Sizes.s350,
