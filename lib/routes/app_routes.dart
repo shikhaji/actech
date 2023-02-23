@@ -1,6 +1,7 @@
 
 import 'package:ac_tech/views/auth/edit_profile.dart';
 import 'package:ac_tech/views/auth/reset_password_screen.dart';
+import 'package:ac_tech/views/dashboard/introduction_video_screen.dart';
 import 'package:ac_tech/views/dashboard/main_home_screen.dart';
 import 'package:flutter/material.dart';
 
@@ -34,6 +35,7 @@ class Routs {
   static const String myOrder = "/my_order";
   static const String paymentDes = "/payment_Desecripiton";
   static const String chapterDisplay = "/chapter_display_screen";
+  static const String introductionVideo = "/introduction_video_screen";
 }
 
 class RoutGenerator {
@@ -105,6 +107,9 @@ class RoutGenerator {
         return MaterialPageRoute(
             builder: (_) => ChapterDisplayScreen(arguments: arguments as OtpArguments,));
 
+      case Routs.introductionVideo:
+        return MaterialPageRoute(
+            builder: (_) => IntroductionVideo(arguments: arguments as OtpArguments,));
 
 
       default:

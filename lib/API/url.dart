@@ -17,6 +17,5 @@ class EndPoints {
   static const String editProfile = '$baseUrl/$post/update_student_kyc';
   static const String addPurchase = '$baseUrl/$post/add_purchase_details';
   static const String verifyCenterCode = '$baseUrl/$get/verify_center_code';
-  static const String checkCourseDetails = '$baseUrl/$get/check_course_payment_status';
 
 }

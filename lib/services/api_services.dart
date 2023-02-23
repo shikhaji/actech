@@ -512,38 +512,5 @@ class ApiService {
   // }
 
 
-//----------------------------Check Course Status API-----------------------//
-
-  Future<CheckCourseModel> courseStatus(BuildContext context,{
-    FormData? data,
-  }) async {
-    try {
-      Loader.showLoader();
-      Response response;
-      print("data:=${data}");
-      response = await dio.post(EndPoints.checkCourseDetails,
-          data: data
-      );
-      print("12345:=${data}");
-
-      print("respose Data here:=${response}");
-
-      if (response.statusCode == 200) {
-        CheckCourseModel responseData = CheckCourseModel.fromJson(response.data);
-        Loader.hideLoader();
-        debugPrint('responseData ----- > ${responseData.status}');
-        return responseData;
-      } else {
-        Loader.hideLoader();
-        CommonFunctions.toast("Invalid Center Code");
-        debugPrint('responseData invaild data ----- > ${response.statusCode}');
-        throw Exception(response.data);
-      }
-    } on DioError catch (e) {
-      Loader.hideLoader();
-      debugPrint('Dio E  $e');
-      throw e.error;
-    }
-  }
 
  }

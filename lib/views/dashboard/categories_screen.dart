@@ -83,17 +83,7 @@ class _CategoriesScreenState extends State<CategoriesScreen> {
     }
   }
 
-  Future<void> checkCourseApi()async {
-    String? id = await Preferances.getString("userId");
-    FormData data() {
-      return FormData.fromMap({
-        "loginid":id?.replaceAll('"', '').replaceAll('"', '').toString(),
-        "categoryid" :"0",
-      });
-    }
-   ApiService().courseStatus(context,data: data());
 
-  }
 
   Future<void>getLoginId()async{
     String? id = await Preferances.getString("userId");
@@ -215,7 +205,9 @@ class _CategoriesScreenState extends State<CategoriesScreen> {
                         displayAmount: "₹${getAllCourses[inx].ccfvCommision ?? ""}",
                         ccid: getAllCourses[inx].ccfvId ?? "",
                         ccstatus: getAllCourses[inx].ccfvStatus ?? "",
-                        amount: "${getAllCourses[inx].ccfvCommision ?? ""}"
+                        ccIntroVideo: getAllCourses[inx].ccfvUrl ?? "",
+                        amount: "${getAllCourses[inx].ccfvCommision ?? ""
+                        }"
                     );
                   },
                 ),
@@ -242,70 +234,17 @@ class _CategoriesScreenState extends State<CategoriesScreen> {
   required String displayAmount,
   required String ccid,
   required String ccstatus,
+  required String ccIntroVideo,
   }
       ){
     return Column(
       children: [
         GestureDetector(
           onTap: (){
-            showDialog(
-              context: context,
-              builder: (ctx) => AlertDialog(
-                title: Text(
-                  "Payment for $name course",
-                  style: AppTextStyle.alertSubtitle,
-                ),
-                content: Text(
-                  "Amount: ${displayAmount}",
-                  style: AppTextStyle.subTitle,
-                ),
-                actions: <Widget>[
-                  Row(
-                    mainAxisAlignment:
-                    MainAxisAlignment.spaceBetween,
-                    children: [
-                      TextButton(
-                        onPressed: () {
-                          Navigator.of(ctx).pop();
-                        },
-                        child: Container(
-                          color: Colors.white,
-                          padding: const EdgeInsets.all(14),
-                          child: const Text("Cancel"),
-                        ),
-                      ),
-                      TextButton(
-                        onPressed: () async {
-                          courseId =ccid;
-                          Navigator.pop(context);
 
-                          var options = {
-                            'key': 'rzp_test_YoriHE0YT6XVEs',
-                            'amount': int.parse(amount) * 100,
-                            'name': 'AC-Tech',
-                            'description': 'Course Purchased',
-                            'send_sms_hash': true,
-                            'prefill': {
-                              'contact': 'Yashil Patel',
-                              'email': 'yashil@gmail.com',
-                              'phone': '9979966965',
-                            },
-                          };
-                          _razorpay.open(options);
-
-                        },
-                        child: Container(
-                          color: Colors.white,
-                          padding: const EdgeInsets.all(14),
-                          child: const Text("Pay Now"),
-                        ),
-                      ),
-                    ],
-                  ),
-                ],
-              ),
+            Navigator.pushNamed(context, Routs.introductionVideo,
+              arguments: OtpArguments(ccUrl: ccIntroVideo)
             );
-
           },
           child: Container(
             alignment: Alignment.center,
@@ -357,11 +296,78 @@ class _CategoriesScreenState extends State<CategoriesScreen> {
                       ),
 
                       Column(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         children: [
-                          SizedBoxH8(),
+
                           appText(displayAmount,
-                              style: AppTextStyle.headingTextTile
+                              style: AppTextStyle.title
                                   .copyWith(fontSize: Sizes.s18.h,color: AppColor.primaryColor)),
+                          SizedBoxH18(),
+                          GestureDetector(
+                            onTap: (){
+                              showDialog(
+                                context: context,
+                                builder: (ctx) => AlertDialog(
+                                  title: Text(
+                                    "Payment for $name course",
+                                    style: AppTextStyle.alertSubtitle,
+                                  ),
+                                  content: Text(
+                                    "Amount: ${displayAmount}",
+                                    style: AppTextStyle.subTitle,
+                                  ),
+                                  actions: <Widget>[
+                                    Row(
+                                      mainAxisAlignment:
+                                      MainAxisAlignment.spaceBetween,
+                                      children: [
+                                        TextButton(
+                                          onPressed: () {
+                                            Navigator.of(ctx).pop();
+                                          },
+                                          child: Container(
+                                            color: Colors.white,
+                                            padding: const EdgeInsets.all(14),
+                                            child: const Text("Cancel"),
+                                          ),
+                                        ),
+                                        TextButton(
+                                          onPressed: () async {
+                                            courseId =ccid;
+                                            Navigator.pop(context);
+
+                                            var options = {
+                                              'key': 'rzp_test_YoriHE0YT6XVEs',
+                                              'amount': int.parse(amount) * 100,
+                                              'name': 'AC-Tech',
+                                              'description': 'Course Purchased',
+                                              'send_sms_hash': true,
+                                              'prefill': {
+                                                'contact': 'Yashil Patel',
+                                                'email': 'yashil@gmail.com',
+                                                'phone': '9979966965',
+                                              },
+                                            };
+                                            _razorpay.open(options);
+
+                                          },
+                                          child: Container(
+                                            color: Colors.white,
+                                            padding: const EdgeInsets.all(14),
+                                            child: const Text("Pay Now"),
+                                          ),
+                                        ),
+                                      ],
+                                    ),
+                                  ],
+                                ),
+                              );
+
+                            },
+                            child: appText("Buy",
+                                style: AppTextStyle.headingTextTile
+                                    .copyWith(fontSize: Sizes.s18.h,color: AppColor.primaryColor)),
+                          ),
                         ],
                       ),
                     ],

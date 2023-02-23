@@ -57,7 +57,6 @@ class _SplashScreenState extends State<SplashScreen> {
               AppAsset.mainLogoImage,
               height: 25.h,
             ),
-            appText("AC-TECH INDIA",style: AppTextStyle.bigTextTile,)
           ],
         ),
       )
