@@ -1,3 +1,4 @@
+import 'package:ac_tech/routes/app_routes.dart';
 import 'package:ac_tech/widgets/primary_button.dart';
 import 'package:dio/dio.dart';
 import 'package:flutter/cupertino.dart';
@@ -16,6 +17,9 @@ import '../utils/app_sizes.dart';
 import '../utils/app_text_style.dart';
 import '../utils/screen_utils.dart';
 import '../views/Auth/login_screen.dart';
+import 'custom_bottom_navigation_bar.dart';
+import 'custom_bottom_navigation_bar.dart';
+import 'custom_bottom_navigation_bar.dart';
 
 class DrawerWidget extends StatefulWidget {
 
@@ -65,11 +69,6 @@ class _DrawerState extends State<DrawerWidget> {
                 child: Column(
                   children: [
                     ScreenUtil().setVerticalSpacing(20),
-                    _DrawerMenuListTile.asset(
-                      title: 'My Order',
-                      onTap: () {},
-                      child: Icon(Icons.format_list_bulleted_sharp),
-                    ),
                     _DrawerMenuListTile.asset(
                       title: 'Terms & Conditions',
                       onTap: () async {
