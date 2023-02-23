@@ -1,7 +1,6 @@
 import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
 import 'package:sizer/sizer.dart';
-
 import '../../routes/arguments.dart';
 import '../../services/api_services.dart';
 import '../../utils/app_assets.dart';

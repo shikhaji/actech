@@ -129,19 +129,6 @@ class _SignUpScreenState extends State<SignUpScreen> with ValidationMixin {
                             print(" yes iam out");
                           }
                         });
-
-                        // ApiService().verifyCenterCode(context,data:cc()).then((value){
-                        //   if(value.center!= null){
-                        //     if(value.status==200){
-
-                        //     }
-                        //   }else{
-                        //     CommonFunctions.toast("invalid center code");
-                        //   }
-                        //
-                        // });
-
-
                       }
                     }),
               ],

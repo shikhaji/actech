@@ -1,18 +1,10 @@
-import 'dart:io';
-
-import 'package:ac_tech/views/dashboard/video_player_screen.dart';
-import 'package:ac_tech/views/dashboard/home_screen.dart';
-import 'package:carousel_slider/carousel_controller.dart';
 import 'package:dio/dio.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:video_player/video_player.dart';
-
 import '../../model/course_categoryid_model.dart';
 import '../../routes/app_routes.dart';
 import '../../routes/arguments.dart';
 import '../../services/api_services.dart';
-import '../../services/shared_preferences.dart';
 import '../../utils/app_assets.dart';
 import '../../utils/app_color.dart';
 import '../../utils/app_sizes.dart';
@@ -20,9 +12,7 @@ import '../../utils/app_text_style.dart';
 import '../../utils/constant.dart';
 import '../../widgets/app_text.dart';
 import '../../widgets/custom_size_box.dart';
-import '../../widgets/drawer_widget.dart';
 import '../../widgets/primary_appbar.dart';
-import '../../widgets/primary_textfield.dart';
 import '../../widgets/scrollview.dart';
 
 class CourseDetailsScreen extends StatefulWidget {

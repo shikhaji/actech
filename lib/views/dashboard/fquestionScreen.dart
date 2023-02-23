@@ -1,11 +1,9 @@
 import 'package:ac_tech/utils/app_text_style.dart';
 import 'package:flutter/material.dart';
 import 'package:getwidget/components/accordion/gf_accordion.dart';
-
 import '../../model/fquestion_model.dart';
 import '../../services/api_services.dart';
 import '../../utils/app_color.dart';
-import '../../widgets/custom_size_box.dart';
 import '../../widgets/primary_appbar.dart';
 import '../../widgets/scrollview.dart';
 

@@ -2,10 +2,8 @@ import 'package:ac_tech/widgets/custom_size_box.dart';
 import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
 import 'package:url_launcher/url_launcher.dart';
-
 import '../../model/my_profile_model.dart';
 import '../../routes/app_routes.dart';
-import '../../routes/arguments.dart';
 import '../../services/api_services.dart';
 import '../../services/shared_preferences.dart';
 import '../../utils/app_assets.dart';

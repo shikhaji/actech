@@ -1,21 +1,10 @@
-import 'dart:io';
 import 'package:carousel_slider/carousel_controller.dart';
-import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:fluttertoast/fluttertoast.dart';
-import 'package:sizer/sizer.dart';
 import 'package:youtube_player_flutter/youtube_player_flutter.dart';
 import '../../model/course_categoryid_model.dart';
 import '../../routes/arguments.dart';
 import '../../utils/app_color.dart';
-import '../../utils/app_sizes.dart';
-import '../../utils/app_text_style.dart';
-import '../../widgets/app_text.dart';
-import '../../widgets/custom_size_box.dart';
-import '../../widgets/primary_appbar.dart';
-import '../../widgets/scrollview.dart';
-import 'package:flutter_file_downloader/flutter_file_downloader.dart';
 
 class VideoPlayerScreen extends StatefulWidget {
   final OtpArguments? arguments;
@@ -24,40 +13,6 @@ class VideoPlayerScreen extends StatefulWidget {
   @override
   State<VideoPlayerScreen> createState() => _VideoPlayerScreenState();
 }
-
-/*abstract class DownloadService {
-  Future<void> download({required String url});
-}
-
-
-class MobileDownloadService implements DownloadService {
-  @override
-  Future<void> download({required String url}) async {
-    // requests permission for downloading the file
-    bool hasPermission = await _requestWritePermission();
-    if (!hasPermission) return;
-
-    // gets the directory where we will download the file.
-    var dir = await getApplicationDocumentsDirectory();
-
-    // You should put the name you want for the file here.
-    // Take in account the extension.
-    String fileName = 'loro';
-
-    // downloads the file
-    Dio dio = Dio();
-    await dio.download(url, "${dir.path}/$fileName");
-
-    // opens the file
-    OpenFile.open("${dir.path}/$fileName", type: 'application/pdf');
-  }
-
-  // requests storage permission
-  Future<bool> _requestWritePermission() async {
-    await Permission.storage.request();
-    return await Permission.storage.request().isGranted;
-  }
-}*/
 
 class _VideoPlayerScreenState extends State<VideoPlayerScreen> {
   List<Course> getAllCourseDetails = [];

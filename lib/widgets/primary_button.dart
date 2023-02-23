@@ -27,10 +27,6 @@ class PrimaryButton extends StatelessWidget {
         height: height ?? ScreenUtil().setHeight(50),
         minWidth: double.infinity,
         shape: const StadiumBorder(),
-
-        // RoundedRectangleBorder(
-        //     borderRadius: BorderRadius.circular(primaryButtonRadius)),
-        //
         color: color ?? AppColor.primaryColor,
         highlightColor: Colors.transparent,
         elevation: 3,
@@ -80,18 +76,5 @@ class CustomButton extends StatelessWidget {
             )),
       ),
     );
-    // MaterialButton(
-    //   height: height ?? ScreenUtil().setHeight(50),
-    //   minWidth: double.infinity,
-    //   shape: const StadiumBorder(),
-    //   color: color ?? AppColor.primaryColor,
-    //   highlightColor: Colors.transparent,
-    //   elevation: 3,
-    //   onPressed: onPressed,
-    //   child: appText(lable,
-    //       style: isStyle == false
-    //           ? AppTextStyle.buttonTextStyle
-    //           : AppTextStyle.buttonTextStyle
-    //               .copyWith(color: color ?? AppColor.primaryColor)));
   }
 }

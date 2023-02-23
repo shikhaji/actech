@@ -1,22 +1,12 @@
 import 'package:ac_tech/utils/app_assets.dart';
 import 'package:ac_tech/views/auth/forgot_password_screen.dart';
 import 'package:ac_tech/views/auth/mobile_verification_screen.dart';
-import 'package:ac_tech/views/auth/signUp.dart';
-import 'package:ac_tech/views/dashboard/main_home_screen.dart';
 import 'package:dio/dio.dart';
-
-import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/material.dart';
-import 'package:fluttertoast/fluttertoast.dart';
 import 'package:sizer/sizer.dart';
-
-import '../../routes/app_routes.dart';
-
 import '../../services/api_services.dart';
 import '../../utils/app_color.dart';
-
 import '../../utils/app_text_style.dart';
-import '../../utils/image_utils.dart';
 import '../../utils/validation_mixin.dart';
 import '../../widgets/app_text.dart';
 import '../../widgets/custom_size_box.dart';

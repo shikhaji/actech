@@ -1,16 +1,13 @@
 import 'package:ac_tech/model/course_category_model.dart';
 import 'package:ac_tech/services/api_services.dart';
-import 'package:ac_tech/utils/function.dart';
 import 'package:dio/dio.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:razorpay_flutter/razorpay_flutter.dart';
-
 import '../../model/check_course_model.dart';
 import '../../routes/app_routes.dart';
 import '../../routes/arguments.dart';
 import '../../services/shared_preferences.dart';
-import '../../utils/app_assets.dart';
 import '../../utils/app_color.dart';
 import '../../utils/app_sizes.dart';
 import '../../utils/app_text_style.dart';

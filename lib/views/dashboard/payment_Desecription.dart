@@ -65,16 +65,6 @@ class _PaymentDesState extends State<PaymentDes> {
    });
   }
 
-  // Future<void> getId()async {
-  //   String? id = await Preferances.getString("userId");
-  //   print("login id here is:000${id}");
-  // setState(() {
-  //
-  //    loginId = "$id";
-  // });
-
-
-  // }
 
   @override
   Widget build(BuildContext context) {

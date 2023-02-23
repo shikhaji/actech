@@ -1,13 +1,10 @@
-import 'package:ac_tech/routes/app_routes.dart';
 import 'package:ac_tech/widgets/primary_button.dart';
 import 'package:dio/dio.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:url_launcher/url_launcher.dart';
-
 import '../model/my_profile_model.dart';
 import '../services/api_services.dart';
 import '../services/shared_preferences.dart';
@@ -17,10 +14,6 @@ import '../utils/app_sizes.dart';
 import '../utils/app_text_style.dart';
 import '../utils/screen_utils.dart';
 import '../views/Auth/login_screen.dart';
-import 'custom_bottom_navigation_bar.dart';
-import 'custom_bottom_navigation_bar.dart';
-import 'custom_bottom_navigation_bar.dart';
-
 class DrawerWidget extends StatefulWidget {
 
   const DrawerWidget({Key? key}) : super(key: key);
