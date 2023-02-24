@@ -55,8 +55,6 @@ class PrimaryTextField extends StatelessWidget {
     this.hintStyle,
     this.contentPadding,
     this.suffixIconConstraints,
-    // const TextStyle(
-    //     fontWeight: FontWeight.w700, color: AppColor.hintTextColor),
     this.keyboardInputType = TextInputType.text,
   }) : super(key: key);
 

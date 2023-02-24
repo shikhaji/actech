@@ -1,4 +1,3 @@
-import 'dart:developer';
 import 'package:ac_tech/views/dashboard/profile_screen.dart';
 import 'package:flutter/material.dart';
 import '../../utils/app_sizes.dart';
@@ -21,9 +20,7 @@ class _MainHomeScreenState extends State<MainHomeScreen> {
   final ValueNotifier<int> _currentIndexNotifier = ValueNotifier(0);
   final GlobalKey<ScaffoldState> _scaffoldKey = GlobalKey<ScaffoldState>();
 
-  // void openDrawer() {
-  //   _scaffoldKey.currentState?.openDrawer();
-  // }
+
 
   @override
   Widget build(BuildContext context) {

@@ -6,15 +6,16 @@ import '../../model/course_categoryid_model.dart';
 import '../../routes/arguments.dart';
 import '../../utils/app_color.dart';
 
-class VideoPlayerScreen extends StatefulWidget {
+class IntroductionVideo extends StatefulWidget {
   final OtpArguments? arguments;
-  const VideoPlayerScreen({Key? key, this.arguments}) : super(key: key);
+  const IntroductionVideo({Key? key, this.arguments}) : super(key: key);
 
   @override
-  State<VideoPlayerScreen> createState() => _VideoPlayerScreenState();
+  State<IntroductionVideo> createState() => _IntroductionVideoState();
 }
 
-class _VideoPlayerScreenState extends State<VideoPlayerScreen> {
+
+class _IntroductionVideoState extends State<IntroductionVideo> {
   List<Course> getAllCourseDetails = [];
 
   final GlobalKey<ScaffoldState> _scaffoldKey = GlobalKey<ScaffoldState>();
@@ -23,8 +24,7 @@ class _VideoPlayerScreenState extends State<VideoPlayerScreen> {
 
   //VIDEO PLAYER
   late var videoURL = "${widget.arguments?.ccUrl.toString()}";
-  late var pdfURL = "https://www.actechindia.org/uploads/${widget.arguments
-      ?.ccChapterPdf}";
+
   late YoutubePlayerController _controller;
   double? _progress;
 

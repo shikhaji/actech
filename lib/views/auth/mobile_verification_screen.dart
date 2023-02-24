@@ -1,19 +1,15 @@
 import 'package:ac_tech/utils/function.dart';
 import 'package:ac_tech/views/auth/login_screen.dart';
-import 'package:ac_tech/views/auth/otp_verification_screen.dart';
 import 'package:dio/dio.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:fluttertoast/fluttertoast.dart';
 import 'package:sizer/sizer.dart';
-
 import '../../routes/app_routes.dart';
 import '../../routes/arguments.dart';
 import '../../services/api_services.dart';
 import '../../utils/app_assets.dart';
 import '../../utils/app_color.dart';
 import '../../utils/app_text_style.dart';
-import '../../utils/image_utils.dart';
 import '../../utils/validation_mixin.dart';
 import '../../widgets/app_text.dart';
 import '../../widgets/custom_size_box.dart';

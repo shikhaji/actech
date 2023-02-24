@@ -3,10 +3,8 @@ import 'package:dio/dio.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:url_launcher/url_launcher.dart';
-
 import '../model/my_profile_model.dart';
 import '../services/api_services.dart';
 import '../services/shared_preferences.dart';
@@ -16,7 +14,6 @@ import '../utils/app_sizes.dart';
 import '../utils/app_text_style.dart';
 import '../utils/screen_utils.dart';
 import '../views/Auth/login_screen.dart';
-
 class DrawerWidget extends StatefulWidget {
 
   const DrawerWidget({Key? key}) : super(key: key);
@@ -65,11 +62,6 @@ class _DrawerState extends State<DrawerWidget> {
                 child: Column(
                   children: [
                     ScreenUtil().setVerticalSpacing(20),
-                    _DrawerMenuListTile.asset(
-                      title: 'My Order',
-                      onTap: () {},
-                      child: Icon(Icons.format_list_bulleted_sharp),
-                    ),
                     _DrawerMenuListTile.asset(
                       title: 'Terms & Conditions',
                       onTap: () async {

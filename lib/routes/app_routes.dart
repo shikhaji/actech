@@ -1,10 +1,9 @@
 
 import 'package:ac_tech/views/auth/edit_profile.dart';
 import 'package:ac_tech/views/auth/reset_password_screen.dart';
+import 'package:ac_tech/views/dashboard/introduction_video_screen.dart';
 import 'package:ac_tech/views/dashboard/main_home_screen.dart';
 import 'package:flutter/material.dart';
-
-import '../services/shared_preferences.dart';
 import '../views/auth/login_screen.dart';
 import '../views/auth/mobile_verification_screen.dart';
 import '../views/auth/otp_verification_screen.dart';
@@ -34,6 +33,7 @@ class Routs {
   static const String myOrder = "/my_order";
   static const String paymentDes = "/payment_Desecripiton";
   static const String chapterDisplay = "/chapter_display_screen";
+  static const String introductionVideo = "/introduction_video_screen";
 }
 
 class RoutGenerator {
@@ -46,12 +46,6 @@ class RoutGenerator {
 
       case Routs.login:
         return MaterialPageRoute(builder: (_) => const LoginScreen());
-
-      // case Routs.forgotPassword:
-      //   return MaterialPageRoute(builder: (_) => const ForgotPassword());
-
-      // case Routs.resetPassword:
-      //   return MaterialPageRoute(builder: (_) => const ResetPasswordScreen());
 
       case Routs.signUp:
         return MaterialPageRoute(builder: (_) => SignUpScreen(arguments: arguments as OtpArguments,));
@@ -105,6 +99,9 @@ class RoutGenerator {
         return MaterialPageRoute(
             builder: (_) => ChapterDisplayScreen(arguments: arguments as OtpArguments,));
 
+      case Routs.introductionVideo:
+        return MaterialPageRoute(
+            builder: (_) => IntroductionVideo(arguments: arguments as OtpArguments,));
 
 
       default:

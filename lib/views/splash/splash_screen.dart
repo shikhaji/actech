@@ -2,11 +2,11 @@ import 'dart:async';
 import 'package:ac_tech/utils/app_assets.dart';
 import 'package:ac_tech/views/dashboard/main_home_screen.dart';
 import 'package:ac_tech/views/splash/welcome_screen.dart';
+import 'package:ac_tech/widgets/custom_size_box.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:sizer/sizer.dart';
 import '../../services/shared_preferences.dart';
-import '../../utils/image_utils.dart';
 
 class SplashScreen extends StatefulWidget {
   const SplashScreen({Key? key}) : super(key: key);
@@ -46,11 +46,17 @@ class _SplashScreenState extends State<SplashScreen> {
     return Container(
         child: Scaffold(
       body: Center(
-          child:Image.asset(
-            AppAsset.splashImage,
-            height: 25.h,
-          ),
-      ),
+        child: Column(
+          children: [
+            SizedBoxH120(),
+            SizedBoxH120(),
+            Image.asset(
+              AppAsset.mainLogoImage,
+              height: 25.h,
+            ),
+          ],
+        ),
+      )
     ));
   }
 }

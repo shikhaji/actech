@@ -1,12 +1,7 @@
-
-
 import 'dart:async';
-
-import 'package:ac_tech/views/auth/signUp.dart';
 import 'package:flutter/material.dart';
 import 'package:pin_code_text_field/pin_code_text_field.dart';
 import 'package:sizer/sizer.dart';
-
 import '../../model/auth_result.dart';
 import '../../routes/app_routes.dart';
 import '../../routes/arguments.dart';
@@ -15,7 +10,6 @@ import '../../utils/app_color.dart';
 import '../../utils/app_sizes.dart';
 import '../../utils/app_text_style.dart';
 import '../../utils/function.dart';
-import '../../utils/image_utils.dart';
 import '../../utils/loader.dart';
 import '../../utils/validation_mixin.dart';
 import 'package:firebase_auth/firebase_auth.dart';
@@ -123,10 +117,6 @@ class _OtpVerificationScreenState extends State<OtpVerificationScreen>
             PrimaryButton(
                 lable: "Verify OTP",
                 onPressed: () async {
-                  // Navigator.pushNamed(context, Routs.signUp,
-                  //     arguments:
-                  //     OtpArguments(phoneNumber: widget.arguments?.phoneNumber)
-                  // );
                   if (_controller.text == "") {
                     CommonFunctions.toast("please enter otp code !!");
                   } else {
@@ -134,8 +124,6 @@ class _OtpVerificationScreenState extends State<OtpVerificationScreen>
                     AuthResult result = await _verify(_controller.text);
                     if (result.status) {}
                   }
-
-                 //  clearField();
                 }
                 ),
             SizedBox(height: Sizes.s30.h),

@@ -1,9 +1,6 @@
-
-import 'package:ac_tech/views/auth/reset_password_screen.dart';
 import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
 import 'package:sizer/sizer.dart';
-
 import '../../routes/app_routes.dart';
 import '../../routes/arguments.dart';
 import '../../services/api_services.dart';
@@ -17,7 +14,6 @@ import '../../widgets/custom_size_box.dart';
 import '../../widgets/primary_button.dart';
 import '../../widgets/primary_textfield.dart';
 import '../../widgets/scrollview.dart';
-import 'otp_verification_screen.dart';
 
 class ForgotPasswordScreen extends StatefulWidget {
   const ForgotPasswordScreen({Key? key}) : super(key: key);
