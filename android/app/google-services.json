@@ -22,6 +22,14 @@
           }
         },
         {
+          "client_id": "559147353286-nv5cnt1hsn6re5nnftk7eipqvudmda9b.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "actech.offical.india",
+            "certificate_hash": "7e7e96dff0001cec1d90d484e5b2804fd90032de"
+          }
+        },
+        {
           "client_id": "559147353286-vfgttfo604a00unojuc6umkoku8vtao8.apps.googleusercontent.com",
           "client_type": 1,
           "android_info": {

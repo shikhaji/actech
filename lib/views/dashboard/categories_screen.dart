@@ -238,7 +238,6 @@ class _CategoriesScreenState extends State<CategoriesScreen> {
       children: [
         GestureDetector(
           onTap: (){
-
             Navigator.pushNamed(context, Routs.introductionVideo,
               arguments: OtpArguments(ccUrl: ccIntroVideo)
             );
