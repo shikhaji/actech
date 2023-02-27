@@ -9,6 +9,7 @@ class OtpArguments {
   String? ccChapterName;
   String? ccChapterPdf;
   String? ccDesc;
+  int? bottomIndex;
 
-  OtpArguments({this.phoneNumber, this.ccChapterName,this.otpStatus, this.userId,this.ccId, this.ccCourseName,this.ccImg, this.ccUrl,this.ccChapterPdf,this.ccDesc});
+  OtpArguments({this.bottomIndex,this.phoneNumber, this.ccChapterName,this.otpStatus, this.userId,this.ccId, this.ccCourseName,this.ccImg, this.ccUrl,this.ccChapterPdf,this.ccDesc});
 }

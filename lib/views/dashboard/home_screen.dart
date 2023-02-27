@@ -188,7 +188,7 @@ class _HomeScreenState extends State<HomeScreen> {
               children: [
                 Text("Recommended Courses ",style: AppTextStyle.alertSubtitle),
                 TextButton(onPressed: (){
-                 Navigator.pushAndRemoveUntil(context, MaterialPageRoute(builder: (context) => MainHomeScreen(index: 1,),), (route) => false);
+                 Navigator.pushAndRemoveUntil(context, MaterialPageRoute(builder: (context) => MainHomeScreen(arguments: OtpArguments(bottomIndex: 1),),), (route) => false);
                 }, child: Text("See All",style: AppTextStyle.subTitle.copyWith(color: AppColor.primaryColor),))
               ],
             ),

@@ -1,5 +1,6 @@
 import 'package:ac_tech/views/dashboard/profile_screen.dart';
 import 'package:flutter/material.dart';
+import '../../routes/arguments.dart';
 import '../../utils/app_sizes.dart';
 import '../../utils/screen_utils.dart';
 import '../../widgets/custom_bottom_navigation_bar.dart';
@@ -9,8 +10,8 @@ import 'home_screen.dart';
 import 'my_order_screen.dart';
 
 class MainHomeScreen extends StatefulWidget {
-  final index;
-  MainHomeScreen({Key? key,required this.index}) : super(key: key);
+  final OtpArguments? arguments;
+  MainHomeScreen({Key? key, this.arguments}) : super(key: key);
 
   @override
   State<MainHomeScreen> createState() => _MainHomeScreenState();
@@ -27,8 +28,8 @@ class _MainHomeScreenState extends State<MainHomeScreen> {
   void initState() {
     // TODO: implement initState
     super.initState();
-    if (widget.index != 0) {
-      _selectedIndex = widget.index;
+    if (widget.arguments!.bottomIndex != 0) {
+      _currentIndexNotifier.value = widget.arguments!.bottomIndex!;
     }
   }
 
