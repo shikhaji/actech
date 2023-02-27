@@ -157,7 +157,7 @@ class _MyOrderScreenState extends State<MyOrderScreen> {
                                 borderRadius: BorderRadius.circular(15),
                                 shape: BoxShape.rectangle,
                                 image: DecorationImage(
-                                  image:  NetworkImage("https://vedioclasses.provisioningtech.com/uploads/${image}"),
+                                  image:  NetworkImage("https://www.actechindia.org/uploads/${image}"),
                                   fit: BoxFit.fitHeight,
                                 ),
                               ),
