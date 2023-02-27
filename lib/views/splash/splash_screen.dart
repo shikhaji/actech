@@ -31,7 +31,7 @@ class _SplashScreenState extends State<SplashScreen> {
       if (id != null ) {
         Navigator.of(context).pushAndRemoveUntil(
             MaterialPageRoute(
-                builder: (context) => const MainHomeScreen()),
+                builder: (context) =>  MainHomeScreen(index: 0,)),
             (Route<dynamic> route) => false);
       } else {
         Navigator.of(context).pushAndRemoveUntil(

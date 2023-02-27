@@ -1,4 +1,5 @@
 import 'package:ac_tech/model/course_category_model.dart';
+import 'package:ac_tech/routes/app_routes.dart';
 import 'package:ac_tech/utils/app_text_style.dart';
 import 'package:carousel_slider/carousel_controller.dart';
 import 'package:carousel_slider/carousel_slider.dart';
@@ -6,6 +7,7 @@ import 'package:dio/dio.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:razorpay_flutter/razorpay_flutter.dart';
+import '../../routes/arguments.dart';
 import '../../services/api_services.dart';
 import '../../services/shared_preferences.dart';
 import '../../utils/app_color.dart';
@@ -17,6 +19,7 @@ import '../../widgets/custom_size_box.dart';
 import '../../widgets/drawer_widget.dart';
 import '../../widgets/primary_appbar.dart';
 import '../../widgets/scrollview.dart';
+import 'main_home_screen.dart';
 
 class HomeScreen extends StatefulWidget {
   const HomeScreen({Key? key}) : super(key: key);
@@ -184,7 +187,9 @@ class _HomeScreenState extends State<HomeScreen> {
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
                 Text("Recommended Courses ",style: AppTextStyle.alertSubtitle),
-                Text("See All",style: AppTextStyle.subTitle.copyWith(color: AppColor.primaryColor),)
+                TextButton(onPressed: (){
+                 Navigator.pushAndRemoveUntil(context, MaterialPageRoute(builder: (context) => MainHomeScreen(index: 1,),), (route) => false);
+                }, child: Text("See All",style: AppTextStyle.subTitle.copyWith(color: AppColor.primaryColor),))
               ],
             ),
             SizedBoxH10(),
@@ -207,6 +212,7 @@ class _HomeScreenState extends State<HomeScreen> {
                         displayAmount: "₹${getAllCourses[inx].ccfvCommision ?? ""}",
                         ccid: getAllCourses[inx].ccfvId ?? "",
                         ccstatus: getAllCourses[inx].ccfvStatus ?? "",
+                        ccIntroVideo: getAllCourses[inx].ccfvUrl ?? "",
                         amount: "${getAllCourses[inx].ccfvCommision ?? ""}",
                       );
                     },
@@ -238,75 +244,83 @@ class _HomeScreenState extends State<HomeScreen> {
         required String ccid,
         required String ccstatus,
         required String displayAmount,
+        required String ccIntroVideo,
       }
       ){
     return Column(
       children: [
-        Container(
-          alignment: Alignment.center,
-          decoration: BoxDecoration(
-            color: AppColor.textFieldColor,
-            borderRadius: BorderRadius.circular(textFieldBorderRadius),
-          ),
-          child: Padding(
-            padding: const EdgeInsets.all(8.0),
-            child: Column(
-              children: [
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: [
+        GestureDetector(
+          onTap: (){
+            Navigator.pushNamed(context, Routs.introductionVideo,
+                arguments: OtpArguments(ccUrl: ccIntroVideo)
+            );
+          },
+          child: Container(
+            alignment: Alignment.center,
+            decoration: BoxDecoration(
+              color: AppColor.textFieldColor,
+              borderRadius: BorderRadius.circular(textFieldBorderRadius),
+            ),
+            child: Padding(
+              padding: const EdgeInsets.all(8.0),
+              child: Column(
+                children: [
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
 
-                    Expanded(
-                      child: Row(
-                        children: [
-                          Container(
-                            height: Sizes.s80.h,
-                            width: Sizes.s120.h,
-                            decoration: BoxDecoration(
-                              borderRadius: BorderRadius.circular(15),
-                              shape: BoxShape.rectangle,
-                              image: DecorationImage(
-                                image:  NetworkImage("https://www.actechindia.org/uploads/${image}"),
-                                fit: BoxFit.fitHeight,
+                      Expanded(
+                        child: Row(
+                          children: [
+                            Container(
+                              height: Sizes.s80.h,
+                              width: Sizes.s120.h,
+                              decoration: BoxDecoration(
+                                borderRadius: BorderRadius.circular(15),
+                                shape: BoxShape.rectangle,
+                                image: DecorationImage(
+                                  image:  NetworkImage("https://www.actechindia.org/uploads/${image}"),
+                                  fit: BoxFit.fitHeight,
+                                ),
                               ),
                             ),
-                          ),
-                          SizedBoxW8(),
-                          Flexible(
-                            flex: 6,
-                            child: Column(
-                              mainAxisAlignment: MainAxisAlignment.start,
-                              crossAxisAlignment: CrossAxisAlignment.start,
-                              children: [
-                                Text(name,
-                                  overflow: TextOverflow.ellipsis,
-                                  maxLines: 6,
-                                  style: AppTextStyle.alertSubtitle
-                                      .copyWith(fontSize: Sizes.s14.h),
-                                ),
-                                SizedBoxH8(),
-                                Text(lessons,
-                                    style: AppTextStyle.alertSubtitle)
+                            SizedBoxW8(),
+                            Flexible(
+                              flex: 6,
+                              child: Column(
+                                mainAxisAlignment: MainAxisAlignment.start,
+                                crossAxisAlignment: CrossAxisAlignment.start,
+                                children: [
+                                  Text(name,
+                                    overflow: TextOverflow.ellipsis,
+                                    maxLines: 6,
+                                    style: AppTextStyle.alertSubtitle
+                                        .copyWith(fontSize: Sizes.s14.h),
+                                  ),
+                                  SizedBoxH8(),
+                                  Text(lessons,
+                                      style: AppTextStyle.alertSubtitle)
 
 
-                              ],
+                                ],
+                              ),
                             ),
-                          ),
+                          ],
+                        ),
+                      ),
+
+                      Column(
+                        children: [
+                          SizedBoxH8(),
+                          appText(displayAmount,
+                              style: AppTextStyle.headingTextTile
+                                  .copyWith(fontSize: Sizes.s18.h,color: AppColor.primaryColor)),
                         ],
                       ),
-                    ),
-
-                    Column(
-                      children: [
-                        SizedBoxH8(),
-                        appText(displayAmount,
-                            style: AppTextStyle.headingTextTile
-                                .copyWith(fontSize: Sizes.s18.h,color: AppColor.primaryColor)),
-                      ],
-                    ),
-                  ],
-                ),
-              ],
+                    ],
+                  ),
+                ],
+              ),
             ),
           ),
         ),
