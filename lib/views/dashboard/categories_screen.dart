@@ -344,9 +344,9 @@ class _CategoriesScreenState extends State<CategoriesScreen> {
                                               'description': 'Course Purchased',
                                               'send_sms_hash': true,
                                               'prefill': {
-                                                'contact': 'Yashil Patel',
-                                                'email': 'yashil@gmail.com',
-                                                'phone': '9979966965',
+                                                'contact': '',
+                                                'email': '',
+                                                'phone': '',
                                               },
                                             };
                                             _razorpay.open(options);
