@@ -58,7 +58,7 @@ class _MainHomeScreenState extends State<MainHomeScreen> {
       case 0:
         return const HomeScreen();
       case 1:
-        return const CategoriesScreen();
+          return const CategoriesScreen();
       case 2:
         return const MyOrderScreen();
       case 3:
