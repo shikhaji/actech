@@ -7,7 +7,6 @@ import 'package:sizer/sizer.dart';
 import '../../utils/app_assets.dart';
 import '../../widgets/custom_size_box.dart';
 import '../../widgets/primary_button.dart';
-import '../auth/signUp.dart';
 
 class WelcomeScreen extends StatefulWidget {
   const WelcomeScreen({Key? key}) : super(key: key);
