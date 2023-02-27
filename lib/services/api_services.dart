@@ -9,6 +9,7 @@ import 'package:fluttertoast/fluttertoast.dart';
 import '../API/dio_client.dart';
 import '../API/url.dart';
 import '../model/course_categoryid_model.dart';
+import '../model/course_purchased_model.dart';
 import '../model/login_model.dart';
 import '../model/mobile_verify_model.dart';
 import '../model/slider_model.dart';
@@ -228,6 +229,32 @@ class ApiService {
 
       if (response.statusCode == 200) {
         GetAllCourseCategory responseData = GetAllCourseCategory.fromJson(response.data);
+        Loader.hideLoader();
+        debugPrint('GetAllCourse responseData ----- > ${response.data}');
+        return responseData;
+      } else {
+        Loader.hideLoader();
+        throw Exception(response.data);
+      }
+    } on DioError catch (e) {
+      Loader.hideLoader();
+      debugPrint('Dio E  $e');
+      throw e.error;
+    }
+  }
+
+  //-----------------------COURSE PURCHASED CATEGORY API-----------------------//
+
+  Future<GetPurchasedCourseCategory> getPurchasedCourses(BuildContext context,{
+    FormData? data,
+  }) async {
+    try {
+      Loader.showLoader();
+      Response response;
+      response = await dio.post(EndPoints.getAllCourseCategory,data: data);
+
+      if (response.statusCode == 200) {
+        GetPurchasedCourseCategory responseData = GetPurchasedCourseCategory.fromJson(response.data);
         Loader.hideLoader();
         debugPrint('GetAllCourse responseData ----- > ${response.data}');
         return responseData;
