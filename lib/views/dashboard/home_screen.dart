@@ -188,35 +188,31 @@ class _HomeScreenState extends State<HomeScreen> {
               children: [
                 Text("Recommended Courses ",style: AppTextStyle.alertSubtitle),
                 TextButton(onPressed: (){
-                 Navigator.pushAndRemoveUntil(context, MaterialPageRoute(builder: (context) => MainHomeScreen(arguments: OtpArguments(bottomIndex: 1),),), (route) => false);
+                  Navigator.pushNamed(context, Routs.mainHome,arguments: OtpArguments(bottomIndex: 1));
                 }, child: Text("See All",style: AppTextStyle.subTitle.copyWith(color: AppColor.primaryColor),))
               ],
             ),
             SizedBoxH10(),
-            GestureDetector(
-              onTap: (){
-              },
-              child: Container(
-                height: Sizes.s350,
-                child:SingleChildScrollView(
-                  child: ListView.builder(
-                    padding: EdgeInsets.symmetric(vertical: Sizes.s20.h),
-                    shrinkWrap: true,
-                    physics: const NeverScrollableScrollPhysics(),
-                    itemCount: getAllCourses.length,
-                    itemBuilder: (context, inx) {
-                      return CoursesListContainer(
-                        image:getAllCourses[inx].ccfvCourseImage ?? "",
-                        name:getAllCourses[inx].ccfvName ?? "",
-                        lessons: "${getAllCourses[inx].ccfvTotalLessons ?? ""} Lessons",
-                        displayAmount: "₹${getAllCourses[inx].ccfvCommision ?? ""}",
-                        ccid: getAllCourses[inx].ccfvId ?? "",
-                        ccstatus: getAllCourses[inx].ccfvStatus ?? "",
-                        ccIntroVideo: getAllCourses[inx].ccfvUrl ?? "",
-                        amount: "${getAllCourses[inx].ccfvCommision ?? ""}",
-                      );
-                    },
-                  ),
+            Container(
+              height: Sizes.s350,
+              child:SingleChildScrollView(
+                child: ListView.builder(
+                  padding: EdgeInsets.symmetric(vertical: Sizes.s20.h),
+                  shrinkWrap: true,
+                  physics: const NeverScrollableScrollPhysics(),
+                  itemCount: getAllCourses.length,
+                  itemBuilder: (context, inx) {
+                    return CoursesListContainer(
+                      image:getAllCourses[inx].ccfvCourseImage ?? "",
+                      name:getAllCourses[inx].ccfvName ?? "",
+                      lessons: "${getAllCourses[inx].ccfvTotalLessons ?? ""} Lessons",
+                      displayAmount: "₹${getAllCourses[inx].ccfvCommision ?? ""}",
+                      ccid: getAllCourses[inx].ccfvId ?? "",
+                      ccstatus: getAllCourses[inx].ccfvStatus ?? "",
+                      ccIntroVideo: getAllCourses[inx].ccfvUrl ?? "",
+                      amount: "${getAllCourses[inx].ccfvCommision ?? ""}",
+                    );
+                  },
                 ),
               ),
             ),
