@@ -91,10 +91,10 @@ class _MyOrderScreenState extends State<MyOrderScreen> {
               itemCount: getAllCourses.length,
               itemBuilder: (context, inx) {
                 return CoursesListContainer(
-                    image: getAllCourses[inx].ccfvCourseImage ?? "",
-                    ccid: getAllCourses[inx].ccfvId ?? "",
-                    name:getAllCourses[inx].ccfvName ?? "",
-                    lessons: "${getAllCourses[inx].ccfvTotalLessons ?? ""} Lessons",
+                  image: getAllCourses[inx].ccfvCourseImage ?? "",
+                  ccid: getAllCourses[inx].ccfvId ?? "",
+                  name:getAllCourses[inx].ccfvName ?? "",
+                  lessons: "${getAllCourses[inx].ccfvTotalLessons ?? ""} Lessons",
 
 
                 );
@@ -148,7 +148,7 @@ class _MyOrderScreenState extends State<MyOrderScreen> {
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
 
-                      Container(
+                      Expanded(
                         child: Row(
                           children: [
                             Container(
@@ -163,20 +163,26 @@ class _MyOrderScreenState extends State<MyOrderScreen> {
                                 ),
                               ),
                             ),
-
                             SizedBoxW8(),
-                            Column(
-                              mainAxisAlignment: MainAxisAlignment.start,
-                              crossAxisAlignment: CrossAxisAlignment.start,
-                              children: [
-                                appText(name,
+                            Flexible(
+                              flex: 6,
+                              child: Column(
+                                mainAxisAlignment: MainAxisAlignment.start,
+                                crossAxisAlignment: CrossAxisAlignment.start,
+                                children: [
+                                  Text(name,
+                                    overflow: TextOverflow.ellipsis,
+                                    maxLines: 2,
                                     style: AppTextStyle.alertSubtitle
-                                        .copyWith(fontSize: Sizes.s16.h)),
-                                SizedBoxH6(),
-                                appText(lessons,
-                                    style: AppTextStyle.alertSubtitle
-                                        .copyWith(fontSize: Sizes.s16.h)),
-                              ],
+                                        .copyWith(fontSize: Sizes.s14.h),
+                                  ),
+                                  SizedBoxH8(),
+                                  Text(lessons,
+                                      style: AppTextStyle.alertSubtitle)
+
+
+                                ],
+                              ),
                             ),
                           ],
                         ),
@@ -188,6 +194,7 @@ class _MyOrderScreenState extends State<MyOrderScreen> {
                           IconButton(onPressed: (){
 
                             Navigator.pushNamed(context, Routs.paymentDes,arguments: OtpArguments(ccId:ccid));
+                            debugPrint("CCID$ccid");
                           }, icon: Icon(Icons.receipt_long_outlined,),iconSize: 30, color: AppColor.primaryLightColor,),
                         ],
                       ),
@@ -205,4 +212,3 @@ class _MyOrderScreenState extends State<MyOrderScreen> {
 
   }
 }
-

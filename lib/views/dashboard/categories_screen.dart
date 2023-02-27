@@ -272,21 +272,26 @@ class _CategoriesScreenState extends State<CategoriesScreen> {
                                 ),
                             ),
                             SizedBoxW8(),
-                        Column(
-                                mainAxisAlignment: MainAxisAlignment.start,
-                                crossAxisAlignment: CrossAxisAlignment.start,
-                                children: [
-                                  appText(name,
-                                      style: AppTextStyle.alertSubtitle
-                                          .copyWith(fontSize: Sizes.s14.h),
-                                  ),
-                                  SizedBoxH8(),
-                                  appText(lessons,
-                                      style: AppTextStyle.alertSubtitle)
+                        Flexible(
+                          flex: 6,
+                          child: Column(
+                                  mainAxisAlignment: MainAxisAlignment.start,
+                                  crossAxisAlignment: CrossAxisAlignment.start,
+                                  children: [
+                                    Text(name,
+                                        overflow: TextOverflow.ellipsis,
+                                        maxLines: 6,
+                                        style: AppTextStyle.alertSubtitle
+                                            .copyWith(fontSize: Sizes.s14.h),
+                                    ),
+                                    SizedBoxH8(),
+                                    Text(lessons,
+                                        style: AppTextStyle.alertSubtitle)
 
 
-                                ],
-                              ),
+                                  ],
+                                ),
+                        ),
                           ],
                         ),
                       ),
