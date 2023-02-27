@@ -78,3 +78,76 @@ class _MainHomeScreenState extends State<MainHomeScreen> {
     return Container();
   }
 }
+
+
+// import 'package:ac_tech/utils/app_assets.dart';
+// import 'package:ac_tech/views/dashboard/profile_screen.dart';
+// import 'package:bottom_bar/bottom_bar.dart';
+// import 'package:flutter/material.dart';
+// import '../../utils/app_color.dart';
+// import 'categories_screen.dart';
+// import 'home_screen.dart';
+// import 'my_order_screen.dart';
+//
+// class MainHomeScreen extends StatefulWidget {
+//   final index;
+//   MainHomeScreen({Key? key, required this.index}) : super(key: key);
+//
+//   @override
+//   State<MainHomeScreen> createState() => _MainHomeScreenState();
+// }
+//
+// class _MainHomeScreenState extends State<MainHomeScreen> {
+//   final controller = PageController();
+//   var selectedIndex=0;
+//   List pages = [
+//     HomeScreen(),
+//     CategoriesScreen(),
+//     MyOrderScreen(),
+//     ProfileScreen()
+//   ];
+//
+//   void onTap(int index){
+//     setState(() {
+//       selectedIndex = index;
+//     });
+//   }
+//
+//   @override
+//   Widget build(BuildContext context) {
+//     return Scaffold(
+//       body: pages[selectedIndex],
+//       bottomNavigationBar: BottomBar(
+//         textStyle: TextStyle(fontWeight: FontWeight.bold),
+//         selectedIndex: selectedIndex,
+//         onTap: onTap,
+//         items: <BottomBarItem>[
+//           BottomBarItem(
+//             icon: ImageIcon(AssetImage(AppAsset.homeFill)),
+//
+//             activeColor: AppColor.primaryColor,
+//             activeTitleColor: AppColor.primaryColor,
+//           ),
+//           BottomBarItem(
+//             icon: ImageIcon(AssetImage(AppAsset.categoryFill)),
+//             title: Text('Courses'),
+//             activeColor: AppColor.primaryColor,
+//             activeTitleColor: AppColor.primaryColor,
+//           ),
+//           BottomBarItem(
+//             icon: ImageIcon(AssetImage(AppAsset.bookmarkFill)),
+//             title: Text('My Class'),
+//             backgroundColorOpacity: 0.1,
+//             activeColor: AppColor.primaryColor,
+//           ),
+//           BottomBarItem(
+//             icon: ImageIcon(AssetImage(AppAsset.userProfileFill)),
+//             title: Text('Profile'),
+//             activeColor: AppColor.primaryColor,
+//             activeTitleColor: AppColor.primaryColor,
+//           ),
+//         ],
+//       ),
+//     );
+//   }
+// }
