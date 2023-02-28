@@ -36,6 +36,7 @@ class PrimaryBottomNavigationBar extends StatelessWidget {
           activeIcon: _buildImageIcon(AppAsset.homeFill),
         ),
         BottomNavigationBarItem(
+
           label: 'Courses',
           icon: _buildImageIcon(AppAsset.category),
           activeIcon: _buildImageIcon(AppAsset.categoryFill),

@@ -10,17 +10,28 @@ import 'home_screen.dart';
 import 'my_order_screen.dart';
 
 class MainHomeScreen extends StatefulWidget {
-  const MainHomeScreen({Key? key}) : super(key: key);
+  final index;
+  const MainHomeScreen({Key? key, this.index}) : super(key: key);
 
   @override
   State<MainHomeScreen> createState() => _MainHomeScreenState();
 }
 
 class _MainHomeScreenState extends State<MainHomeScreen> {
+  int _selectedIndex = 0;
   final ValueNotifier<int> _currentIndexNotifier = ValueNotifier(0);
   final GlobalKey<ScaffoldState> _scaffoldKey = GlobalKey<ScaffoldState>();
 
-
+  @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+      if(_selectedIndex!=0){
+        setState(() {
+          _selectedIndex = widget.index;
+        });
+      }
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -44,8 +55,8 @@ class _MainHomeScreenState extends State<MainHomeScreen> {
           ),
           bottomNavigationBar: PrimaryBottomNavigationBar(
             currentIndex: currentIndex,
-            onTap: (index) {
-              _currentIndexNotifier.value = index;
+            onTap: (_selectedIndex) {
+              _currentIndexNotifier.value = _selectedIndex;
             },
           ),
         );
@@ -53,8 +64,8 @@ class _MainHomeScreenState extends State<MainHomeScreen> {
     );
   }
 
-  Widget _buildBody(int index) {
-    switch (index) {
+  Widget _buildBody(int _selectedIndex) {
+    switch (_selectedIndex) {
       case 0:
         return const HomeScreen();
       case 1:
