@@ -236,30 +236,30 @@ class _CategoriesScreenState extends State<CategoriesScreen> {
       ){
     return Column(
       children: [
-        GestureDetector(
-          onTap: (){
-            Navigator.pushNamed(context, Routs.introductionVideo,
-              arguments: OtpArguments(ccUrl: ccIntroVideo)
-            );
-          },
-          child: Container(
-            alignment: Alignment.center,
-            decoration: BoxDecoration(
-              color: AppColor.textFieldColor,
-              borderRadius: BorderRadius.circular(textFieldBorderRadius),
-            ),
-            child: Padding(
-              padding: const EdgeInsets.all(8.0),
-              child: Column(
-                children: [
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: [
+        Container(
+          alignment: Alignment.center,
+          decoration: BoxDecoration(
+            color: AppColor.textFieldColor,
+            borderRadius: BorderRadius.circular(textFieldBorderRadius),
+          ),
+          child: Padding(
+            padding: const EdgeInsets.all(8.0),
+            child: Column(
+              children: [
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
 
-                      Expanded(
-                        child: Row(
-                          children: [
-                            Container(
+                    Expanded(
+                      child: Row(
+                        children: [
+                          GestureDetector(
+                            onTap: (){
+                              Navigator.pushNamed(context, Routs.introductionVideo,
+                                  arguments: OtpArguments(ccUrl: ccIntroVideo)
+                              );
+                            },
+                            child: Container(
                                 height: Sizes.s80.h,
                                 width: Sizes.s120.h,
                                 decoration: BoxDecoration(
@@ -271,32 +271,94 @@ class _CategoriesScreenState extends State<CategoriesScreen> {
                                   ),
                                 ),
                             ),
-                            SizedBoxW8(),
-                        Flexible(
-                          flex: 6,
-                          child: Column(
-                                  mainAxisAlignment: MainAxisAlignment.start,
-                                  crossAxisAlignment: CrossAxisAlignment.start,
-                                  children: [
-                                    Text(name,
-                                        overflow: TextOverflow.ellipsis,
-                                        maxLines: 6,
-                                        style: AppTextStyle.alertSubtitle
-                                            .copyWith(fontSize: Sizes.s14.h),
-                                    ),
-                                    SizedBoxH8(),
-                                    Text(lessons,
-                                        style: AppTextStyle.alertSubtitle)
+                          ),
+                          SizedBoxW8(),
+                      Flexible(
+                        flex: 6,
+                        child: Column(
+                                mainAxisAlignment: MainAxisAlignment.start,
+                                crossAxisAlignment: CrossAxisAlignment.start,
+                                children: [
+                                  Text(name,
+                                      overflow: TextOverflow.ellipsis,
+                                      maxLines: 6,
+                                      style: AppTextStyle.alertSubtitle
+                                          .copyWith(fontSize: Sizes.s14.h),
+                                  ),
+                                  SizedBoxH8(),
+                                  Text(lessons,
+                                      style: AppTextStyle.alertSubtitle)
 
 
-                                  ],
-                                ),
-                        ),
-                          ],
-                        ),
+                                ],
+                              ),
                       ),
+                        ],
+                      ),
+                    ),
 
-                      Column(
+                    GestureDetector(
+                      onTap: (){
+                        showDialog(
+                          context: context,
+                          builder: (ctx) => AlertDialog(
+                            title: Text(
+                              "Payment for $name course",
+                              style: AppTextStyle.alertSubtitle,
+                            ),
+                            content: Text(
+                              "Amount: ${displayAmount}",
+                              style: AppTextStyle.subTitle,
+                            ),
+                            actions: <Widget>[
+                              Row(
+                                mainAxisAlignment:
+                                MainAxisAlignment.spaceBetween,
+                                children: [
+                                  TextButton(
+                                    onPressed: () {
+                                      Navigator.of(ctx).pop();
+                                    },
+                                    child: Container(
+                                      color: Colors.white,
+                                      padding: const EdgeInsets.all(14),
+                                      child: const Text("Cancel"),
+                                    ),
+                                  ),
+                                  TextButton(
+                                    onPressed: () async {
+                                      courseId =ccid;
+                                      Navigator.pop(context);
+
+                                      var options = {
+                                        'key': 'rzp_test_YoriHE0YT6XVEs',
+                                        'amount': int.parse(amount) * 100,
+                                        'name': 'AC-Tech',
+                                        'description': 'Course Purchased',
+                                        'send_sms_hash': true,
+                                        'prefill': {
+                                          'contact': '',
+                                          'email': '',
+                                          'phone': '',
+                                        },
+                                      };
+                                      _razorpay.open(options);
+
+                                    },
+                                    child: Container(
+                                      color: Colors.white,
+                                      padding: const EdgeInsets.all(14),
+                                      child: const Text("Pay Now"),
+                                    ),
+                                  ),
+                                ],
+                              ),
+                            ],
+                          ),
+                        );
+
+                      },
+                      child: Column(
                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         children: [
 
@@ -304,77 +366,15 @@ class _CategoriesScreenState extends State<CategoriesScreen> {
                               style: AppTextStyle.title
                                   .copyWith(fontSize: Sizes.s18.h,color: AppColor.primaryColor)),
                           SizedBoxH18(),
-                          GestureDetector(
-                            onTap: (){
-                              showDialog(
-                                context: context,
-                                builder: (ctx) => AlertDialog(
-                                  title: Text(
-                                    "Payment for $name course",
-                                    style: AppTextStyle.alertSubtitle,
-                                  ),
-                                  content: Text(
-                                    "Amount: ${displayAmount}",
-                                    style: AppTextStyle.subTitle,
-                                  ),
-                                  actions: <Widget>[
-                                    Row(
-                                      mainAxisAlignment:
-                                      MainAxisAlignment.spaceBetween,
-                                      children: [
-                                        TextButton(
-                                          onPressed: () {
-                                            Navigator.of(ctx).pop();
-                                          },
-                                          child: Container(
-                                            color: Colors.white,
-                                            padding: const EdgeInsets.all(14),
-                                            child: const Text("Cancel"),
-                                          ),
-                                        ),
-                                        TextButton(
-                                          onPressed: () async {
-                                            courseId =ccid;
-                                            Navigator.pop(context);
-
-                                            var options = {
-                                              'key': 'rzp_test_YoriHE0YT6XVEs',
-                                              'amount': int.parse(amount) * 100,
-                                              'name': 'AC-Tech',
-                                              'description': 'Course Purchased',
-                                              'send_sms_hash': true,
-                                              'prefill': {
-                                                'contact': '',
-                                                'email': '',
-                                                'phone': '',
-                                              },
-                                            };
-                                            _razorpay.open(options);
-
-                                          },
-                                          child: Container(
-                                            color: Colors.white,
-                                            padding: const EdgeInsets.all(14),
-                                            child: const Text("Pay Now"),
-                                          ),
-                                        ),
-                                      ],
-                                    ),
-                                  ],
-                                ),
-                              );
-
-                            },
-                            child: appText("Buy",
-                                style: AppTextStyle.headingTextTile
-                                    .copyWith(fontSize: Sizes.s18.h,color: AppColor.primaryColor)),
-                          ),
+                          appText("Buy",
+                              style: AppTextStyle.headingTextTile
+                                  .copyWith(fontSize: Sizes.s18.h,color: AppColor.primaryColor)),
                         ],
                       ),
-                    ],
-                  ),
-                ],
-              ),
+                    ),
+                  ],
+                ),
+              ],
             ),
           ),
         ),
