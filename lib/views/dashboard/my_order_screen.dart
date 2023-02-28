@@ -1,6 +1,6 @@
 import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
-import '../../model/course_category_model.dart';
+import '../../model/course_purchased_model.dart';
 import '../../routes/app_routes.dart';
 import '../../routes/arguments.dart';
 import '../../services/api_services.dart';
@@ -10,7 +10,6 @@ import '../../utils/app_sizes.dart';
 import '../../utils/app_text_style.dart';
 import '../../utils/constant.dart';
 import '../../utils/screen_utils.dart';
-import '../../widgets/app_text.dart';
 import '../../widgets/custom_size_box.dart';
 import '../../widgets/drawer_widget.dart';
 import '../../widgets/primary_appbar.dart';
@@ -50,15 +49,15 @@ class _MyOrderScreenState extends State<MyOrderScreen> {
         "status" :"1",
       });
     }
-    GetAllCourseCategory? _getAllCourseCategory= await ApiService().getAllCourses(context,data: data());
+    GetPurchasedCourseCategory? _getPurchaseCourseCategory= await ApiService().getPurchasedCourses(context,data: data());
 
-    if(_getAllCourseCategory != null){
+    if(_getPurchaseCourseCategory != null){
 
-      getAllCourses = _getAllCourseCategory.course
-          .map((e) => Course.fromJson(e.toJson()))
+      getAllCourses = _getPurchaseCourseCategory.course
+      !.map((e) => Course.fromJson(e.toJson()))
           .toList();
-      allCourseListRes = _getAllCourseCategory.course
-          .map((e) => Course.fromJson(e.toJson()))
+      allCourseListRes = _getPurchaseCourseCategory.course
+      !.map((e) => Course.fromJson(e.toJson()))
           .toList();
       setState(() {});
     }
@@ -91,10 +90,10 @@ class _MyOrderScreenState extends State<MyOrderScreen> {
               itemCount: getAllCourses.length,
               itemBuilder: (context, inx) {
                 return CoursesListContainer(
-                    image: getAllCourses[inx].ccfvCourseImage ?? "",
-                    ccid: getAllCourses[inx].ccfvId ?? "",
-                    name:getAllCourses[inx].ccfvName ?? "",
-                    lessons: "${getAllCourses[inx].ccfvTotalLessons ?? ""} Lessons",
+                  image: getAllCourses[inx].cCFVCOURSEIMAGE ?? "",
+                  ccid: getAllCourses[inx].cCFVID ?? "",
+                  name:getAllCourses[inx].cCFVNAME ?? "",
+                  lessons: "${getAllCourses[inx].cCFVTOTALLESSONS ?? ""} Lessons",
 
 
                 );
@@ -148,7 +147,7 @@ class _MyOrderScreenState extends State<MyOrderScreen> {
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
 
-                      Container(
+                      Expanded(
                         child: Row(
                           children: [
                             Container(
@@ -163,20 +162,26 @@ class _MyOrderScreenState extends State<MyOrderScreen> {
                                 ),
                               ),
                             ),
-
                             SizedBoxW8(),
-                            Column(
-                              mainAxisAlignment: MainAxisAlignment.start,
-                              crossAxisAlignment: CrossAxisAlignment.start,
-                              children: [
-                                appText(name,
+                            Flexible(
+                              flex: 6,
+                              child: Column(
+                                mainAxisAlignment: MainAxisAlignment.start,
+                                crossAxisAlignment: CrossAxisAlignment.start,
+                                children: [
+                                  Text(name,
+                                    overflow: TextOverflow.ellipsis,
+                                    maxLines: 2,
                                     style: AppTextStyle.alertSubtitle
-                                        .copyWith(fontSize: Sizes.s16.h)),
-                                SizedBoxH6(),
-                                appText(lessons,
-                                    style: AppTextStyle.alertSubtitle
-                                        .copyWith(fontSize: Sizes.s16.h)),
-                              ],
+                                        .copyWith(fontSize: Sizes.s14.h),
+                                  ),
+                                  SizedBoxH8(),
+                                  Text(lessons,
+                                      style: AppTextStyle.alertSubtitle)
+
+
+                                ],
+                              ),
                             ),
                           ],
                         ),
@@ -188,6 +193,7 @@ class _MyOrderScreenState extends State<MyOrderScreen> {
                           IconButton(onPressed: (){
 
                             Navigator.pushNamed(context, Routs.paymentDes,arguments: OtpArguments(ccId:ccid));
+                            debugPrint("CCID$ccid");
                           }, icon: Icon(Icons.receipt_long_outlined,),iconSize: 30, color: AppColor.primaryLightColor,),
                         ],
                       ),
@@ -205,4 +211,3 @@ class _MyOrderScreenState extends State<MyOrderScreen> {
 
   }
 }
-

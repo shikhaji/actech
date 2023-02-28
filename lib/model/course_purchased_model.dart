@@ -1,11 +1,11 @@
-class GetAllCourseCategoryId {
+class GetPurchasedCourseCategory {
   int? status;
   String? message;
   List<Course>? course;
 
-  GetAllCourseCategoryId({this.status, this.message, this.course});
+  GetPurchasedCourseCategory({this.status, this.message, this.course});
 
-  GetAllCourseCategoryId.fromJson(Map<String, dynamic> json) {
+  GetPurchasedCourseCategory.fromJson(Map<String, dynamic> json) {
     status = json['status'];
     message = json['message'];
     if (json['course'] != null) {
@@ -28,14 +28,13 @@ class GetAllCourseCategoryId {
 }
 
 class Course {
-  String? cVLTT;
-  String? cVLCCFVID;
-  String? cVLNAME;
-  String? cVLSTATUS;
-  String? cVLID;
-  String? cVLCOURSEPDF;
-  String? cVLVIDEOURL;
-  String? cVLDESC;
+  String? pCLID;
+  String? pCLTT;
+  String? pCLCLID;
+  String? pLCTRANSACTIONID;
+  String? pLCPAYMENTDATE;
+  String? pLCPAYMENTSTATUS;
+  String? pLCLOGINID;
   String? cCFVID;
   String? cCFVTT;
   String? cCFVNAME;
@@ -46,14 +45,13 @@ class Course {
   String? cCFVURL;
 
   Course(
-      {this.cVLTT,
-        this.cVLCCFVID,
-        this.cVLNAME,
-        this.cVLSTATUS,
-        this.cVLID,
-        this.cVLCOURSEPDF,
-        this.cVLVIDEOURL,
-        this.cVLDESC,
+      {this.pCLID,
+        this.pCLTT,
+        this.pCLCLID,
+        this.pLCTRANSACTIONID,
+        this.pLCPAYMENTDATE,
+        this.pLCPAYMENTSTATUS,
+        this.pLCLOGINID,
         this.cCFVID,
         this.cCFVTT,
         this.cCFVNAME,
@@ -64,14 +62,13 @@ class Course {
         this.cCFVURL});
 
   Course.fromJson(Map<String, dynamic> json) {
-    cVLTT = json['CVL_TT'];
-    cVLCCFVID = json['CVL_CCFV_ID'];
-    cVLNAME = json['CVL_NAME'];
-    cVLSTATUS = json['CVL_STATUS'];
-    cVLID = json['CVL_ID'];
-    cVLCOURSEPDF = json['CVL_COURSE_PDF'];
-    cVLVIDEOURL = json['CVL_VIDEO_URL'];
-    cVLDESC = json['CVL_DESC'];
+    pCLID = json['PCL_ID'];
+    pCLTT = json['PCL_TT'];
+    pCLCLID = json['PCL_CL_ID'];
+    pLCTRANSACTIONID = json['PLC_TRANSACTION_ID'];
+    pLCPAYMENTDATE = json['PLC_PAYMENT_DATE'];
+    pLCPAYMENTSTATUS = json['PLC_PAYMENT_STATUS'];
+    pLCLOGINID = json['PLC_LOGIN_ID'];
     cCFVID = json['CCFV_ID'];
     cCFVTT = json['CCFV_TT'];
     cCFVNAME = json['CCFV_NAME'];
@@ -84,14 +81,13 @@ class Course {
 
   Map<String, dynamic> toJson() {
     final Map<String, dynamic> data = new Map<String, dynamic>();
-    data['CVL_TT'] = this.cVLTT;
-    data['CVL_CCFV_ID'] = this.cVLCCFVID;
-    data['CVL_NAME'] = this.cVLNAME;
-    data['CVL_STATUS'] = this.cVLSTATUS;
-    data['CVL_ID'] = this.cVLID;
-    data['CVL_COURSE_PDF'] = this.cVLCOURSEPDF;
-    data['CVL_VIDEO_URL'] = this.cVLVIDEOURL;
-    data['CVL_DESC'] = this.cVLDESC;
+    data['PCL_ID'] = this.pCLID;
+    data['PCL_TT'] = this.pCLTT;
+    data['PCL_CL_ID'] = this.pCLCLID;
+    data['PLC_TRANSACTION_ID'] = this.pLCTRANSACTIONID;
+    data['PLC_PAYMENT_DATE'] = this.pLCPAYMENTDATE;
+    data['PLC_PAYMENT_STATUS'] = this.pLCPAYMENTSTATUS;
+    data['PLC_LOGIN_ID'] = this.pLCLOGINID;
     data['CCFV_ID'] = this.cCFVID;
     data['CCFV_TT'] = this.cCFVTT;
     data['CCFV_NAME'] = this.cCFVNAME;

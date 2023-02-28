@@ -9,11 +9,13 @@ import 'package:fluttertoast/fluttertoast.dart';
 import '../API/dio_client.dart';
 import '../API/url.dart';
 import '../model/course_categoryid_model.dart';
+import '../model/course_purchased_model.dart';
 import '../model/login_model.dart';
 import '../model/mobile_verify_model.dart';
 import '../model/slider_model.dart';
 import '../model/verify_center_code_model.dart';
 import '../routes/app_routes.dart';
+import '../routes/arguments.dart';
 import '../utils/function.dart';
 import '../utils/loader.dart';
 import '../views/Auth/login_screen.dart';
@@ -115,7 +117,7 @@ class ApiService {
         CommonFunctions.toast("Login Success");
 
         Navigator.pushNamedAndRemoveUntil(
-            context, Routs.mainHome, (route) => false);
+            context, Routs.mainHome,arguments: OtpArguments(bottomIndex: 0), (route) => false);
 
         return responseData;
       } else {
@@ -228,6 +230,32 @@ class ApiService {
 
       if (response.statusCode == 200) {
         GetAllCourseCategory responseData = GetAllCourseCategory.fromJson(response.data);
+        Loader.hideLoader();
+        debugPrint('GetAllCourse responseData ----- > ${response.data}');
+        return responseData;
+      } else {
+        Loader.hideLoader();
+        throw Exception(response.data);
+      }
+    } on DioError catch (e) {
+      Loader.hideLoader();
+      debugPrint('Dio E  $e');
+      throw e.error;
+    }
+  }
+
+  //-----------------------COURSE PURCHASED CATEGORY API-----------------------//
+
+  Future<GetPurchasedCourseCategory> getPurchasedCourses(BuildContext context,{
+    FormData? data,
+  }) async {
+    try {
+      Loader.showLoader();
+      Response response;
+      response = await dio.post(EndPoints.getAllCourseCategory,data: data);
+
+      if (response.statusCode == 200) {
+        GetPurchasedCourseCategory responseData = GetPurchasedCourseCategory.fromJson(response.data);
         Loader.hideLoader();
         debugPrint('GetAllCourse responseData ----- > ${response.data}');
         return responseData;
@@ -356,7 +384,7 @@ class ApiService {
         debugPrint('Update profile data  ----- > ${response.data}');
         Loader.hideLoader();
 
-        Navigator.pushNamed(context, Routs.mainHome);
+        Navigator.pushNamed(context, Routs.mainHome,arguments: OtpArguments(bottomIndex: 3));
         Fluttertoast.showToast(
           msg: 'Updated Sucessfully...',
           backgroundColor: Colors.grey,

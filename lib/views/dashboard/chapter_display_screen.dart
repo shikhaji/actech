@@ -176,7 +176,6 @@ class _ChapterDisplayScreenState extends State<ChapterDisplayScreen> {
                 onProgress: (name, progress){
                   setState(() {
                     _progress = progress;
-
                   });
                 },
                 onDownloadCompleted: (value){

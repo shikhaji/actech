@@ -88,13 +88,13 @@ class _CourseDetailsScreenState extends State<CourseDetailsScreen> {
                   itemCount: getAllCourseDetails.length,
                   itemBuilder: (context, inx) {
                     return CoursesListContainer(
-                       name: getAllCourseDetails[inx].cvlName ?? "",
+                       name: getAllCourseDetails[inx].cCFVNAME ?? "",
                        minutes: "20 Minutes",
-                      url: getAllCourseDetails[inx].cvlVideoUrl ?? "",
-                      chapterName: getAllCourseDetails[inx].ccfvName ?? "",
-                      chapterPdf: getAllCourseDetails[inx].cvlCoursePdf  ?? "",
-                      desc: getAllCourseDetails[inx].cvlDesc  ?? "",
-                      img: getAllCourseDetails[inx].ccfvCourseImage  ?? "",
+                      url: getAllCourseDetails[inx].cCFVURL ?? "",
+                      chapterName: getAllCourseDetails[inx].cVLNAME ?? "",
+                      chapterPdf: getAllCourseDetails[inx].cVLCOURSEPDF  ?? "",
+                      desc: getAllCourseDetails[inx].cVLDESC  ?? "",
+                      img: getAllCourseDetails[inx].cCFVCOURSEIMAGE  ?? "",
 
                     );
                   },

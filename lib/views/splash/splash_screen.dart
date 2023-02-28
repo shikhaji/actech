@@ -1,4 +1,5 @@
 import 'dart:async';
+import 'package:ac_tech/routes/arguments.dart';
 import 'package:ac_tech/utils/app_assets.dart';
 import 'package:ac_tech/views/dashboard/main_home_screen.dart';
 import 'package:ac_tech/views/splash/welcome_screen.dart';
@@ -31,7 +32,7 @@ class _SplashScreenState extends State<SplashScreen> {
       if (id != null ) {
         Navigator.of(context).pushAndRemoveUntil(
             MaterialPageRoute(
-                builder: (context) => const MainHomeScreen()),
+                builder: (context) =>  MainHomeScreen(arguments: OtpArguments(bottomIndex: 0),)),
             (Route<dynamic> route) => false);
       } else {
         Navigator.of(context).pushAndRemoveUntil(
