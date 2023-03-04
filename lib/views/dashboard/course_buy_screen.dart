@@ -131,26 +131,23 @@ class _CourseBuyScreenState extends State<CourseBuyScreen> {
             PrimaryPadding(
               child: Column(
                 children: [
-                 Container(
+                 YoutubePlayer(
+                   controller: _controller,
+                   showVideoProgressIndicator: true,
+                   onReady: () => debugPrint("Ready"),
+                   bottomActions: [
+                     CurrentPosition(),
+                     ProgressBar(
+                       isExpanded: true,
 
-                   child:  YoutubePlayer(
-                     controller: _controller,
-                     showVideoProgressIndicator: true,
-                     onReady: () => debugPrint("Ready"),
-                     bottomActions: [
-                       CurrentPosition(),
-                       ProgressBar(
-                         isExpanded: true,
-
-                         colors: const ProgressBarColors(
-                           playedColor: AppColor.primaryColor,
-                           handleColor: AppColor.primaryLightColor,
-                         ),
+                       colors: const ProgressBarColors(
+                         playedColor: AppColor.primaryColor,
+                         handleColor: AppColor.primaryLightColor,
                        ),
-                       RemainingDuration(),
-                       PlaybackSpeedButton(),
-                     ],
-                   ),
+                     ),
+                     RemainingDuration(),
+                     PlaybackSpeedButton(),
+                   ],
                  ),
                   SizedBoxH20(),
                   PrimaryButton(lable: "Enroll for ₹${widget.arguments.ccAmount}",
@@ -186,35 +183,32 @@ class _CourseBuyScreenState extends State<CourseBuyScreen> {
                       color: AppColor.textFieldColor,
                       borderRadius: BorderRadius.only(topRight: Radius.circular(25),topLeft: Radius.circular(25))
                   ),
-                  child: Flexible(
-                    flex: 6,
-                    child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        SizedBoxH14(),
-                        PrimaryPadding(
-                          child: Text("Course : ${widget.arguments.ccCourseName}",
-                              style: AppTextStyle.title,overflow: TextOverflow.ellipsis,maxLines: 10,),
-                        ),
-                        Divider(
-                          thickness: 1,
-                        ),
-                        SizedBoxH18(),
-                        Expanded(
-                          child: SingleChildScrollView(
-                            child: PrimaryPadding(
-                              child: Container(
-                                alignment: Alignment.topLeft,
-                                child:  Text(
-                                    "Course Description : ${widget.arguments?.ccDesc} ",
-                                    style: AppTextStyle.alertSubtitle1,overflow: TextOverflow.ellipsis,maxLines: 50,),
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      SizedBoxH14(),
+                      PrimaryPadding(
+                        child: Text("${widget.arguments.ccCourseName}",
+                            style: AppTextStyle.appBarTextTitle,overflow: TextOverflow.ellipsis,maxLines: 10,),
+                      ),
+                      Divider(
+                        thickness: 1,
+                      ),
+                      SizedBoxH14(),
+                      Expanded(
+                        child: SingleChildScrollView(
+                          child: PrimaryPadding(
+                            child: Container(
+                              alignment: Alignment.topLeft,
+                              child:  Text(
+                                  "Course Description : ${widget.arguments?.ccDesc} ",
+                                  style: AppTextStyle.alertSubtitle1,overflow: TextOverflow.ellipsis,maxLines: 50,),
 
-                              ),
                             ),
                           ),
                         ),
-                      ],
-                    ),
+                      ),
+                    ],
                   ),
                 ),
               ),

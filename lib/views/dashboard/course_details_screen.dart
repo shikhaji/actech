@@ -1,3 +1,4 @@
+import 'package:ac_tech/widgets/primary_padding.dart';
 import 'package:dio/dio.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -53,11 +54,12 @@ class _CourseDetailsScreenState extends State<CourseDetailsScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-        body: CustomScroll(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            SizedBoxH10(),
-            Container(
+        body: SafeArea(
+          child: PrimaryPadding(
+            child: Column(
+              children: [
+                SizedBoxH10(),
+                Container(
                   decoration: BoxDecoration(
                     borderRadius: BorderRadius.circular(15),
                     image: DecorationImage(
@@ -65,54 +67,57 @@ class _CourseDetailsScreenState extends State<CourseDetailsScreen> {
                       fit: BoxFit.cover,
                     ),
                   ),
-              height: Sizes.s200.h,
+                  height: Sizes.s200.h,
 
-              ),
-            SizedBoxH34(),
-            Text("${widget.arguments?.ccCourseName}",style: AppTextStyle.title),
-            SizedBoxH10(),
-            Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children:[
-                Text("${getAllCourseDetails.length.toString()} Lessons",style: AppTextStyle.alertSubtitle),
-                Container(
-                  decoration: BoxDecoration(
-                    color: AppColor.primaryColor
+                ),
+                SizedBoxH34(),
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children:[
+                    Text("${getAllCourseDetails.length.toString()} Lessons",style: AppTextStyle.alertSubtitle),
+                    Container(
+                      decoration: BoxDecoration(
+                          color: AppColor.primaryColor
+                      ),
+                      child: TextButton(onPressed: (){
+
+                        Navigator.pushNamed(context, Routs.paymentDes,arguments: OtpArguments(ccId:"${widget.arguments!.ccId}"));
+
+                      }, child: appText("Purchased Receipt",style: AppTextStyle.alertSubtitle1.copyWith(color: AppColor.white))),
+                    )
+                  ],
+                ),
+                SizedBoxH20(),
+                Expanded(
+                  child: SizedBox(
+                    height: Sizes.s320,
+                    child: SingleChildScrollView(
+                      child: ListView.builder(
+                        padding: EdgeInsets.symmetric(vertical: Sizes.s20.h),
+                        shrinkWrap: true,
+                        physics: const NeverScrollableScrollPhysics(),
+                        itemCount: getAllCourseDetails.length,
+                        itemBuilder: (context, inx) {
+                          return CoursesListContainer(
+                            name: getAllCourseDetails[inx].cCFVNAME ?? "",
+                            url: getAllCourseDetails[inx].cCFVURL ?? "",
+                            chapterName: getAllCourseDetails[inx].cVLNAME ?? "",
+                            chapterPdf: getAllCourseDetails[inx].cVLCOURSEPDF  ?? "",
+                            desc: getAllCourseDetails[inx].cVLDESC  ?? "",
+                            img: getAllCourseDetails[inx].cCFVCOURSEIMAGE  ?? "",
+
+                          );
+                        },
+                      ),
+                    ),
                   ),
-                  child: TextButton(onPressed: (){
+                ),
+                //Container
 
-                    Navigator.pushNamed(context, Routs.paymentDes,arguments: OtpArguments(ccId:"${widget.arguments!.ccId}"));
-
-                  }, child: appText("Purchased Receipt",style: AppTextStyle.alertSubtitle1.copyWith(color: AppColor.white))),
-                )
               ],
             ),
-            SizedBoxH10(),
-            Container(
-              height: Sizes.s320,
-              child: SingleChildScrollView(
-                child: ListView.builder(
-                  padding: EdgeInsets.symmetric(vertical: Sizes.s20.h),
-                  shrinkWrap: true,
-                  physics: const NeverScrollableScrollPhysics(),
-                  itemCount: getAllCourseDetails.length,
-                  itemBuilder: (context, inx) {
-                    return CoursesListContainer(
-                       name: getAllCourseDetails[inx].cCFVNAME ?? "",
-                      url: getAllCourseDetails[inx].cCFVURL ?? "",
-                      chapterName: getAllCourseDetails[inx].cVLNAME ?? "",
-                      chapterPdf: getAllCourseDetails[inx].cVLCOURSEPDF  ?? "",
-                      desc: getAllCourseDetails[inx].cVLDESC  ?? "",
-                      img: getAllCourseDetails[inx].cCFVCOURSEIMAGE  ?? "",
+          ),
 
-                    );
-                  },
-                ),
-              ),
-            ),
-            //Container
-
-          ],
         ),
         appBar: SecondaryAppBar(
           title: "${widget.arguments?.ccCourseName}",
