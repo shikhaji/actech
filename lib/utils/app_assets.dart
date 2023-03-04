@@ -8,8 +8,8 @@ class AppAsset {
   //splash screen(png)
   static const String splash = "${imagePath}splash_img.jpg";
   static const String backGround = "${imagePath}background_img.png";
-  static const splashImage = "${imagePath}Logo.png";
-  static const mainLogoImage = "${imagePath}Logo.png";
+  static const splashImage = "${imagePath}logo.png";
+  static const mainLogoImage = "${imagePath}logo.png";
 
   //BOTTOM NAV BAR IMAGE
 
