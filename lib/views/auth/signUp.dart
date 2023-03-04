@@ -28,9 +28,11 @@ class _SignUpScreenState extends State<SignUpScreen> with ValidationMixin {
   final TextEditingController _email = TextEditingController();
   final TextEditingController _password = TextEditingController();
   final TextEditingController _referCode = TextEditingController();
+  final TextEditingController _centerCodeNAme = TextEditingController();
   final TextEditingController _categories = TextEditingController();
   bool obscurePassword = true;
   final _formKey = GlobalKey<FormState>();
+  String centerCodeName = "";
 
   @override
   void initState() {
@@ -115,20 +117,44 @@ class _SignUpScreenState extends State<SignUpScreen> with ValidationMixin {
                   hintText: "Enter center code",
                   validator: centerCodeValidator,
                 ),
+                _centerCodeNAme.text != "" ?  Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    appText("Center Name", style: AppTextStyle.lable),
+                    SizedBoxH8(),
+                    PrimaryTextField(
+                      controller: _centerCodeNAme,
+                      readOnly: true,
+                      validator: centerCodeValidator,
+                    )
+                  ],
+                ): SizedBox.shrink(),
+
+
                 SizedBoxH8(),
-                PrimaryButton(
-                    lable: "Sign Up",
+                _centerCodeNAme.text == ""  ?   PrimaryButton(
+                    lable: "Verify center code",
                     onPressed: () {
                       if (_formKey.currentState!.validate()) {
 
                         ApiService().verifyCenterCode(context,data: cc()).then((value) {
                           if(value.status== 200){
-                            print(" yes i am in");
-                            ApiService().signUp(context,data:data());
+                         setState(() {
+                           _centerCodeNAme.text = "${value.center!.branchName}";
+                         });
+                          print("name := ${centerCodeName}");
                           }else{
-                            print(" yes iam out");
+
                           }
                         });
+                      }
+                    })
+             :   PrimaryButton(
+                    lable: "Sign Up",
+                    onPressed: () {
+                      if (_formKey.currentState!.validate()) {
+
+                        ApiService().signUp(context,data:data());
                       }
                     }),
               ],

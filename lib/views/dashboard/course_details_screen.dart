@@ -173,7 +173,7 @@ class _CourseDetailsScreenState extends State<CourseDetailsScreen> {
                         ],
                       ),
                     ),
-                     Column(
+                    Column(
                       children: [
                         SizedBox(
                           height: 90,
@@ -182,12 +182,12 @@ class _CourseDetailsScreenState extends State<CourseDetailsScreen> {
                               onTap:(){
                                 Navigator.pushNamed(context, Routs.chapterDisplay,
                                     arguments: OtpArguments(
-                                      ccUrl: url,
-                                      ccChapterName: name,
-                                      ccCourseName: chapterName,
-                                      ccChapterPdf: chapterPdf,
-                                      ccDesc: desc,
-                                      ccImg: img
+                                        ccUrl: url,
+                                        ccChapterName: name,
+                                        ccCourseName: chapterName,
+                                        ccChapterPdf: chapterPdf,
+                                        ccDesc: desc,
+                                        ccImg: img
                                     ));
                                 //  clearField();
                               },

@@ -30,7 +30,7 @@ Future<void> main() async {
   await Firebase.initializeApp();
 
   runApp(const MyApp());
-  disableCapture();
+  //disableCapture();
 }
 
 class MyApp extends StatelessWidget {
