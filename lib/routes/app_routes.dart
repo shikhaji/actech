@@ -107,7 +107,7 @@ class RoutGenerator {
 
       case Routs.courseBuy:
         return MaterialPageRoute(
-            builder: (_) => CourseBuyScreen());
+            builder: (_) => CourseBuyScreen(arguments: arguments as OtpArguments,));
 
 
       default:

@@ -196,7 +196,7 @@ class _ChapterDisplayScreenState extends State<ChapterDisplayScreen> {
             child: Center(
               child: Text(
                 'Download Course Materials',
-                style: AppTextStyle.lable,
+                style: AppTextStyle.buttonTextStyle,
               ),
             ),
           ),

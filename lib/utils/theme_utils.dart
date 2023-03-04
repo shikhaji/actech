@@ -18,7 +18,7 @@ class ThemeUtils {
         inputDecorationTheme: lightInputDecorationTheme,
         dividerColor: AppColor.darkGrey,
         //colorScheme: const ColorScheme.light(),
-        primarySwatch: createMaterialColor(const Color(0xCA3289F6)),
+        primarySwatch: createMaterialColor(const Color(0xFF344c4a)),
         fontFamily: "Nunito_Sans");
   }
 

@@ -114,6 +114,7 @@ class _SignUpScreenState extends State<SignUpScreen> with ValidationMixin {
                 SizedBoxH8(),
                 PrimaryTextField(
                   controller: _referCode,
+                  readOnly: _centerCodeNAme.text !="" ? true : false,
                   hintText: "Enter center code",
                   validator: centerCodeValidator,
                 ),

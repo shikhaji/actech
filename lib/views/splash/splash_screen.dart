@@ -47,15 +47,9 @@ class _SplashScreenState extends State<SplashScreen> {
     return Container(
         child: Scaffold(
       body: Center(
-        child: Column(
-          children: [
-            SizedBoxH120(),
-            SizedBoxH120(),
-            Image.asset(
-              AppAsset.mainLogoImage,
-              height: 25.h,
-            ),
-          ],
+        child: Image.asset(
+          AppAsset.mainLogoImage,
+          height: 25.h,
         ),
       )
     ));
