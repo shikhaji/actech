@@ -133,14 +133,15 @@ class _MyOrderScreenState extends State<MyOrderScreen> {
                   ccImg:image,
                 ));
           },
-          child: Container(
+          child:  Container(
             alignment: Alignment.center,
             decoration: BoxDecoration(
-              color: AppColor.textFieldColor,
+              border: Border.all(color: AppColor.grey,width: Sizes.s1.w),
+              color: AppColor.white,
               borderRadius: BorderRadius.circular(textFieldBorderRadius),
             ),
             child: Padding(
-              padding: const EdgeInsets.all(8.0),
+              padding: const EdgeInsets.all(12.0),
               child: Column(
                 children: [
                   Row(
@@ -151,18 +152,29 @@ class _MyOrderScreenState extends State<MyOrderScreen> {
                         child: Row(
                           children: [
                             Container(
-                              height: Sizes.s80.h,
-                              width: Sizes.s120.h,
                               decoration: BoxDecoration(
-                                borderRadius: BorderRadius.circular(15),
-                                shape: BoxShape.rectangle,
-                                image: DecorationImage(
-                                  image:  NetworkImage("https://www.actechindia.org/uploads/${image}"),
-                                  fit: BoxFit.fitHeight,
-                                ),
+                                borderRadius: BorderRadius.circular(12),
+                                color: Colors.white,
+                                boxShadow: [
+                                  BoxShadow(
+                                    color:
+                                    Colors.grey.withOpacity(0.5), //color of shadow
+                                    spreadRadius: 3, //spread radius
+                                    blurRadius: 5, // blur radius
+                                    offset: const Offset(0, 3),
+                                  )
+                                ],
+                              ),
+                              child: ClipRRect(
+                                borderRadius: BorderRadius.circular(12),
+                                clipBehavior: Clip.antiAlias,
+                                child: Image.network("https://www.actechindia.org/uploads/${image}",fit: BoxFit.contain,height: Sizes.s100.h,width: Sizes.s100.h,),
                               ),
                             ),
-                            SizedBoxW8(),
+
+                            SizedBox(
+                              width: Sizes.s18,
+                            ),
                             Flexible(
                               flex: 6,
                               child: Column(
@@ -171,32 +183,41 @@ class _MyOrderScreenState extends State<MyOrderScreen> {
                                 children: [
                                   Text(name,
                                     overflow: TextOverflow.ellipsis,
-                                    maxLines: 2,
-                                    style: AppTextStyle.alertSubtitle
-                                        .copyWith(fontSize: Sizes.s14.h),
+                                    maxLines: 6,
+                                    style: AppTextStyle.alertSubtitle1
+                                        .copyWith(fontSize: Sizes.s18.h,color: AppColor.black),
                                   ),
                                   SizedBoxH8(),
-                                  Text(lessons,
-                                      style: AppTextStyle.alertSubtitle)
-
-
-                                ],
+                                  Text("${lessons}",
+                                      style: AppTextStyle.alertSubtitle1.copyWith(fontSize: Sizes.s14.h)),
+                                  ],
                               ),
                             ),
                           ],
                         ),
+
+                      ),
+                      CircleAvatar(
+                        child: IconButton(
+
+                          onPressed: (){
+                            Navigator.pushNamed(context, Routs.courseDetail,
+                                arguments: OtpArguments(
+                                  ccImg: image,
+                                  ccId: ccid,
+                                  ccCourseName: name,
+                                  ccLessons: lessons,
+                                )
+
+                            );
+                          },
+                          icon: Icon(Icons.arrow_forward_ios),
+                          color: AppColor.white,
+                        ),
+                        backgroundColor: AppColor.primaryColor,
+
                       ),
 
-                      Column(
-                        children: [
-                          SizedBoxH8(),
-                          IconButton(onPressed: (){
-
-                            Navigator.pushNamed(context, Routs.paymentDes,arguments: OtpArguments(ccId:ccid));
-                            debugPrint("CCID$ccid");
-                          }, icon: Icon(Icons.receipt_long_outlined,),iconSize: 30, color: AppColor.primaryLightColor,),
-                        ],
-                      ),
                     ],
                   ),
                 ],
@@ -204,7 +225,7 @@ class _MyOrderScreenState extends State<MyOrderScreen> {
             ),
           ),
         ),
-        SizedBoxH10(),
+        SizedBoxH14(),
       ],
     );
 

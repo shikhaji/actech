@@ -18,6 +18,7 @@ import '../../widgets/app_text.dart';
 import '../../widgets/custom_size_box.dart';
 import '../../widgets/drawer_widget.dart';
 import '../../widgets/primary_appbar.dart';
+import '../../widgets/primary_padding.dart';
 import '../../widgets/scrollview.dart';
 import 'main_home_screen.dart';
 
@@ -131,93 +132,100 @@ class _HomeScreenState extends State<HomeScreen> {
           ),
           child: const DrawerWidget(),
         ),
-        body: CustomScroll(
-          children: [
-            SizedBoxH18(),
-            SizedBox(
-              width: double.infinity,
-              child: CarouselSlider.builder(
-                  carouselController: buttonCarouselController,
-                  itemCount: sliderImageList.length ?? 0,
-                  itemBuilder: (BuildContext context, int itemIndex,
-                      int pageViewIndex) =>
-                      Padding(
-                          padding: const EdgeInsets.only(right: 3, left: 3),
-                          child: Container(
-                            decoration: BoxDecoration(
-                                borderRadius: BorderRadius.circular(12),
-                                image: DecorationImage(
-                                    image: NetworkImage(
-                                      'https://www.actechindia.org/uploads/${sliderImageList[itemIndex].bannerImage}',
-                                    ),
-                                    fit: BoxFit.cover)),
-                          )),
-                  options: CarouselOptions(
-                    onPageChanged: (index, _) {
-                      setState(() {
-                        _selectedSliderIndex = index;
-                      });
-                    },
-                    aspectRatio: 15 / 8,
-                    viewportFraction: 1,
-                    initialPage: 0,
-                    autoPlay: false,
-                    enableInfiniteScroll: false,
-                    autoPlayInterval: const Duration(seconds: 3),
-                    autoPlayAnimationDuration:
-                    const Duration(milliseconds: 800),
-                    autoPlayCurve: Curves.fastOutSlowIn,
-                    enlargeCenterPage: true,
-                    scrollDirection: Axis.horizontal,
-                  )),
-            ),
-            SizedBoxH18(),
-            Row(
-              mainAxisAlignment: MainAxisAlignment.center,
+        body: SafeArea(
+          child: PrimaryPadding(
+            child:Column(
               children: [
-                ...List.generate(
-                  sliderImageList.length,
-                      (index) => Indicator(
-                      isActive: _selectedSliderIndex == index ? true : false),
-                )
-              ],
-            ),
-            SizedBoxH10(),
-            Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: [
-                Text("Recommended Courses ",style: AppTextStyle.alertSubtitle),
-                TextButton(onPressed: (){
-                  Navigator.pushNamed(context, Routs.mainHome,arguments: OtpArguments(bottomIndex: 1));
-                }, child: Text("See All",style: AppTextStyle.subTitle.copyWith(color: AppColor.primaryColor),))
-              ],
-            ),
-            SizedBoxH10(),
-            Container(
-              height: Sizes.s350,
-              child:SingleChildScrollView(
-                child: ListView.builder(
-                  padding: EdgeInsets.symmetric(vertical: Sizes.s20.h),
-                  shrinkWrap: true,
-                  physics: const NeverScrollableScrollPhysics(),
-                  itemCount: getAllCourses.length,
-                  itemBuilder: (context, inx) {
-                    return CoursesListContainer(
-                      image:getAllCourses[inx].ccfvCourseImage ?? "",
-                      name:getAllCourses[inx].ccfvName ?? "",
-                      lessons: "${getAllCourses[inx].ccfvTotalLessons ?? ""} Lessons",
-                      displayAmount: "₹${getAllCourses[inx].ccfvCommision ?? ""}",
-                      ccid: getAllCourses[inx].ccfvId ?? "",
-                      ccstatus: getAllCourses[inx].ccfvStatus ?? "",
-                      ccIntroVideo: getAllCourses[inx].ccfvUrl ?? "",
-                      amount: "${getAllCourses[inx].ccfvCommision ?? ""}",
-                    );
-                  },
+                SizedBoxH18(),
+                SizedBox(
+                  width: double.infinity,
+                  child: CarouselSlider.builder(
+                      carouselController: buttonCarouselController,
+                      itemCount: sliderImageList.length ?? 0,
+                      itemBuilder: (BuildContext context, int itemIndex,
+                          int pageViewIndex) =>
+                          Padding(
+                              padding: const EdgeInsets.only(right: 3, left: 3),
+                              child: Container(
+                                decoration: BoxDecoration(
+                                    borderRadius: BorderRadius.circular(12),
+                                    image: DecorationImage(
+                                        image: NetworkImage(
+                                          'https://www.actechindia.org/uploads/${sliderImageList[itemIndex].bannerImage}',
+                                        ),
+                                        fit: BoxFit.cover)),
+                              )),
+                      options: CarouselOptions(
+                        onPageChanged: (index, _) {
+                          setState(() {
+                            _selectedSliderIndex = index;
+                          });
+                        },
+                        aspectRatio: 15 / 8,
+                        viewportFraction: 1,
+                        initialPage: 0,
+                        autoPlay: false,
+                        enableInfiniteScroll: false,
+                        autoPlayInterval: const Duration(seconds: 3),
+                        autoPlayAnimationDuration:
+                        const Duration(milliseconds: 800),
+                        autoPlayCurve: Curves.fastOutSlowIn,
+                        enlargeCenterPage: true,
+                        scrollDirection: Axis.horizontal,
+                      )),
                 ),
-              ),
-            ),
-            //Container
-          ],
+                SizedBoxH18(),
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    ...List.generate(
+                      sliderImageList.length,
+                          (index) => Indicator(
+                          isActive: _selectedSliderIndex == index ? true : false),
+                    )
+                  ],
+                ),
+                SizedBoxH10(),
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    Text("Recommended Courses ",style: AppTextStyle.alertSubtitle),
+                    TextButton(onPressed: (){
+                      Navigator.pushNamed(context, Routs.mainHome,arguments: OtpArguments(bottomIndex: 1));
+                    }, child: Text("See All",style: AppTextStyle.subTitle.copyWith(color: AppColor.drawerBackground),))
+                  ],
+                ),
+                SizedBoxH10(),
+                Expanded(
+                  child: SizedBox(
+                    height: Sizes.s350,
+                    child:SingleChildScrollView(
+                      child: ListView.builder(
+                        padding: EdgeInsets.symmetric(vertical: Sizes.s20.h),
+                        shrinkWrap: true,
+                        physics: const NeverScrollableScrollPhysics(),
+                        itemCount: getAllCourses.length,
+                        itemBuilder: (context, inx) {
+                          return CoursesListContainer(
+                            image:getAllCourses[inx].ccfvCourseImage ?? "",
+                            name:getAllCourses[inx].ccfvName ?? "",
+                            lessons: "${getAllCourses[inx].ccfvTotalLessons ?? ""} ",
+                            displayAmount: "₹${getAllCourses[inx].ccfvCommision ?? ""}",
+                            ccid: getAllCourses[inx].ccfvId ?? "",
+                            ccstatus: getAllCourses[inx].ccfvStatus ?? "",
+                            ccIntroVideo: getAllCourses[inx].ccfvUrl ?? "",
+                            ccDescription: getAllCourses[inx].ccfvDesc ?? "",
+                            amount: "${getAllCourses[inx].ccfvCommision ?? ""}",
+                          );
+                        },
+                      ),
+                    ),
+                  ),
+                ),
+                //Container
+              ],
+            )
+          ),
         ),
         appBar: SecondaryAppBar(
             title: "Home",
@@ -241,82 +249,105 @@ class _HomeScreenState extends State<HomeScreen> {
         required String ccstatus,
         required String displayAmount,
         required String ccIntroVideo,
+        required String ccDescription,
       }
       ){
     return Column(
       children: [
-        GestureDetector(
-          onTap: (){
-            Navigator.pushNamed(context, Routs.introductionVideo,
-                arguments: OtpArguments(ccUrl: ccIntroVideo)
-            );
-          },
-          child: Container(
-            alignment: Alignment.center,
-            decoration: BoxDecoration(
-              color: AppColor.textFieldColor,
-              borderRadius: BorderRadius.circular(textFieldBorderRadius),
-            ),
-            child: Padding(
-              padding: const EdgeInsets.all(8.0),
-              child: Column(
-                children: [
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: [
+        Container(
+          alignment: Alignment.center,
+          decoration: BoxDecoration(
+            border: Border.all(color: AppColor.grey,width: Sizes.s1.w),
+            color: AppColor.white,
+            borderRadius: BorderRadius.circular(textFieldBorderRadius),
+          ),
+          child: Padding(
+            padding: const EdgeInsets.all(12.0),
+            child: Column(
+              children: [
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
 
-                      Expanded(
-                        child: Row(
-                          children: [
-                            Container(
-                              height: Sizes.s80.h,
-                              width: Sizes.s120.h,
-                              decoration: BoxDecoration(
-                                borderRadius: BorderRadius.circular(15),
-                                shape: BoxShape.rectangle,
-                                image: DecorationImage(
-                                  image:  NetworkImage("https://www.actechindia.org/uploads/${image}"),
-                                  fit: BoxFit.fitHeight,
-                                ),
-                              ),
-                            ),
-                            SizedBoxW8(),
-                            Flexible(
-                              flex: 6,
-                              child: Column(
-                                mainAxisAlignment: MainAxisAlignment.start,
-                                crossAxisAlignment: CrossAxisAlignment.start,
-                                children: [
-                                  Text(name,
-                                    overflow: TextOverflow.ellipsis,
-                                    maxLines: 6,
-                                    style: AppTextStyle.alertSubtitle
-                                        .copyWith(fontSize: Sizes.s14.h),
-                                  ),
-                                  SizedBoxH8(),
-                                  Text(lessons,
-                                      style: AppTextStyle.alertSubtitle)
-
-
-                                ],
-                              ),
-                            ),
-                          ],
-                        ),
-                      ),
-
-                      Column(
+                    Expanded(
+                      child: Row(
                         children: [
-                          SizedBoxH8(),
-                          appText(displayAmount,
-                              style: AppTextStyle.headingTextTile
-                                  .copyWith(fontSize: Sizes.s18.h,color: AppColor.primaryColor)),
+                          Container(
+                            decoration: BoxDecoration(
+                              borderRadius: BorderRadius.circular(12),
+                              color: Colors.white,
+                              boxShadow: [
+                                BoxShadow(
+                                  color:
+                                  Colors.grey.withOpacity(0.5), //color of shadow
+                                  spreadRadius: 3, //spread radius
+                                  blurRadius: 5, // blur radius
+                                  offset: const Offset(0, 3),
+                                )
+                              ],
+                            ),
+                            child: ClipRRect(
+                              borderRadius: BorderRadius.circular(12),
+                              clipBehavior: Clip.antiAlias,
+                              child: Image.network("https://www.actechindia.org/uploads/${image}",fit: BoxFit.contain,height: Sizes.s100.h,width: Sizes.s100.h,),
+                            ),
+                          ),
+
+                          SizedBox(
+                            width: Sizes.s18,
+                          ),
+                          Flexible(
+                            flex: 6,
+                            child: Column(
+                              mainAxisAlignment: MainAxisAlignment.start,
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: [
+                                Text(name,
+                                  overflow: TextOverflow.ellipsis,
+                                  maxLines: 6,
+                                  style: AppTextStyle.alertSubtitle1
+                                      .copyWith(fontSize: Sizes.s18.h,color: AppColor.black),
+                                ),
+                                SizedBoxH8(),
+                                Text("${lessons}Lessons",
+                                    style: AppTextStyle.alertSubtitle1.copyWith(fontSize: Sizes.s14.h)),
+                                SizedBoxH8(),
+                                appText(displayAmount,
+                                    style: AppTextStyle.title
+                                        .copyWith(fontSize: Sizes.s14.h,color: AppColor.primaryColor)),
+                              ],
+                            ),
+                          ),
                         ],
                       ),
-                    ],
-                  ),
-                ],
-              ),
+
+                    ),
+                    CircleAvatar(
+                      child: IconButton(
+
+                        onPressed: (){
+                          Navigator.pushNamed(context, Routs.courseBuy,
+                              arguments: OtpArguments(
+                                ccId: ccid,
+                                ccUrl: ccIntroVideo,
+                                ccCourseName: name,
+                                ccDesc: ccDescription,
+                                ccAmount: amount,
+                                ccLessons: lessons,
+                              )
+
+                          );
+                        },
+                        icon: Icon(Icons.arrow_forward_ios),
+                        color: AppColor.white,
+                      ),
+                      backgroundColor: AppColor.primaryColor,
+
+                    ),
+
+                  ],
+                ),
+              ],
             ),
           ),
         ),

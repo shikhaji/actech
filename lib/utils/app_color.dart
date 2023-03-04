@@ -9,9 +9,10 @@
   class AppColor {
     AppColor._();
 
-    static const Color primaryColor = Color(0xFF335EF7);
-    static const Color primaryLightColor = Color(0xCA3289F6);
-    static const Color drawerBackground = Color(0xCA2571F3);
+    //static const Color primaryColor = Color(0xFF2e5aa5);
+    static const Color primaryColor = Color(0xFF344c4a);
+    static const Color primaryLightColor = Color(0xCA73443d);
+    static const Color drawerBackground = Color(0xCA73443d);
     static const Color red = Color(0xffF41111);
     static const Color grey = Color(0xff869497);
     static const Color darkGrey = Color(0xff808080);
@@ -22,5 +23,6 @@
     static const Color orange = Color(0xffFF9966);
     static const Color green = Color(0xff00A355);
     static const Color textFieldColor = Color(0xffEEF2F6);
+    static const Color aliceBlue = Color(0xff7589A2);
   }
 

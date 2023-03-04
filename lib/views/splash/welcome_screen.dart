@@ -1,6 +1,7 @@
 import 'package:ac_tech/utils/app_text_style.dart';
 import 'package:ac_tech/views/auth/login_screen.dart';
 import 'package:ac_tech/views/auth/mobile_verification_screen.dart';
+import 'package:ac_tech/views/auth/signUp.dart';
 import 'package:ac_tech/widgets/app_text.dart';
 import 'package:flutter/material.dart';
 import 'package:sizer/sizer.dart';

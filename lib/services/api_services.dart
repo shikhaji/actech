@@ -383,8 +383,9 @@ class ApiService {
       if (response.statusCode == 200) {
         debugPrint('Update profile data  ----- > ${response.data}');
         Loader.hideLoader();
-
-        Navigator.pushNamed(context, Routs.mainHome,arguments: OtpArguments(bottomIndex: 3));
+        Navigator.pushNamedAndRemoveUntil(
+            context, Routs.mainHome,arguments: OtpArguments(bottomIndex: 3), (route) => false);
+       //Navigator.pushNamed(context, Routs.mainHome,arguments: OtpArguments(bottomIndex: 3));
         Fluttertoast.showToast(
           msg: 'Updated Sucessfully...',
           backgroundColor: Colors.grey,
@@ -426,7 +427,7 @@ class ApiService {
       if (response.statusCode == 200) {
         debugPrint('Update profile data  ----- > ${response.data}');
         Loader.hideLoader();
-        // Navigator.pushNamed(context, Routs.editProfile);
+        Navigator.pushNamed(context, Routs.mainHome,arguments: OtpArguments(bottomIndex: 2));
         Fluttertoast.showToast(
           msg: 'Your course purchased Successfully...',
           backgroundColor: Colors.grey,

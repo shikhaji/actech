@@ -42,6 +42,7 @@ class Course {
     required this.ccfvCourseImage,
     required this.ccfvTotalLessons,
     required this.ccfvUrl,
+    required this.ccfvDesc,
   });
 
   String ccfvId;
@@ -52,6 +53,7 @@ class Course {
   String ccfvCourseImage;
   String ccfvTotalLessons;
   String ccfvUrl;
+  String ccfvDesc;
 
   factory Course.fromJson(Map<String, dynamic> json) => Course(
     ccfvId: json["CCFV_ID"],
@@ -62,6 +64,7 @@ class Course {
     ccfvCourseImage: json["CCFV_COURSE_IMAGE"],
     ccfvTotalLessons: json["CCFV_TOTAL_LESSONS"],
     ccfvUrl: json["CCFV_URL"],
+    ccfvDesc: json["CCFV_DESC"],
   );
 
   Map<String, dynamic> toJson() => {
@@ -73,5 +76,6 @@ class Course {
     "CCFV_COURSE_IMAGE": ccfvCourseImage,
     "CCFV_TOTAL_LESSONS": ccfvTotalLessons,
     "CCFV_URL": ccfvUrl,
+    "CCFV_DESC": ccfvDesc,
   };
 }
