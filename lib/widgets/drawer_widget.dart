@@ -22,7 +22,7 @@ class DrawerWidget extends StatefulWidget {
 }
 
 class _DrawerState extends State<DrawerWidget> {
-  Course? myProfileData;
+  ProfileModel? myProfileData;
 
   @override
   void initState() {

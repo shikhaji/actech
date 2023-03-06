@@ -35,6 +35,7 @@ class _CourseBuyScreenState extends State<CourseBuyScreen> {
   late var _razorpay;
   String loginId ="";
   String courseId ="";
+  String phone ="";
   CarouselController buttonCarouselController = CarouselController();
 
   //VIDEO PLAYER
@@ -73,8 +74,10 @@ class _CourseBuyScreenState extends State<CourseBuyScreen> {
   }
   Future<void>getLoginId()async{
     String? id = await Preferances.getString("userId");
+    String? phoneNo = await Preferances.getString("phone");
     setState(() {
       loginId="$id";
+      phone="$phoneNo";
       print("LoginId:$loginId");
     });
   }
@@ -162,7 +165,7 @@ class _CourseBuyScreenState extends State<CourseBuyScreen> {
                         'description': 'Course Purchased',
                         'send_sms_hash': true,
                         'prefill': {
-                          'contact': '',
+                          'contact': '${phone}',
                           'email': '',
                           'phone': '',
                         },
