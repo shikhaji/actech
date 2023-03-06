@@ -7,6 +7,7 @@ import 'package:dio/dio.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:razorpay_flutter/razorpay_flutter.dart';
+import '../../model/my_profile_model.dart';
 import '../../routes/arguments.dart';
 import '../../services/api_services.dart';
 import '../../services/shared_preferences.dart';
@@ -38,6 +39,7 @@ class _HomeScreenState extends State<HomeScreen> {
   List latestNewsList = [];
   List<Course> getAllCourses=[];
   List<Course> allCourseListRes = [];
+  ProfileModel? myProfileData;
   bool _isSearching = false;
   void openDrawer() {
     _scaffoldKey.currentState?.openDrawer();
@@ -47,6 +49,7 @@ class _HomeScreenState extends State<HomeScreen> {
 
     callApi();
     callCourseApi();
+    getProfileApi();
   }
 
   Future<void> callApi() async {
@@ -79,6 +82,23 @@ class _HomeScreenState extends State<HomeScreen> {
           .toList();
       setState(() {});
     }
+  }
+  Future<void> getProfileApi() async {
+    String? id = await Preferances.getString("userId");
+
+    FormData data() {
+      return FormData.fromMap({
+        "loginid":id?.replaceAll('"', '').replaceAll('"', '').toString(),
+      });
+    }
+    print("login id $id");
+    ApiService().myProfile(context,data: data()).then((value){
+      setState(() {
+        myProfileData=value.course!;
+        Preferances.setString("phone", value.course.branchPhone);
+      });
+    });
+
   }
 
   Future<void> _onSearchHandler(String qurey) async {

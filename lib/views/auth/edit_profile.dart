@@ -34,7 +34,7 @@ class _EditProfileState extends State<EditProfile> with ValidationMixin {
   final TextEditingController _categories = TextEditingController();
   bool obscurePassword = true;
   final _formKey = GlobalKey<FormState>();
-  Course? myProfileData;
+  ProfileModel? myProfileData;
   @override
   void initState() {
     // TODO: implement initState

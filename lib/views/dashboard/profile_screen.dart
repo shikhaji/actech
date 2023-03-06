@@ -30,7 +30,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
     _scaffoldKey.currentState?.openDrawer();
   }
 
-  Course? myProfileData;
+  ProfileModel? myProfileData;
 
   @override
   void initState() {

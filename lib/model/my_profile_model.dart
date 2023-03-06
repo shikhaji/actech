@@ -17,12 +17,12 @@ class MyProfileModel {
 
   int status;
   String message;
-  Course course;
+  ProfileModel course;
 
   factory MyProfileModel.fromJson(Map<String, dynamic> json) => MyProfileModel(
     status: json["status"],
     message: json["message"],
-    course: Course.fromJson(json["course"]),
+    course: ProfileModel.fromJson(json["course"]),
   );
 
   Map<String, dynamic> toJson() => {
@@ -32,8 +32,8 @@ class MyProfileModel {
   };
 }
 
-class Course {
-  Course({
+class ProfileModel {
+  ProfileModel({
     required this.branchId,
     this.firmId,
     required this.branchName,
@@ -107,7 +107,7 @@ class Course {
   String branchStudentPhoto;
   String branchReferBy;
 
-  factory Course.fromJson(Map<String, dynamic> json) => Course(
+  factory ProfileModel.fromJson(Map<String, dynamic> json) => ProfileModel(
     branchId: json["BRANCH_ID"],
     firmId: json["FIRM_ID"],
     branchName: json["BRANCH_NAME"],
