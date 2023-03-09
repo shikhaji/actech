@@ -1,17 +1,17 @@
-class GetOrderListModel {
+class GetAllMainCourse {
   int? status;
   String? message;
-  List<GetOrderList>? course;
+  List<MainCourse>? course;
 
-  GetOrderListModel({this.status, this.message, this.course});
+  GetAllMainCourse({this.status, this.message, this.course});
 
-  GetOrderListModel.fromJson(Map<String, dynamic> json) {
+  GetAllMainCourse.fromJson(Map<String, dynamic> json) {
     status = json['status'];
     message = json['message'];
     if (json['course'] != null) {
-      course = <GetOrderList>[];
+      course = <MainCourse>[];
       json['course'].forEach((v) {
-        course!.add(new GetOrderList.fromJson(v));
+        course!.add(new MainCourse.fromJson(v));
       });
     }
   }
@@ -27,16 +27,7 @@ class GetOrderListModel {
   }
 }
 
-class GetOrderList {
-  String? pCLID;
-  String? pCLTT;
-  String? pCLCLID;
-  String? pLCTRANSACTIONID;
-  String? pLCPAYMENTDATE;
-  String? pLCPAYMENTSTATUS;
-  String? pLCLOGINID;
-  String? pCLCENTERCOMISSION;
-  String? pCLADMINCOMMISION;
+class MainCourse {
   String? cMCID;
   String? cMCTT;
   String? cMCNAME;
@@ -47,17 +38,8 @@ class GetOrderList {
   String? cMCINTROURL;
   String? cMCDESC;
 
-  GetOrderList(
-      {this.pCLID,
-        this.pCLTT,
-        this.pCLCLID,
-        this.pLCTRANSACTIONID,
-        this.pLCPAYMENTDATE,
-        this.pLCPAYMENTSTATUS,
-        this.pLCLOGINID,
-        this.pCLCENTERCOMISSION,
-        this.pCLADMINCOMMISION,
-        this.cMCID,
+  MainCourse(
+      {this.cMCID,
         this.cMCTT,
         this.cMCNAME,
         this.cMCSTATUS,
@@ -67,16 +49,7 @@ class GetOrderList {
         this.cMCINTROURL,
         this.cMCDESC});
 
-  GetOrderList.fromJson(Map<String, dynamic> json) {
-    pCLID = json['PCL_ID'];
-    pCLTT = json['PCL_TT'];
-    pCLCLID = json['PCL_CL_ID'];
-    pLCTRANSACTIONID = json['PLC_TRANSACTION_ID'];
-    pLCPAYMENTDATE = json['PLC_PAYMENT_DATE'];
-    pLCPAYMENTSTATUS = json['PLC_PAYMENT_STATUS'];
-    pLCLOGINID = json['PLC_LOGIN_ID'];
-    pCLCENTERCOMISSION = json['PCL_CENTER_COMISSION'];
-    pCLADMINCOMMISION = json['PCL_ADMIN_COMMISION'];
+  MainCourse.fromJson(Map<String, dynamic> json) {
     cMCID = json['CMC_ID'];
     cMCTT = json['CMC_TT'];
     cMCNAME = json['CMC_NAME'];
@@ -90,15 +63,6 @@ class GetOrderList {
 
   Map<String, dynamic> toJson() {
     final Map<String, dynamic> data = new Map<String, dynamic>();
-    data['PCL_ID'] = this.pCLID;
-    data['PCL_TT'] = this.pCLTT;
-    data['PCL_CL_ID'] = this.pCLCLID;
-    data['PLC_TRANSACTION_ID'] = this.pLCTRANSACTIONID;
-    data['PLC_PAYMENT_DATE'] = this.pLCPAYMENTDATE;
-    data['PLC_PAYMENT_STATUS'] = this.pLCPAYMENTSTATUS;
-    data['PLC_LOGIN_ID'] = this.pLCLOGINID;
-    data['PCL_CENTER_COMISSION'] = this.pCLCENTERCOMISSION;
-    data['PCL_ADMIN_COMMISION'] = this.pCLADMINCOMMISION;
     data['CMC_ID'] = this.cMCID;
     data['CMC_TT'] = this.cMCTT;
     data['CMC_NAME'] = this.cMCNAME;

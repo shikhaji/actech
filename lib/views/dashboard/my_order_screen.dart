@@ -1,6 +1,6 @@
 import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
-import '../../model/course_purchased_model.dart';
+import '../../model/course_category_model.dart';
 import '../../routes/app_routes.dart';
 import '../../routes/arguments.dart';
 import '../../services/api_services.dart';
@@ -46,21 +46,12 @@ class _MyOrderScreenState extends State<MyOrderScreen> {
     FormData data() {
       return FormData.fromMap({
         "loginid":id?.replaceAll('"', '').replaceAll('"', '').toString(),
-        "status" :"1",
+        "cc_id" :"3",
+        "status":"1"
       });
     }
-    GetPurchasedCourseCategory? _getPurchaseCourseCategory= await ApiService().getPurchasedCourses(context,data: data());
+   ApiService().getPurchasedCourses(context,data: data());
 
-    if(_getPurchaseCourseCategory != null){
-
-      getAllCourses = _getPurchaseCourseCategory.course
-      !.map((e) => Course.fromJson(e.toJson()))
-          .toList();
-      allCourseListRes = _getPurchaseCourseCategory.course
-      !.map((e) => Course.fromJson(e.toJson()))
-          .toList();
-      setState(() {});
-    }
   }
 
   @override
@@ -90,10 +81,10 @@ class _MyOrderScreenState extends State<MyOrderScreen> {
               itemCount: getAllCourses.length,
               itemBuilder: (context, inx) {
                 return CoursesListContainer(
-                  image: getAllCourses[inx].cCFVCOURSEIMAGE ?? "",
-                  ccid: getAllCourses[inx].cCFVID ?? "",
-                  name:getAllCourses[inx].cCFVNAME ?? "",
-                  lessons: "${getAllCourses[inx].cCFVTOTALLESSONS ?? ""} Lessons",
+                  image: getAllCourses[inx].ccfvCourseImage ?? "",
+                  ccid: getAllCourses[inx].ccfvId ?? "",
+                  name:getAllCourses[inx].ccfvName ?? "",
+                  lessons: "${getAllCourses[inx].ccfvTotalLessons ?? ""} Lessons",
 
 
                 );
@@ -108,12 +99,10 @@ class _MyOrderScreenState extends State<MyOrderScreen> {
           ],
         ),
         appBar: SecondaryAppBar(
-          title: "My Class",
+          title: "Chapters",
           isLeading: true,
-          leadingIcon: Icons.menu,
-          onBackPressed: () {
-            openDrawer();
-          },
+          leadingIcon: Icons.arrow_back_ios,
+
         ));
   }
   Widget CoursesListContainer({
@@ -190,7 +179,7 @@ class _MyOrderScreenState extends State<MyOrderScreen> {
                                   SizedBoxH8(),
                                   Text("${lessons}",
                                       style: AppTextStyle.alertSubtitle1.copyWith(fontSize: Sizes.s14.h)),
-                                  ],
+                                ],
                               ),
                             ),
                           ],

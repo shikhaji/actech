@@ -60,7 +60,7 @@ class _PaymentDesState extends State<PaymentDes> {
 
        });
        print("getOrderList:=${getOrderListModel!.course!.length}");
-       print("getOrderList:=${getOrderListModel!.course![0].cCFVNAME}");
+       print("getOrderList:=${getOrderListModel!.course![0].cMCNAME}");
      }
    });
   }
@@ -88,7 +88,7 @@ class _PaymentDesState extends State<PaymentDes> {
                 rows: [
                   DataRow(cells: [
                     DataCell(Text("Name:")),
-                    DataCell(Text("${getOrderListModel != null && getOrderListModel!.course != null ? getOrderListModel!.course![0].cCFVNAME : ""}")),
+                    DataCell(Text("${getOrderListModel != null && getOrderListModel!.course != null ? getOrderListModel!.course![0].cMCNAME : ""}")),
 
                   ]),
                   DataRow(cells: [
@@ -98,7 +98,7 @@ class _PaymentDesState extends State<PaymentDes> {
                   ]),
                   DataRow(cells: [
                     DataCell(Text('Amount:')),
-                    DataCell(Text('${getOrderListModel != null && getOrderListModel!.course != null ? getOrderListModel!.course![0].cCFVCOMMISION : ""}')),
+                    DataCell(Text('${getOrderListModel != null && getOrderListModel!.course != null ? getOrderListModel!.course![0].cMCCOMMISION: ""}')),
 
                   ]),
                   DataRow(cells: [

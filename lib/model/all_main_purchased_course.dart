@@ -1,17 +1,17 @@
-class GetOrderListModel {
+class GetAllMainPurchasedCourse {
   int? status;
   String? message;
-  List<GetOrderList>? course;
+  List<PurchasedCourse>? course;
 
-  GetOrderListModel({this.status, this.message, this.course});
+  GetAllMainPurchasedCourse({this.status, this.message, this.course});
 
-  GetOrderListModel.fromJson(Map<String, dynamic> json) {
+  GetAllMainPurchasedCourse.fromJson(Map<String, dynamic> json) {
     status = json['status'];
     message = json['message'];
     if (json['course'] != null) {
-      course = <GetOrderList>[];
+      course = <PurchasedCourse>[];
       json['course'].forEach((v) {
-        course!.add(new GetOrderList.fromJson(v));
+        course!.add(new PurchasedCourse.fromJson(v));
       });
     }
   }
@@ -27,7 +27,7 @@ class GetOrderListModel {
   }
 }
 
-class GetOrderList {
+class PurchasedCourse {
   String? pCLID;
   String? pCLTT;
   String? pCLCLID;
@@ -47,7 +47,7 @@ class GetOrderList {
   String? cMCINTROURL;
   String? cMCDESC;
 
-  GetOrderList(
+  PurchasedCourse(
       {this.pCLID,
         this.pCLTT,
         this.pCLCLID,
@@ -67,7 +67,7 @@ class GetOrderList {
         this.cMCINTROURL,
         this.cMCDESC});
 
-  GetOrderList.fromJson(Map<String, dynamic> json) {
+  PurchasedCourse.fromJson(Map<String, dynamic> json) {
     pCLID = json['PCL_ID'];
     pCLTT = json['PCL_TT'];
     pCLCLID = json['PCL_CL_ID'];

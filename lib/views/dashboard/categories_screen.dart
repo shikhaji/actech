@@ -1,3 +1,4 @@
+import 'package:ac_tech/model/all_main_course_model.dart';
 import 'package:ac_tech/model/course_category_model.dart';
 import 'package:ac_tech/services/api_services.dart';
 import 'package:ac_tech/widgets/primary_button.dart';
@@ -30,14 +31,14 @@ class CategoriesScreen extends StatefulWidget {
 }
 
 class _CategoriesScreenState extends State<CategoriesScreen> {
-  List<Course> getAllCourses=[];
+  List<MainCourse> getAllCourses=[];
   final GlobalKey<ScaffoldState> _scaffoldKey = GlobalKey<ScaffoldState>();
   final TextEditingController _searchController = TextEditingController();
   late var _razorpay;
   String courseId ="";
   String loginId ="";
 
-  List<Course> allCourseListRes = [];
+  List<MainCourse> allCourseListRes = [];
   List<CheckCourse> checkCourseList = [];
   bool _isSearching = false;
 
@@ -69,15 +70,15 @@ class _CategoriesScreenState extends State<CategoriesScreen> {
         "status" :"0",
       });
     }
-    GetAllCourseCategory? _getAllCourseCategory= await ApiService().getAllCourses(context,data: data());
+    GetAllMainCourse? _getAllCourseCategory= await ApiService().getAllMainCourses(context,data: data());
 
     if(_getAllCourseCategory != null){
 
-      getAllCourses = _getAllCourseCategory.course
-          .map((e) => Course.fromJson(e.toJson()))
+      getAllCourses = _getAllCourseCategory.course!
+          .map((e) => MainCourse.fromJson(e.toJson()))
           .toList();
-      allCourseListRes = _getAllCourseCategory.course
-          .map((e) => Course.fromJson(e.toJson()))
+      allCourseListRes = _getAllCourseCategory.course!
+          .map((e) => MainCourse.fromJson(e.toJson()))
           .toList();
       setState(() {});
     }
@@ -105,9 +106,9 @@ class _CategoriesScreenState extends State<CategoriesScreen> {
     setState(() {});
   }
 
-  List<Course> searchCourse(String qurey) {
+  List<MainCourse> searchCourse(String qurey) {
     return allCourseListRes
-        .where((e) => e.ccfvName.toLowerCase().contains(qurey.toLowerCase()))
+        .where((e) => e.cMCNAME!.toLowerCase().contains(qurey.toLowerCase()))
         .toList();
   }
 
@@ -203,15 +204,15 @@ class _CategoriesScreenState extends State<CategoriesScreen> {
                         itemCount: getAllCourses.length,
                         itemBuilder: (context, inx) {
                           return CoursesListContainer(
-                              image:getAllCourses[inx].ccfvCourseImage ?? "",
-                              name:getAllCourses[inx].ccfvName ?? "",
-                              lessons: "${getAllCourses[inx].ccfvTotalLessons ?? ""} ",
-                              displayAmount: "₹${getAllCourses[inx].ccfvCommision ?? ""}",
-                              ccid: getAllCourses[inx].ccfvId ?? "",
-                              ccstatus: getAllCourses[inx].ccfvStatus ?? "",
-                              ccIntroVideo: getAllCourses[inx].ccfvUrl ?? "",
-                              ccDescription: getAllCourses[inx].ccfvDesc ?? "",
-                              amount: "${getAllCourses[inx].ccfvCommision ?? ""
+                              image:getAllCourses[inx].cMCIMAGE ?? "",
+                              name:getAllCourses[inx].cMCNAME ?? "",
+                              lessons: "${getAllCourses[inx].cMCCHAPTERS ?? ""} ",
+                              displayAmount: "₹${getAllCourses[inx].cMCCOMMISION ?? ""}",
+                              ccid: getAllCourses[inx].cMCID ?? "",
+                              ccstatus: getAllCourses[inx].cMCSTATUS ?? "",
+                              ccIntroVideo: getAllCourses[inx].cMCINTROURL ?? "",
+                              ccDescription: getAllCourses[inx].cMCDESC ?? "",
+                              amount: "${getAllCourses[inx].cMCCOMMISION ?? ""
                               }"
                           );
                         },
