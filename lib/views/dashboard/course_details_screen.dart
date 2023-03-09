@@ -51,8 +51,10 @@ class _CourseDetailsScreenState extends State<CourseDetailsScreen> {
     });
 
   }
+
   @override
   Widget build(BuildContext context) {
+
     return Scaffold(
         body: SafeArea(
           child: PrimaryPadding(
@@ -68,7 +70,6 @@ class _CourseDetailsScreenState extends State<CourseDetailsScreen> {
                     ),
                   ),
                   height: Sizes.s200.h,
-
                 ),
                 SizedBoxH34(),
                 Row(
@@ -87,6 +88,7 @@ class _CourseDetailsScreenState extends State<CourseDetailsScreen> {
                     )
                   ],
                 ),
+
                 SizedBoxH20(),
                 Expanded(
                   child: SizedBox(

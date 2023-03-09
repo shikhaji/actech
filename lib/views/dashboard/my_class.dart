@@ -1,8 +1,10 @@
+import 'package:ac_tech/routes/arguments.dart';
 import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
+
+import '../../model/all_main_purchased_course.dart';
 import '../../model/course_purchased_model.dart';
 import '../../routes/app_routes.dart';
-import '../../routes/arguments.dart';
 import '../../services/api_services.dart';
 import '../../services/shared_preferences.dart';
 import '../../utils/app_color.dart';
@@ -15,23 +17,25 @@ import '../../widgets/drawer_widget.dart';
 import '../../widgets/primary_appbar.dart';
 import '../../widgets/scrollview.dart';
 
-class MyOrderScreen extends StatefulWidget {
+class MyClassScreen extends StatefulWidget {
   final OtpArguments? arguments;
-  const MyOrderScreen({Key? key, this.arguments}) : super(key: key);
+  const MyClassScreen({Key? key, this.arguments,}) : super(key: key);
 
   @override
-  State<MyOrderScreen> createState() => _MyOrderScreenState();
+  State<MyClassScreen> createState() => _MyClassScreenState();
 }
 
-class _MyOrderScreenState extends State<MyOrderScreen> {
-  List<Course> myOrderList=[];
-  List<Course> getAllCourses=[];
-  List<Course> allCourseListRes = [];
+class _MyClassScreenState extends State<MyClassScreen> {
+  List<PurchasedCourse> myOrderList=[];
+  List<PurchasedCourse> getAllCourses=[];
+  List<PurchasedCourse> allCourseListRes = [];
   final GlobalKey<ScaffoldState> _scaffoldKey = GlobalKey<ScaffoldState>();
 
 
 
-
+  void openDrawer() {
+    _scaffoldKey.currentState?.openDrawer();
+  }
   @override
   void initState() {
     // TODO: implement initState
@@ -45,27 +49,38 @@ class _MyOrderScreenState extends State<MyOrderScreen> {
     FormData data() {
       return FormData.fromMap({
         "loginid":id?.replaceAll('"', '').replaceAll('"', '').toString(),
-        "cc_id" :"${widget.arguments?.ccId}",
+        "status" :"1",
       });
     }
-    GetPurchasedCourseCategory? _getPurchaseCourseCategory= await ApiService().getPurchasedCourses(context,data: data());
+    GetAllMainPurchasedCourse? _getPurchaseCourseCategory= await ApiService().getAllMainPurchasedCourses(context,data: data());
 
     if(_getPurchaseCourseCategory != null){
 
       getAllCourses = _getPurchaseCourseCategory.course
-      !.map((e) => Course.fromJson(e.toJson()))
+      !.map((e) => PurchasedCourse.fromJson(e.toJson()))
           .toList();
       allCourseListRes = _getPurchaseCourseCategory.course
-      !.map((e) => Course.fromJson(e.toJson()))
+      !.map((e) => PurchasedCourse.fromJson(e.toJson()))
           .toList();
       setState(() {});
     }
   }
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(
         key: _scaffoldKey,
+        drawer: Drawer(
+          backgroundColor: Colors.white,
+          elevation: 0,
+          width: ScreenUtil().screenWidth * 0.8,
+          shape: RoundedRectangleBorder(
+            borderRadius: BorderRadius.only(
+              topRight: Radius.circular(Sizes.s20.r),
+              bottomRight: Radius.circular(Sizes.s20.r),
+            ),
+          ),
+          child: const DrawerWidget(),
+        ),
         body: CustomScroll(
           children: [
             SizedBoxH10(),
@@ -77,10 +92,10 @@ class _MyOrderScreenState extends State<MyOrderScreen> {
               itemCount: getAllCourses.length,
               itemBuilder: (context, inx) {
                 return CoursesListContainer(
-                  image: getAllCourses[inx].cCFVCOURSEIMAGE ?? "",
-                  ccid: getAllCourses[inx].cCFVID ?? "",
-                  name:getAllCourses[inx].cCFVNAME ?? "",
-                  lessons: "${getAllCourses[inx].cCFVTOTALLESSONS ?? ""} Lessons",
+                  image: getAllCourses[inx].cMCIMAGE ?? "",
+                  ccid: getAllCourses[inx].cMCID ?? "",
+                  name:getAllCourses[inx].cMCNAME ?? "",
+                  lessons: "${getAllCourses[inx].cMCCHAPTERS ?? ""} Lessons",
 
 
                 );
@@ -95,10 +110,12 @@ class _MyOrderScreenState extends State<MyOrderScreen> {
           ],
         ),
         appBar: SecondaryAppBar(
-          title: "Chapters",
+          title: "My Class",
           isLeading: true,
-          leadingIcon: Icons.arrow_back_ios,
-
+          leadingIcon: Icons.menu,
+          onBackPressed: () {
+            openDrawer();
+          },
         ));
   }
   Widget CoursesListContainer({
@@ -175,7 +192,7 @@ class _MyOrderScreenState extends State<MyOrderScreen> {
                                   SizedBoxH8(),
                                   Text("${lessons}",
                                       style: AppTextStyle.alertSubtitle1.copyWith(fontSize: Sizes.s14.h)),
-                                  ],
+                                ],
                               ),
                             ),
                           ],
@@ -186,7 +203,7 @@ class _MyOrderScreenState extends State<MyOrderScreen> {
                         child: IconButton(
 
                           onPressed: (){
-                            Navigator.pushNamed(context, Routs.courseDetail,
+                            Navigator.pushNamed(context, Routs.myOrder,
                                 arguments: OtpArguments(
                                   ccImg: image,
                                   ccId: ccid,

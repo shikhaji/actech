@@ -8,6 +8,8 @@ import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import '../API/dio_client.dart';
 import '../API/url.dart';
+import '../model/all_main_course_model.dart';
+import '../model/all_main_purchased_course.dart';
 import '../model/course_categoryid_model.dart';
 import '../model/course_purchased_model.dart';
 import '../model/login_model.dart';
@@ -243,7 +245,57 @@ class ApiService {
       throw e.error;
     }
   }
+  //-----------------------GET ALL MAIN COURSE CATEGORY API-----------------------//
 
+  Future<GetAllMainCourse> getAllMainCourses(BuildContext context,{
+    FormData? data,
+  }) async {
+    try {
+      Loader.showLoader();
+      Response response;
+      response = await dio.post(EndPoints.allMainCourse,data: data);
+
+      if (response.statusCode == 200) {
+        GetAllMainCourse responseData = GetAllMainCourse.fromJson(response.data);
+        Loader.hideLoader();
+        debugPrint('GetAllCourse responseData ----- > ${response.data}');
+        return responseData;
+      } else {
+        Loader.hideLoader();
+        throw Exception(response.data);
+      }
+    } on DioError catch (e) {
+      Loader.hideLoader();
+      debugPrint('Dio E  $e');
+      throw e.error;
+    }
+  }
+
+  //-----------------------GET ALL MAIN PURCHASED COURSE CATEGORY API-----------------------//
+
+  Future<GetAllMainPurchasedCourse> getAllMainPurchasedCourses(BuildContext context,{
+    FormData? data,
+  }) async {
+    try {
+      Loader.showLoader();
+      Response response;
+      response = await dio.post(EndPoints.allMainCourse,data: data);
+
+      if (response.statusCode == 200) {
+        GetAllMainPurchasedCourse responseData = GetAllMainPurchasedCourse.fromJson(response.data);
+        Loader.hideLoader();
+        debugPrint('GetAllCourse responseData ----- > ${response.data}');
+        return responseData;
+      } else {
+        Loader.hideLoader();
+        throw Exception(response.data);
+      }
+    } on DioError catch (e) {
+      Loader.hideLoader();
+      debugPrint('Dio E  $e');
+      throw e.error;
+    }
+  }
   //-----------------------COURSE PURCHASED CATEGORY API-----------------------//
 
   Future<GetPurchasedCourseCategory> getPurchasedCourses(BuildContext context,{

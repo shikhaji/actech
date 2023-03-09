@@ -7,6 +7,13 @@ import 'package:dio/dio.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:razorpay_flutter/razorpay_flutter.dart';
+import '../../model/all_main_course_model.dart';
+import '../../model/all_main_course_model.dart';
+import '../../model/all_main_course_model.dart';
+import '../../model/all_main_course_model.dart';
+import '../../model/all_main_course_model.dart';
+import '../../model/all_main_course_model.dart';
+import '../../model/all_main_course_model.dart';
 import '../../model/my_profile_model.dart';
 import '../../routes/arguments.dart';
 import '../../services/api_services.dart';
@@ -37,8 +44,8 @@ class _HomeScreenState extends State<HomeScreen> {
   int _selectedSliderIndex = 0;
   List sliderImageList = [];
   List latestNewsList = [];
-  List<Course> getAllCourses=[];
-  List<Course> allCourseListRes = [];
+  List<MainCourse> getAllCourses=[];
+  List<MainCourse> allCourseListRes = [];
   ProfileModel? myProfileData;
   bool _isSearching = false;
   void openDrawer() {
@@ -70,15 +77,15 @@ class _HomeScreenState extends State<HomeScreen> {
         "status" :"0",
       });
     }
-    GetAllCourseCategory? _getAllCourseCategory= await ApiService().getAllCourses(context,data: data());
+    GetAllMainCourse? _getAllCourseCategory= await ApiService().getAllMainCourses(context,data: data());
 
     if(_getAllCourseCategory != null){
 
       getAllCourses = _getAllCourseCategory.course!
-          .map((e) => Course.fromJson(e.toJson()))
+          .map((e) => MainCourse.fromJson(e.toJson()))
           .toList();
       allCourseListRes = _getAllCourseCategory.course!
-          .map((e) => Course.fromJson(e.toJson()))
+          .map((e) => MainCourse.fromJson(e.toJson()))
           .toList();
       setState(() {});
     }
@@ -101,23 +108,8 @@ class _HomeScreenState extends State<HomeScreen> {
 
   }
 
-  Future<void> _onSearchHandler(String qurey) async {
-    if (qurey.isNotEmpty) {
-      _isSearching = true;
-      getAllCourses = _isSearching ? searchCourse(qurey) : getAllCourses;
-    } else {
-      getAllCourses.clear();
-      getAllCourses = allCourseListRes;
-      _isSearching = false;
-    }
-    setState(() {});
-  }
 
-  List<Course> searchCourse(String qurey) {
-    return allCourseListRes
-        .where((e) => e.ccfvName!.toLowerCase().contains(qurey.toLowerCase()))
-        .toList();
-  }
+
 
   String? paymentId;
 
@@ -227,15 +219,15 @@ class _HomeScreenState extends State<HomeScreen> {
                         itemCount: getAllCourses.length,
                         itemBuilder: (context, inx) {
                           return CoursesListContainer(
-                            image:getAllCourses[inx].ccfvCourseImage ?? "",
-                            name:getAllCourses[inx].ccfvName ?? "",
-                            lessons: "${getAllCourses[inx].ccfvTotalLessons ?? ""} ",
-                            displayAmount: "₹${getAllCourses[inx].ccfvCommision ?? ""}",
-                            ccid: getAllCourses[inx].ccfvId ?? "",
-                            ccstatus: getAllCourses[inx].ccfvStatus ?? "",
-                            ccIntroVideo: getAllCourses[inx].ccfvUrl ?? "",
-                            ccDescription: getAllCourses[inx].ccfvDesc ?? "",
-                            amount: "${getAllCourses[inx].ccfvCommision ?? ""}",
+                            image:getAllCourses[inx].cMCIMAGE ?? "",
+                            name:getAllCourses[inx].cMCNAME ?? "",
+                            lessons: "${getAllCourses[inx].cMCCHAPTERS ?? ""} ",
+                            displayAmount: "₹${getAllCourses[inx].cMCCOMMISION ?? ""}",
+                            ccid: getAllCourses[inx].cMCID ?? "",
+                            ccstatus: getAllCourses[inx].cMCSTATUS ?? "",
+                            ccIntroVideo: getAllCourses[inx].cMCINTROURL ?? "",
+                            ccDescription: getAllCourses[inx].cMCDESC ?? "",
+                            amount: "${getAllCourses[inx].cMCCOMMISION ?? ""}",
                           );
                         },
                       ),
