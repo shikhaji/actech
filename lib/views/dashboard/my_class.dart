@@ -126,104 +126,94 @@ class _MyClassScreenState extends State<MyClassScreen> {
   }){
     return Column(
       children: [
-        GestureDetector(
-          onTap: (){
-            Navigator.pushNamed(context, Routs.courseDetail,
-                arguments: OtpArguments(
-                  ccId:ccid,
-                  ccCourseName:name,
-                  ccImg:image,
-                ));
-          },
-          child:  Container(
-            alignment: Alignment.center,
-            decoration: BoxDecoration(
-              border: Border.all(color: AppColor.grey,width: Sizes.s1.w),
-              color: AppColor.white,
-              borderRadius: BorderRadius.circular(textFieldBorderRadius),
-            ),
-            child: Padding(
-              padding: const EdgeInsets.all(12.0),
-              child: Column(
-                children: [
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: [
+        Container(
+          alignment: Alignment.center,
+          decoration: BoxDecoration(
+            border: Border.all(color: AppColor.grey,width: Sizes.s1.w),
+            color: AppColor.white,
+            borderRadius: BorderRadius.circular(textFieldBorderRadius),
+          ),
+          child: Padding(
+            padding: const EdgeInsets.all(12.0),
+            child: Column(
+              children: [
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
 
-                      Expanded(
-                        child: Row(
-                          children: [
-                            Container(
-                              decoration: BoxDecoration(
-                                borderRadius: BorderRadius.circular(12),
-                                color: Colors.white,
-                                boxShadow: [
-                                  BoxShadow(
-                                    color:
-                                    Colors.grey.withOpacity(0.5), //color of shadow
-                                    spreadRadius: 3, //spread radius
-                                    blurRadius: 5, // blur radius
-                                    offset: const Offset(0, 3),
-                                  )
-                                ],
-                              ),
-                              child: ClipRRect(
-                                borderRadius: BorderRadius.circular(12),
-                                clipBehavior: Clip.antiAlias,
-                                child: Image.network("https://www.actechindia.org/uploads/${image}",fit: BoxFit.contain,height: Sizes.s100.h,width: Sizes.s100.h,),
-                              ),
-                            ),
-
-                            SizedBox(
-                              width: Sizes.s18,
-                            ),
-                            Flexible(
-                              flex: 6,
-                              child: Column(
-                                mainAxisAlignment: MainAxisAlignment.start,
-                                crossAxisAlignment: CrossAxisAlignment.start,
-                                children: [
-                                  Text(name,
-                                    overflow: TextOverflow.ellipsis,
-                                    maxLines: 6,
-                                    style: AppTextStyle.alertSubtitle1
-                                        .copyWith(fontSize: Sizes.s18.h,color: AppColor.black),
-                                  ),
-                                  SizedBoxH8(),
-                                  Text("${lessons}",
-                                      style: AppTextStyle.alertSubtitle1.copyWith(fontSize: Sizes.s14.h)),
-                                ],
-                              ),
-                            ),
-                          ],
-                        ),
-
-                      ),
-                      CircleAvatar(
-                        child: IconButton(
-
-                          onPressed: (){
-                            Navigator.pushNamed(context, Routs.myOrder,
-                                arguments: OtpArguments(
-                                  ccImg: image,
-                                  ccId: ccid,
-                                  ccCourseName: name,
-                                  ccLessons: lessons,
+                    Expanded(
+                      child: Row(
+                        children: [
+                          Container(
+                            decoration: BoxDecoration(
+                              borderRadius: BorderRadius.circular(12),
+                              color: Colors.white,
+                              boxShadow: [
+                                BoxShadow(
+                                  color:
+                                  Colors.grey.withOpacity(0.5), //color of shadow
+                                  spreadRadius: 3, //spread radius
+                                  blurRadius: 5, // blur radius
+                                  offset: const Offset(0, 3),
                                 )
+                              ],
+                            ),
+                            child: ClipRRect(
+                              borderRadius: BorderRadius.circular(12),
+                              clipBehavior: Clip.antiAlias,
+                              child: Image.network("https://www.actechindia.org/uploads/${image}",fit: BoxFit.contain,height: Sizes.s100.h,width: Sizes.s100.h,),
+                            ),
+                          ),
 
-                            );
-                          },
-                          icon: Icon(Icons.arrow_forward_ios),
-                          color: AppColor.white,
-                        ),
-                        backgroundColor: AppColor.primaryColor,
-
+                          SizedBox(
+                            width: Sizes.s18,
+                          ),
+                          Flexible(
+                            flex: 6,
+                            child: Column(
+                              mainAxisAlignment: MainAxisAlignment.start,
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: [
+                                Text(name,
+                                  overflow: TextOverflow.ellipsis,
+                                  maxLines: 6,
+                                  style: AppTextStyle.alertSubtitle1
+                                      .copyWith(fontSize: Sizes.s18.h,color: AppColor.black),
+                                ),
+                                SizedBoxH8(),
+                                Text("${lessons}",
+                                    style: AppTextStyle.alertSubtitle1.copyWith(fontSize: Sizes.s14.h)),
+                              ],
+                            ),
+                          ),
+                        ],
                       ),
 
-                    ],
-                  ),
-                ],
-              ),
+                    ),
+                    CircleAvatar(
+                      child: IconButton(
+
+                        onPressed: (){
+                          Navigator.pushNamed(context, Routs.myOrder,
+                              // arguments: OtpArguments(
+                              //   ccImg: image,
+                              //   ccId: ccid,
+                              //   ccCourseName: name,
+                              //   ccLessons: lessons,
+                              // )
+
+                          );
+                        },
+                        icon: Icon(Icons.arrow_forward_ios),
+                        color: AppColor.white,
+                      ),
+                      backgroundColor: AppColor.primaryColor,
+
+                    ),
+
+                  ],
+                ),
+              ],
             ),
           ),
         ),
