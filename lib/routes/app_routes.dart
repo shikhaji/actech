@@ -93,7 +93,7 @@ class RoutGenerator {
 
       case Routs.myOrder:
         return MaterialPageRoute(
-            builder: (_) => MyOrderScreen());
+            builder: (_) => MyOrderScreen(arguments: arguments as OtpArguments,));
 
       case Routs.paymentDes:
         return MaterialPageRoute(

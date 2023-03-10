@@ -387,29 +387,7 @@ class ApiService {
       debugPrint('Dio E  $e');
     }
   }
-  Future<GetOrderListModel> getOrderListAPi1(BuildContext context,{
-    FormData? data,
-  }) async {
-    try {
-      Loader.showLoader();
-      Response response;
-      response = await dio.post(EndPoints.getMyOrderList,data: data);
 
-      if (response.statusCode == 200) {
-        GetOrderListModel responseData = GetOrderListModel.fromJson(response.data);
-        Loader.hideLoader();
-        debugPrint('GetAllCourse responseData ----- > ${response.data}');
-        return responseData;
-      } else {
-        Loader.hideLoader();
-        throw Exception(response.data);
-      }
-    } on DioError catch (e) {
-      Loader.hideLoader();
-      debugPrint('Dio E  $e');
-      throw e.error;
-    }
-  }
   //----------------------------MY PROFILE BY ID API-----------------------//
   Future<MyProfileModel> myProfile(
       BuildContext context, {

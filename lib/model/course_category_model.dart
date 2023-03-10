@@ -1,85 +1,81 @@
-// To parse this JSON data, do
-//
-//     final getAllCourseCategory = getAllCourseCategoryFromJson(jsonString);
-
-import 'dart:convert';
-
-GetAllCourseCategory getAllCourseCategoryFromJson(String str) => GetAllCourseCategory.fromJson(json.decode(str));
-
-String getAllCourseCategoryToJson(GetAllCourseCategory data) => json.encode(data.toJson());
-
 class GetAllCourseCategory {
-  GetAllCourseCategory({
-    required this.status,
-    required this.message,
-    required this.course,
-  });
+  int? status;
+  String? message;
+  List<Course>? course;
 
-  int status;
-  String message;
-  List<Course> course;
+  GetAllCourseCategory({this.status, this.message, this.course});
 
-  factory GetAllCourseCategory.fromJson(Map<String, dynamic> json) => GetAllCourseCategory(
-    status: json["status"],
-    message: json["message"],
-    course: List<Course>.from(json["course"].map((x) => Course.fromJson(x))),
-  );
+  GetAllCourseCategory.fromJson(Map<String, dynamic> json) {
+    status = json['status'];
+    message = json['message'];
+    if (json['course'] != null) {
+      course = <Course>[];
+      json['course'].forEach((v) {
+        course!.add(new Course.fromJson(v));
+      });
+    }
+  }
 
-  Map<String, dynamic> toJson() => {
-    "status": status,
-    "message": message,
-    "course": List<dynamic>.from(course.map((x) => x.toJson())),
-  };
+  Map<String, dynamic> toJson() {
+    final Map<String, dynamic> data = new Map<String, dynamic>();
+    data['status'] = this.status;
+    data['message'] = this.message;
+    if (this.course != null) {
+      data['course'] = this.course!.map((v) => v.toJson()).toList();
+    }
+    return data;
+  }
 }
 
 class Course {
-  Course({
-    required this.ccfvId,
-    required this.ccfvTt,
-    required this.ccfvName,
-    required this.ccfvStatus,
-    required this.ccfvCommision,
-    required this.ccfvCourseImage,
-    required this.ccfvTotalLessons,
-    required this.ccfvUrl,
-    required this.ccfvDesc,
-    required this.ccfvCmcId,
-  });
+  String? cCFVID;
+  String? cCFVTT;
+  String? cCFVNAME;
+  String? cCFVSTATUS;
+  String? cCFVCOMMISION;
+  String? cCFVCOURSEIMAGE;
+  String? cCFVTOTALLESSONS;
+  String? cCFVURL;
+  String? cCFVDESC;
+  String? cCFVCMCID;
 
-  String ccfvId;
-  DateTime ccfvTt;
-  String ccfvName;
-  String ccfvStatus;
-  String ccfvCommision;
-  String ccfvCourseImage;
-  String ccfvTotalLessons;
-  String ccfvUrl;
-  String ccfvDesc;
-  String ccfvCmcId;
+  Course(
+      {this.cCFVID,
+        this.cCFVTT,
+        this.cCFVNAME,
+        this.cCFVSTATUS,
+        this.cCFVCOMMISION,
+        this.cCFVCOURSEIMAGE,
+        this.cCFVTOTALLESSONS,
+        this.cCFVURL,
+        this.cCFVDESC,
+        this.cCFVCMCID});
 
-  factory Course.fromJson(Map<String, dynamic> json) => Course(
-    ccfvId: json["CCFV_ID"],
-    ccfvTt: DateTime.parse(json["CCFV_TT"]),
-    ccfvName: json["CCFV_NAME"],
-    ccfvStatus: json["CCFV_STATUS"],
-    ccfvCommision: json["CCFV_COMMISION"],
-    ccfvCourseImage: json["CCFV_COURSE_IMAGE"],
-    ccfvTotalLessons: json["CCFV_TOTAL_LESSONS"],
-    ccfvUrl: json["CCFV_URL"],
-    ccfvDesc: json["CCFV_DESC"],
-    ccfvCmcId: json["CCFV_CMC_ID"],
-  );
+  Course.fromJson(Map<String, dynamic> json) {
+    cCFVID = json['CCFV_ID'];
+    cCFVTT = json['CCFV_TT'];
+    cCFVNAME = json['CCFV_NAME'];
+    cCFVSTATUS = json['CCFV_STATUS'];
+    cCFVCOMMISION = json['CCFV_COMMISION'];
+    cCFVCOURSEIMAGE = json['CCFV_COURSE_IMAGE'];
+    cCFVTOTALLESSONS = json['CCFV_TOTAL_LESSONS'];
+    cCFVURL = json['CCFV_URL'];
+    cCFVDESC = json['CCFV_DESC'];
+    cCFVCMCID = json['CCFV_CMC_ID'];
+  }
 
-  Map<String, dynamic> toJson() => {
-    "CCFV_ID": ccfvId,
-    "CCFV_TT": ccfvTt.toIso8601String(),
-    "CCFV_NAME": ccfvName,
-    "CCFV_STATUS": ccfvStatus,
-    "CCFV_COMMISION": ccfvCommision,
-    "CCFV_COURSE_IMAGE": ccfvCourseImage,
-    "CCFV_TOTAL_LESSONS": ccfvTotalLessons,
-    "CCFV_URL": ccfvUrl,
-    "CCFV_DESC": ccfvDesc,
-    "CCFV_CMC_ID": ccfvCmcId,
-  };
+  Map<String, dynamic> toJson() {
+    final Map<String, dynamic> data = new Map<String, dynamic>();
+    data['CCFV_ID'] = this.cCFVID;
+    data['CCFV_TT'] = this.cCFVTT;
+    data['CCFV_NAME'] = this.cCFVNAME;
+    data['CCFV_STATUS'] = this.cCFVSTATUS;
+    data['CCFV_COMMISION'] = this.cCFVCOMMISION;
+    data['CCFV_COURSE_IMAGE'] = this.cCFVCOURSEIMAGE;
+    data['CCFV_TOTAL_LESSONS'] = this.cCFVTOTALLESSONS;
+    data['CCFV_URL'] = this.cCFVURL;
+    data['CCFV_DESC'] = this.cCFVDESC;
+    data['CCFV_CMC_ID'] = this.cCFVCMCID;
+    return data;
+  }
 }
