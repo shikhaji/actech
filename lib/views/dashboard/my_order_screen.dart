@@ -1,5 +1,6 @@
 import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
+import 'package:youtube_player_flutter/youtube_player_flutter.dart';
 import '../../model/course_category_model.dart';
 import '../../routes/app_routes.dart';
 import '../../routes/arguments.dart';
@@ -10,19 +11,30 @@ import '../../utils/app_sizes.dart';
 import '../../utils/app_text_style.dart';
 import '../../utils/constant.dart';
 import '../../utils/screen_utils.dart';
+import '../../widgets/app_text.dart';
 import '../../widgets/custom_size_box.dart';
 import '../../widgets/drawer_widget.dart';
 import '../../widgets/primary_appbar.dart';
+import '../../widgets/primary_padding.dart';
 import '../../widgets/scrollview.dart';
 
 class MyOrderScreen extends StatefulWidget {
-  const MyOrderScreen({Key? key}) : super(key: key);
+  final OtpArguments? arguments;
+  const MyOrderScreen({Key? key, this.arguments}) : super(key: key);
 
   @override
   State<MyOrderScreen> createState() => _MyOrderScreenState();
 }
 
 class _MyOrderScreenState extends State<MyOrderScreen> {
+
+  //VIDEO PLAYER
+  late var videoURL = "${widget.arguments?.ccUrl.toString()}";
+  late var pdfURL = "https://www.actechindia.org/uploads/${widget.arguments
+      ?.ccChapterPdf}";
+  late YoutubePlayerController _controller;
+  double? _progress;
+
   List<Course> myOrderList=[];
   List<Course> getAllCourses=[];
   List<Course> allCourseListRes = [];
@@ -37,8 +49,15 @@ class _MyOrderScreenState extends State<MyOrderScreen> {
   void initState() {
     // TODO: implement initState
     super.initState();
-
+    final videoID = YoutubePlayer.convertUrlToId(videoURL);
+    _controller = YoutubePlayerController(
+      initialVideoId: videoID!,
+      flags: YoutubePlayerFlags(
+        autoPlay: false,
+      ),
+    );
     callApi();
+    print("ccid: ${widget.arguments?.ccId}");
   }
 
   Future<void> callApi()async {
@@ -46,11 +65,16 @@ class _MyOrderScreenState extends State<MyOrderScreen> {
     FormData data() {
       return FormData.fromMap({
         "loginid":id?.replaceAll('"', '').replaceAll('"', '').toString(),
-        "cc_id" :"3",
-        "status":"1"
+        "cc_id" :'${widget.arguments?.ccId}',
+        "status":1
       });
     }
-   ApiService().getPurchasedCourses(context,data: data());
+   ApiService().getPurchasedCourses(context,data: data()).then((value){
+
+     setState(() {
+       getAllCourses = value.course!;
+     });
+   });
 
   }
 
@@ -58,48 +82,90 @@ class _MyOrderScreenState extends State<MyOrderScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
         key: _scaffoldKey,
-        drawer: Drawer(
-          backgroundColor: Colors.white,
-          elevation: 0,
-          width: ScreenUtil().screenWidth * 0.8,
-          shape: RoundedRectangleBorder(
-            borderRadius: BorderRadius.only(
-              topRight: Radius.circular(Sizes.s20.r),
-              bottomRight: Radius.circular(Sizes.s20.r),
+        body: SafeArea(
+          child: PrimaryPadding(
+            child: Column(
+              children: [
+                SizedBoxH10(),
+                Container(
+                  decoration: BoxDecoration(
+                    borderRadius: BorderRadius.circular(15),
+                  ),
+                  child: YoutubePlayer(
+                    controller: _controller,
+                    showVideoProgressIndicator: true,
+                    onReady: () => debugPrint("Ready"),
+                    bottomActions: [
+                      CurrentPosition(),
+                      ProgressBar(
+                        isExpanded: true,
+
+                        colors: ProgressBarColors(
+                          playedColor: AppColor.primaryColor,
+                          handleColor: AppColor.primaryLightColor,
+                        ),
+                      ),
+                      RemainingDuration(),
+                      PlaybackSpeedButton(),
+                      FullScreenButton(),
+                    ],
+                  ),
+                  height: Sizes.s200.h,
+                ),
+                SizedBoxH34(),
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children:[
+                    Text("${getAllCourses.length.toString()} Category",style: AppTextStyle.alertSubtitle),
+                    Container(
+                      decoration: BoxDecoration(
+                          color: AppColor.primaryColor
+                      ),
+                      child: TextButton(onPressed: (){
+
+                        Navigator.pushNamed(context, Routs.paymentDes,arguments: OtpArguments(ccId:"${widget.arguments!.ccId}"));
+
+                      }, child: appText("Purchased Receipt",style: AppTextStyle.alertSubtitle1.copyWith(color: AppColor.white))),
+                    )
+                  ],
+                ),
+
+                SizedBoxH20(),
+                Expanded(
+                  child: SizedBox(
+                    height: Sizes.s320,
+                    child: SingleChildScrollView(
+                      child: ListView.builder(
+                        padding: EdgeInsets.symmetric(vertical: Sizes.s20.h),
+                        shrinkWrap: true,
+                        physics: const NeverScrollableScrollPhysics(),
+                        itemCount: getAllCourses.length,
+                        itemBuilder: (context, inx) {
+                          return CoursesListContainer(
+                            image: getAllCourses[inx].cCFVCOURSEIMAGE ?? "",
+                            ccid: getAllCourses[inx].cCFVID ?? "",
+                            name:getAllCourses[inx].cCFVNAME ?? "",
+                            lessons: "${getAllCourses[inx].cCFVTOTALLESSONS ?? ""} Lessons",
+
+
+                          );
+
+
+                        },
+
+                      ),
+                    ),
+                  ),
+                ),
+                //Container
+
+              ],
             ),
           ),
-          child: const DrawerWidget(),
-        ),
-        body: CustomScroll(
-          children: [
-            SizedBoxH10(),
 
-            ListView.builder(
-              padding: EdgeInsets.symmetric(vertical: Sizes.s20.h),
-              shrinkWrap: true,
-              physics: const NeverScrollableScrollPhysics(),
-              itemCount: getAllCourses.length,
-              itemBuilder: (context, inx) {
-                return CoursesListContainer(
-                  image: getAllCourses[inx].ccfvCourseImage ?? "",
-                  ccid: getAllCourses[inx].ccfvId ?? "",
-                  name:getAllCourses[inx].ccfvName ?? "",
-                  lessons: "${getAllCourses[inx].ccfvTotalLessons ?? ""} Lessons",
-
-
-                );
-
-
-              },
-
-            ),
-
-
-
-          ],
         ),
         appBar: SecondaryAppBar(
-          title: "Chapters",
+          title: "${widget.arguments?.ccCourseName}",
           isLeading: true,
           leadingIcon: Icons.arrow_back_ios,
 

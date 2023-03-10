@@ -80,11 +80,6 @@ class _CourseDetailsScreenState extends State<CourseDetailsScreen> {
                       decoration: BoxDecoration(
                           color: AppColor.primaryColor
                       ),
-                      child: TextButton(onPressed: (){
-
-                        Navigator.pushNamed(context, Routs.paymentDes,arguments: OtpArguments(ccId:"${widget.arguments!.ccId}"));
-
-                      }, child: appText("Purchased Receipt",style: AppTextStyle.alertSubtitle1.copyWith(color: AppColor.white))),
                     )
                   ],
                 ),

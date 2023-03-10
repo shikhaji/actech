@@ -40,7 +40,6 @@ class _MyClassScreenState extends State<MyClassScreen> {
   void initState() {
     // TODO: implement initState
     super.initState();
-
     callApi();
   }
 
@@ -95,9 +94,8 @@ class _MyClassScreenState extends State<MyClassScreen> {
                   image: getAllCourses[inx].cMCIMAGE ?? "",
                   ccid: getAllCourses[inx].cMCID ?? "",
                   name:getAllCourses[inx].cMCNAME ?? "",
+                  url:getAllCourses[inx].cMCINTROURL ?? "",
                   lessons: "${getAllCourses[inx].cMCCHAPTERS ?? ""} Lessons",
-
-
                 );
 
 
@@ -123,6 +121,7 @@ class _MyClassScreenState extends State<MyClassScreen> {
     required String name,
     required String lessons,
     required String ccid,
+    required String url,
   }){
     return Column(
       children: [
@@ -195,13 +194,13 @@ class _MyClassScreenState extends State<MyClassScreen> {
 
                         onPressed: (){
                           Navigator.pushNamed(context, Routs.myOrder,
-                              // arguments: OtpArguments(
-                              //   ccImg: image,
-                              //   ccId: ccid,
-                              //   ccCourseName: name,
-                              //   ccLessons: lessons,
-                              // )
-
+                              arguments: OtpArguments(
+                                ccImg: image,
+                                ccId: ccid,
+                                ccCourseName: name,
+                                ccLessons: lessons,
+                                ccUrl: url,
+                              )
                           );
                         },
                         icon: Icon(Icons.arrow_forward_ios),
