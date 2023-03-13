@@ -65,4 +65,9 @@ class AppTextStyle {
       color: Color(0xff616467),
       fontSize: Sizes.s14,
       fontWeight: FontWeight.w500);
+
+  static const TextStyle alertSubtitle2 = TextStyle(
+      color: Color(0xff616467),
+      fontSize: Sizes.s18,
+      fontWeight: FontWeight.w500);
 }

@@ -87,35 +87,12 @@ class _MyOrderScreenState extends State<MyOrderScreen> {
             child: Column(
               children: [
                 SizedBoxH10(),
-                Container(
-                  decoration: BoxDecoration(
-                    borderRadius: BorderRadius.circular(15),
-                  ),
-                  child: YoutubePlayer(
-                    controller: _controller,
-                    showVideoProgressIndicator: true,
-                    onReady: () => debugPrint("Ready"),
-                    bottomActions: [
-                      CurrentPosition(),
-                      ProgressBar(
-                        isExpanded: true,
+                SizedBoxH10(),
 
-                        colors: ProgressBarColors(
-                          playedColor: AppColor.primaryColor,
-                          handleColor: AppColor.primaryLightColor,
-                        ),
-                      ),
-                      RemainingDuration(),
-                      PlaybackSpeedButton(),
-                    ],
-                  ),
-                  height: Sizes.s200.h,
-                ),
-                SizedBoxH34(),
                 Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children:[
-                    Text("${getAllCourses.length.toString()} Category",style: AppTextStyle.alertSubtitle),
+                    Text("${getAllCourses.length.toString()} Category",style: AppTextStyle.alertSubtitle2),
                     Container(
                       decoration: BoxDecoration(
                           color: AppColor.primaryColor
