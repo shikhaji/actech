@@ -1,6 +1,4 @@
-import 'dart:io';
-import 'package:ac_tech/views/dashboard/landscape_player_page.dart';
-import 'package:ac_tech/widgets/primary_button.dart';
+
 import 'package:carousel_slider/carousel_controller.dart';
 import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
