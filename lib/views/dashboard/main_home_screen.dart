@@ -1,3 +1,4 @@
+import 'package:ac_tech/views/dashboard/my_class.dart';
 import 'package:ac_tech/views/dashboard/profile_screen.dart';
 import 'package:flutter/material.dart';
 import '../../routes/arguments.dart';
@@ -18,6 +19,7 @@ class MainHomeScreen extends StatefulWidget {
 }
 
 class _MainHomeScreenState extends State<MainHomeScreen> {
+  int _selectedIndex = 0;
   bool isMenuOpen = false;
   final ValueNotifier<int> _currentIndexNotifier = ValueNotifier(0);
   final GlobalKey<ScaffoldState> _scaffoldKey = GlobalKey<ScaffoldState>();
@@ -70,7 +72,7 @@ class _MainHomeScreenState extends State<MainHomeScreen> {
       case 1:
           return const CategoriesScreen();
       case 2:
-        return const MyOrderScreen();
+        return const MyClassScreen();
       case 3:
         return const ProfileScreen();
       default:
@@ -78,5 +80,3 @@ class _MainHomeScreenState extends State<MainHomeScreen> {
     return Container();
   }
 }
-
-

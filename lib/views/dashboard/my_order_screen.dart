@@ -107,7 +107,6 @@ class _MyOrderScreenState extends State<MyOrderScreen> {
                       ),
                       RemainingDuration(),
                       PlaybackSpeedButton(),
-                      FullScreenButton(),
                     ],
                   ),
                   height: Sizes.s200.h,
