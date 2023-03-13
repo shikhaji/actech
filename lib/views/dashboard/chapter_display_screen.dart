@@ -147,7 +147,7 @@ class _ChapterDisplayScreenState extends State<ChapterDisplayScreen> {
           SizedBoxH34(),
           Align(
               alignment: Alignment.topLeft,
-              child: appText("${widget.arguments?.ccChapterName}",
+              child: appText("${widget.arguments?.ccCourseName}",
                   style: AppTextStyle.title)
           ),
           SizedBoxH20(),
