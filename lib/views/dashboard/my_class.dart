@@ -95,7 +95,7 @@ class _MyClassScreenState extends State<MyClassScreen> {
                   ccid: getAllCourses[inx].cMCID ?? "",
                   name:getAllCourses[inx].cMCNAME ?? "",
                   url:getAllCourses[inx].cMCINTROURL ?? "",
-                  lessons: "${getAllCourses[inx].cMCCHAPTERS ?? ""} Lessons",
+                  lessons: "${getAllCourses[inx].cMCCHAPTERS ?? ""} Categories",
                 );
 
 
