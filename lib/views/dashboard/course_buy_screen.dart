@@ -9,6 +9,7 @@ import 'package:flutter/services.dart';
 import 'package:razorpay_flutter/razorpay_flutter.dart';
 import 'package:youtube_player_flutter/youtube_player_flutter.dart';
 
+import '../../model/company_profile_model.dart';
 import '../../model/course_category_model.dart';
 import '../../routes/arguments.dart';
 import '../../services/api_services.dart';
@@ -43,10 +44,19 @@ class _CourseBuyScreenState extends State<CourseBuyScreen> {
 
   late YoutubePlayerController _controller;
   double? _progress;
-
+  CompanyProfileList? companyProfileList;
 
   @override
   void initState() {
+
+    ApiService().getCompanyProfile(context).then((value) {
+      if(value != null){
+        setState(() {
+          companyProfileList = value.cOMPANY;
+        });
+      }
+    });
+
     final videoID = YoutubePlayer.convertUrlToId(videoURL);
     _controller = YoutubePlayerController(
       initialVideoId: videoID!,
@@ -156,10 +166,10 @@ class _CourseBuyScreenState extends State<CourseBuyScreen> {
                   PrimaryButton(lable: "Enroll for ₹${widget.arguments.ccAmount}",
                   onPressed: () async {
                       courseId ="${widget.arguments.ccId}";
-
+print("seacrt key :=${companyProfileList!.kEYID}");
 
                       var options = {
-                        'key': 'rzp_test_YoriHE0YT6XVEs',
+                        'key': '${companyProfileList!.kEYID}',
                         'amount': int.parse("${widget.arguments.ccAmount}") * 100,
                         'name': 'AC-Tech',
                         'description': 'Course Purchased',

@@ -10,6 +10,7 @@ import '../API/dio_client.dart';
 import '../API/url.dart';
 import '../model/all_main_course_model.dart';
 import '../model/all_main_purchased_course.dart';
+import '../model/company_profile_model.dart';
 import '../model/course_categoryid_model.dart';
 import '../model/course_purchased_model.dart';
 import '../model/login_model.dart';
@@ -538,29 +539,29 @@ class ApiService {
 
   //----------------------------Payment DES API-----------------------//
 
-  // Future<MyOderListModel> paymentDes (BuildContext context,{
-  //   FormData? data,
-  // }) async {
-  //   try {
-  //     Loader.showLoader();
-  //     Response response;
-  //     response = await dio.post(EndPoints.getMyOrderList,
-  //     );
-  //     if (response.statusCode == 200) {
-  //       MyOderListModel responseData = MyOderListModel.fromJson(response.data);
-  //       Loader.hideLoader();
-  //       debugPrint('responseData ----- > ${response.data}');
-  //       return responseData;
-  //     } else {
-  //       Loader.hideLoader();
-  //       throw Exception(response.data);
-  //     }
-  //   } on DioError catch (e) {
-  //     Loader.hideLoader();
-  //     debugPrint('Dio E  $e');
-  //     throw e.error;
-  //   }
-  // }
+  Future<CompanyProfileModel?> getCompanyProfile (BuildContext context,{
+    FormData? data,
+  }) async {
+    try {
+      Loader.showLoader();
+      Response response;
+      response = await dio.post(EndPoints.companyProfile,
+      );
+      if (response.statusCode == 200) {
+        CompanyProfileModel responseData = CompanyProfileModel.fromJson(response.data);
+        Loader.hideLoader();
+        debugPrint('responseData ----- > ${response.data}');
+        return responseData;
+      } else {
+        Loader.hideLoader();
+        throw Exception(response.data);
+      }
+    } on DioError catch (e) {
+      Loader.hideLoader();
+      debugPrint('Dio E  $e');
+      throw e.error;
+    }
+  }
 
 
 

@@ -18,5 +18,6 @@ class EndPoints {
   static const String addPurchase = '$baseUrl/$post/add_purchase_details';
   static const String verifyCenterCode = '$baseUrl/$get/verify_center_code';
   static const String allMainCourse = '$baseUrl/$get/get_all_main_course_category';
+  static const String companyProfile = '$baseUrl/$get/get_company_profile';
 
 }
